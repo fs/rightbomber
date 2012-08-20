@@ -1,1 +1,1 @@
-fuck you!
+http://rightbomber.herokuapp.com/
