@@ -1,9 +1,24 @@
 .player {
   width: 16px;
   height: 16px;
-  border: 1px solid grey;
+  border: 2px solid blue;
 
+  position: absolute;
+  background: #fff;
 }
-.player.top {
-  border-bottom: none;
+
+.player.right {
+  border-right-color: red;
+}
+
+.player.up {
+  border-top-color: red;
+}
+
+.player.left {
+  border-left-color: red;
+}
+
+.player.down {
+  border-bottom-color: red;
 }

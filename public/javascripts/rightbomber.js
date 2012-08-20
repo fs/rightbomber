@@ -5,20 +5,33 @@ var Rightbomber,
 Rightbomber = (function() {
 
   function Rightbomber() {
+    this.tick = __bind(this.tick, this);
+
     this.run = __bind(this.run, this);
     console.log('init');
   }
 
   Rightbomber.prototype.run = function() {
-    var gameLoop, keyboard,
-      _this = this;
+    var gameLoop;
     console.log('run');
-    keyboard = new Keyboard;
-    keyboard.activate();
-    gameLoop = new GameLoop(function(timeDelta) {
-      return console.log("loop body");
-    });
+    this.keyboard = new Keyboard;
+    this.keyboard.activate();
+    this.player = new Player;
+    gameLoop = new GameLoop(this.tick);
     return gameLoop.run();
+  };
+
+  Rightbomber.prototype.tick = function(timeDelta) {
+    var direction, _i, _len, _ref;
+    _ref = ['right', 'up', 'left', 'down'];
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      direction = _ref[_i];
+      if (this.keyboard.keys[direction]) {
+        this.player.moving = true;
+        this.player.setDirection(direction);
+      }
+    }
+    return this.player.render();
   };
 
   return Rightbomber;
