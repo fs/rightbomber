@@ -1,13 +1,23 @@
+window.map_debug = (message) ->
+  console.log("map: #{message}")
+
 class MapModel
-  constructor: (options) ->
+  constructor: ->
+    map_debug("init")
+
+  generate: (options) =>
+    map_debug("generate")
+    @cells = []
+    options ||= {}
     rows = options.rows || 20
     cols = options.cols || 20
 
-    @initCells(rows, cols)
+    @cells = @initCells(rows, cols)
     @generateTerrain()
 
   # public interface
   getCell: (x, y) ->
+    map_debug("get cells")
     try
       @cells[x][y]
     catch e
@@ -16,26 +26,32 @@ class MapModel
   # private functions
   # init cells array
   initCells: (rows, cols) =>
+    map_debug("init cells")
     @rows = rows
     @cols = cols
 
-    @cells = []
+    cells = []
     rownum = 0
     while rownum < rows
       colnum = 0
+      cells[rownum] = new Array(cols)
       while colnum < cols
-        @cells[rownum][colnum] = new MapCell()
-    @cells
+        cells[rownum][colnum] = new MapCell()
+        colnum++
+      rownum++
+    cells
 
   # add some more interesting objects to map
   generateTerrain: () =>
-    @cells = []
+    map_debug("generateTerrain")
     rownum = 0
     while rownum < @rows
       colnum = 0
       while colnum < @cols
-        if rownum + colnum % 10 == 0
+        if rownum + colnum % 8 == 0
           @cells[rownum][colnum].setPassable(false)
+        colnum++
+      rownum++
     @cells
 
     #  forEachCell: (callback, context) =>
