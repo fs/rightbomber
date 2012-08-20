@@ -8,7 +8,7 @@ class Map
   generate: (options = {}) =>
     console.log "map: generate"
     @initCells()
-    # @generateTerrain()
+    @generateTerrain()
 
   getCell: (x, y) =>
     @cells[y][x]

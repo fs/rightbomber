@@ -20,7 +20,8 @@ Map = (function() {
       options = {};
     }
     console.log("map: generate");
-    return this.initCells();
+    this.initCells();
+    return this.generateTerrain();
   };
 
   Map.prototype.getCell = function(x, y) {
