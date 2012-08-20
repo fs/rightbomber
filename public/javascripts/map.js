@@ -6,6 +6,15 @@ window.map_debug = function(message) {
   return console.log("map: " + message);
 };
 
+$(function() {
+  var grid, map, map_view;
+  map = new MapModel();
+  map.generate({});
+  map_view = new MapView();
+  grid = map_view.render(map, {});
+  return $("body").append(grid);
+});
+
 MapModel = (function() {
 
   function MapModel() {
@@ -22,19 +31,14 @@ MapModel = (function() {
     map_debug("generate");
     this.cells = [];
     options || (options = {});
-    rows = options.rows || 20;
-    cols = options.cols || 20;
+    rows = options.rows || 40;
+    cols = options.cols || 100;
     this.cells = this.initCells(rows, cols);
     return this.generateTerrain();
   };
 
   MapModel.prototype.getCell = function(x, y) {
-    map_debug("get cells");
-    try {
-      return this.cells[x][y];
-    } catch (e) {
-      return new MapCell();
-    }
+    return this.cells[x][y];
   };
 
   MapModel.prototype.initCells = function(rows, cols) {
@@ -63,7 +67,7 @@ MapModel = (function() {
     while (rownum < this.rows) {
       colnum = 0;
       while (colnum < this.cols) {
-        if (rownum + colnum % 8 === 0) {
+        if ((rownum + colnum) % 8 === 0) {
           this.cells[rownum][colnum].setPassable(false);
         }
         colnum++;
@@ -79,9 +83,37 @@ MapModel = (function() {
 
 MapView = (function() {
 
-  function MapView(map) {
-    this.map = map;
+  function MapView() {
+    map_debug("view init");
   }
+
+  MapView.prototype.render = function(map) {
+    var $cell, $result, $row, cell, colnum, rownum;
+    $result = $("<table/>", {
+      id: "map-grid",
+      style: "display: block;"
+    });
+    rownum = 0;
+    while (rownum < map.rows) {
+      colnum = 0;
+      $row = $("<tr />", {
+        "data-row": rownum
+      });
+      while (colnum < map.cols) {
+        cell = map.getCell(rownum, colnum);
+        $cell = $("<td />", {
+          "data-row": rownum,
+          "data-col": colnum,
+          "class": cell.getType()
+        });
+        $row.append($cell);
+        colnum++;
+      }
+      rownum++;
+      $result.append($row);
+    }
+    return $result;
+  };
 
   return MapView;
 
@@ -93,10 +125,20 @@ MapCell = (function() {
     this.setPassable = __bind(this.setPassable, this);
 
     this.isPassable = __bind(this.isPassable, this);
+
+    this.getType = __bind(this.getType, this);
     this.rownum = rownum;
     this.colnum = colnum;
     this.passable = true;
   }
+
+  MapCell.prototype.getType = function() {
+    if (this.passable) {
+      return 'grass';
+    } else {
+      return 'stone';
+    }
+  };
 
   MapCell.prototype.isPassable = function() {
     return this.passable;

@@ -7,3 +7,8 @@ howto to compile:
 howto to run:
   rackup -p PORT
    
+
+# TODO
+# include to project
+  * requirejs
+  * scss

@@ -1,6 +1,15 @@
 window.map_debug = (message) ->
   console.log("map: #{message}")
 
+$ ->
+  map = new MapModel()
+  map.generate({})
+
+  map_view = new MapView()
+  grid = map_view.render(map, {})
+
+  $("body").append(grid)
+
 class MapModel
   constructor: ->
     map_debug("init")
@@ -9,19 +18,20 @@ class MapModel
     map_debug("generate")
     @cells = []
     options ||= {}
-    rows = options.rows || 20
-    cols = options.cols || 20
+    rows = options.rows || 40
+    cols = options.cols || 100
 
     @cells = @initCells(rows, cols)
     @generateTerrain()
 
   # public interface
   getCell: (x, y) ->
-    map_debug("get cells")
-    try
-      @cells[x][y]
-    catch e
-      new MapCell()
+    @cells[x][y]
+#    map_debug("get cells")
+#    try
+#      @cells[x][y]
+#    catch e
+#      new MapCell()
 
   # private functions
   # init cells array
@@ -48,7 +58,7 @@ class MapModel
     while rownum < @rows
       colnum = 0
       while colnum < @cols
-        if rownum + colnum % 8 == 0
+        if (rownum + colnum) % 8 == 0
           @cells[rownum][colnum].setPassable(false)
         colnum++
       rownum++
@@ -57,14 +67,35 @@ class MapModel
     #  forEachCell: (callback, context) =>
 
 class MapView
-  constructor: (map) ->
-    @map = map
+  constructor: () ->
+    map_debug("view init")
+
+  render: (map) ->
+    $result = $("<table/>", { id: "map-grid", style: "display: block;" })
+    rownum = 0
+    while rownum < map.rows
+      colnum = 0
+      $row = $("<tr />", { "data-row": rownum })
+      while colnum < map.cols
+        cell = map.getCell(rownum, colnum)
+        $cell = $("<td />", { "data-row": rownum, "data-col": colnum, class: cell.getType()})
+        $row.append($cell)
+        colnum++
+      rownum++
+      $result.append($row)
+    $result
 
 class MapCell
   constructor: (rownum, colnum) ->
     @rownum = rownum
     @colnum = colnum
     @passable = true
+
+  getType: =>
+    if @passable
+      'grass'
+    else
+      'stone'
   
   isPassable: =>
     @passable
