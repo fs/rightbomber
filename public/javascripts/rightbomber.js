@@ -18,6 +18,8 @@
 
   })();
 
-  (new Rightbomber).run;
+  $(function() {
+    return (new Rightbomber).run;
+  });
 
 }).call(this);
