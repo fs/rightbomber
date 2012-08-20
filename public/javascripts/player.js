@@ -4,6 +4,13 @@ var Player,
 
 Player = (function() {
 
+  Player.prototype.velocity = 4;
+
+  Player.prototype.position = {
+    x: 0.5,
+    y: 0.5
+  };
+
   Player.prototype.moving = false;
 
   Player.prototype.direction = 1;
@@ -22,12 +29,37 @@ Player = (function() {
   function Player() {
     this.toString = __bind(this.toString, this);
 
+    this.move = __bind(this.move, this);
+
     this.setDirection = __bind(this.setDirection, this);
 
   }
 
   Player.prototype.setDirection = function(directionString) {
     return this.direction = this.directionMap[directionString];
+  };
+
+  Player.prototype.move = function(timeDelta) {
+    var dx, dy, velocity;
+    if (this.moving) {
+      dx = 0;
+      dy = 0;
+      velocity = this.velocity * timeDelta;
+      if (this.direction === 0) {
+        dx = velocity;
+      }
+      if (this.direction === 2) {
+        dx = -velocity;
+      }
+      if (this.direction === 1) {
+        dy = velocity;
+      }
+      if (this.direction === 3) {
+        dy = -velocity;
+      }
+      this.position.x += dx;
+      return this.position.y += dy;
+    }
   };
 
   Player.prototype.toString = function() {

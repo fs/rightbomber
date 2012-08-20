@@ -6,7 +6,7 @@ class GameLoop
     delta = time - @lastRunTime
     @lastRunTime = time
 
-    @loopFunction(delta)
+    @loopFunction(delta / 1000.0) # seconds
 
     setTimeout @run, 0
   time: -> (new Date).getTime()

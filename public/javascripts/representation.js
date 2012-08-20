@@ -22,9 +22,16 @@ Representation = (function() {
   };
 
   Representation.prototype.update = function() {
-    return this.getElement().attr({
+    var element;
+    element = this.getElement();
+    element.attr({
       "class": this.object.toString()
     });
+    element.css({
+      left: this.object.position.x * 16 + 'px',
+      top: -this.object.position.y * 16 + 'px'
+    });
+    debugger;
   };
 
   return Representation;

@@ -24,6 +24,7 @@ Rightbomber = (function() {
 
   Rightbomber.prototype.tick = function(timeDelta) {
     var direction, _i, _len, _ref;
+    this.player.moving = false;
     _ref = ['right', 'up', 'left', 'down'];
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
       direction = _ref[_i];
@@ -32,6 +33,7 @@ Rightbomber = (function() {
         this.player.setDirection(direction);
       }
     }
+    this.player.move(timeDelta);
     return this.playerRepresentation.update();
   };
 
