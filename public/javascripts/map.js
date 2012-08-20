@@ -54,7 +54,7 @@ Map = (function() {
     while (rownum < this.rows) {
       colnum = 0;
       while (colnum < this.cols) {
-        if ((rownum + colnum) % 8 === 4 && Math.random() < 0.75) {
+        if ((rownum % 4 === 3 || colnum % 4 === 3) && Math.random() < 0.5) {
           this.cells[rownum][colnum].passable = false;
         }
         colnum++;

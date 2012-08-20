@@ -35,7 +35,7 @@ class Map
     while rownum < @rows
       colnum = 0
       while colnum < @cols
-        if (rownum + colnum) % 8 == 4 && Math.random() < 0.75
+        if (rownum % 4 == 3 || colnum % 4 == 3) && Math.random() < 0.5
           @cells[rownum][colnum].passable = false
         colnum++
       rownum++
