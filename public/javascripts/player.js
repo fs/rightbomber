@@ -29,8 +29,7 @@ Player = (function() {
   }
 
   Player.prototype.setDirection = function(directionString) {
-    this.direction = this.directionMap[directionString];
-    return console.log(this.toString());
+    return this.direction = this.directionMap[directionString];
   };
 
   Player.prototype.toString = function() {
@@ -50,7 +49,7 @@ Player = (function() {
     this.element.attr({
       "class": this.toString()
     });
-    return $(document.body).append(this.element);
+    return this.element;
   };
 
   return Player;

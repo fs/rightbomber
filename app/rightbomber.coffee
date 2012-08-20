@@ -10,6 +10,9 @@ class Rightbomber
 
     @player = new Player
 
+    @playerElement = @player.render()
+    $(document.body).append(@playerElement)
+
     gameLoop = new GameLoop(@tick)
     gameLoop.run()
 
@@ -19,7 +22,7 @@ class Rightbomber
         @player.moving = true
         @player.setDirection(direction)
 
-    @player.render() # to page
+      @player.render()
 
 # player.render() # => html
 

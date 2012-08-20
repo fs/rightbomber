@@ -17,21 +17,25 @@ Rightbomber = (function() {
     this.keyboard = new Keyboard;
     this.keyboard.activate();
     this.player = new Player;
+    this.playerElement = this.player.render();
+    $(document.body).append(this.playerElement);
     gameLoop = new GameLoop(this.tick);
     return gameLoop.run();
   };
 
   Rightbomber.prototype.tick = function(timeDelta) {
-    var direction, _i, _len, _ref;
+    var direction, _i, _len, _ref, _results;
     _ref = ['right', 'up', 'left', 'down'];
+    _results = [];
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
       direction = _ref[_i];
       if (this.keyboard.keys[direction]) {
         this.player.moving = true;
         this.player.setDirection(direction);
       }
+      _results.push(this.player.render());
     }
-    return this.player.render();
+    return _results;
   };
 
   return Rightbomber;

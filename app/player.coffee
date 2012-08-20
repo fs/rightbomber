@@ -16,7 +16,6 @@ class Player
 
   setDirection: (directionString) =>
     @direction = @directionMap[directionString]
-    console.log @toString()
 
   toString: =>
     state = ['player']
@@ -29,5 +28,4 @@ class Player
   render: =>
     @element = $("<div>") unless @element?
     @element.attr class: @toString()
-
-    $(document.body).append @element
+    @element
