@@ -22,10 +22,3 @@ class Player
     state.push 'moving' if @moving
     state.push @directionMap[@direction]
     state.join ' '
-
-  # render to html
-
-  render: =>
-    @element = $("<div>") unless @element?
-    @element.attr class: @toString()
-    @element

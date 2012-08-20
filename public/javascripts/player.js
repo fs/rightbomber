@@ -20,8 +20,6 @@ Player = (function() {
   };
 
   function Player() {
-    this.render = __bind(this.render, this);
-
     this.toString = __bind(this.toString, this);
 
     this.setDirection = __bind(this.setDirection, this);
@@ -40,16 +38,6 @@ Player = (function() {
     }
     state.push(this.directionMap[this.direction]);
     return state.join(' ');
-  };
-
-  Player.prototype.render = function() {
-    if (this.element == null) {
-      this.element = $("<div>");
-    }
-    this.element.attr({
-      "class": this.toString()
-    });
-    return this.element;
   };
 
   return Player;
