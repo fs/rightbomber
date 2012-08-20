@@ -14,7 +14,7 @@ class MapView
       tr = $("<tr>", { "data-row": rownum })
 
       while colnum < @map.cols
-        cell = @map.getCell(rownum, colnum)
+        cell = @map.getCell(colnum, rownum)
         td = $ "<td>",
           "data-row": rownum,
           "data-col": colnum,

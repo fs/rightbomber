@@ -23,6 +23,14 @@ Rightbomber = (function() {
     this.keyboard.activate();
     this.player = new Player;
     this.playerRepresentation = new Representation(document.body, this.player);
+    this.player.isPassable = function(position) {
+      var x1, x2, y1, y2;
+      x1 = Math.floor(position.x);
+      y1 = Math.floor(position.y);
+      x2 = Math.floor(position.x + 1);
+      y2 = Math.floor(position.y + 1);
+      return (x1 >= 0) && (y1 >= 0) && (x2 < map.cols) && (y2 < map.rows) && map.getCell(x1, y1).passable && map.getCell(x1, y2).passable && map.getCell(x2, y1).passable && map.getCell(x2, y2).passable;
+    };
     gameLoop = new GameLoop(this.tick);
     return gameLoop.run();
   };

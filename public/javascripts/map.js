@@ -6,7 +6,7 @@ Map = (function() {
 
   Map.prototype.rows = 20;
 
-  Map.prototype.cols = 20;
+  Map.prototype.cols = 40;
 
   function Map() {
     this.getCell = __bind(this.getCell, this);
@@ -20,12 +20,11 @@ Map = (function() {
       options = {};
     }
     console.log("map: generate");
-    this.initCells();
-    return this.generateTerrain();
+    return this.initCells();
   };
 
   Map.prototype.getCell = function(x, y) {
-    return this.cells[x][y];
+    return this.cells[y][x];
   };
 
   Map.prototype.initCells = function() {

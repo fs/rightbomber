@@ -12,5 +12,5 @@ class Representation
     element = @getElement()
     element.attr class: @object.toString()
     element.css
-      left:  @object.position.x * 16 + 'px'
-      top:  -@object.position.y * 16 + 'px'
+      left: @object.position.x * 16 + 'px'
+      top:  @object.position.y * 16 + 'px'

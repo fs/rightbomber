@@ -7,8 +7,8 @@ Player = (function() {
   Player.prototype.velocity = 4;
 
   Player.prototype.position = {
-    x: 0.5,
-    y: 0.5
+    x: 0,
+    y: 0
   };
 
   Player.prototype.moving = false;
@@ -40,7 +40,7 @@ Player = (function() {
   };
 
   Player.prototype.move = function(timeDelta) {
-    var dx, dy, velocity;
+    var dx, dy, newPosition, velocity;
     if (this.moving) {
       dx = 0;
       dy = 0;
@@ -52,13 +52,17 @@ Player = (function() {
         dx = -velocity;
       }
       if (this.direction === 1) {
-        dy = velocity;
-      }
-      if (this.direction === 3) {
         dy = -velocity;
       }
-      this.position.x += dx;
-      return this.position.y += dy;
+      if (this.direction === 3) {
+        dy = velocity;
+      }
+      newPosition = {};
+      newPosition.x = this.position.x + dx;
+      newPosition.y = this.position.y + dy;
+      if (this.isPassable(newPosition)) {
+        return this.position = newPosition;
+      }
     }
   };
 

@@ -29,7 +29,7 @@ Representation = (function() {
     });
     return element.css({
       left: this.object.position.x * 16 + 'px',
-      top: -this.object.position.y * 16 + 'px'
+      top: this.object.position.y * 16 + 'px'
     });
   };
 

@@ -1,6 +1,6 @@
 class Map
   rows: 20
-  cols: 20
+  cols: 40
 
   constructor: ->
     console.log "map: init"
@@ -8,10 +8,10 @@ class Map
   generate: (options = {}) =>
     console.log "map: generate"
     @initCells()
-    @generateTerrain()
+    # @generateTerrain()
 
   getCell: (x, y) =>
-    @cells[x][y]
+    @cells[y][x]
 
   # private functions
   # init cells array

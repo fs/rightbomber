@@ -2,8 +2,8 @@ class Player
   velocity: 4 # grid element per second
 
   position:
-    x: 0.5
-    y: 0.5
+    x: 0
+    y: 0
 
   moving: false
   direction: 1
@@ -31,11 +31,14 @@ class Player
 
       dx =  velocity if @direction == 0
       dx = -velocity if @direction == 2
-      dy =  velocity if @direction == 1
-      dy = -velocity if @direction == 3
+      dy = -velocity if @direction == 1
+      dy =  velocity if @direction == 3
 
-      @position.x += dx
-      @position.y += dy
+      newPosition = {}
+      newPosition.x = @position.x + dx
+      newPosition.y = @position.y + dy
+
+      @position = newPosition if @isPassable(newPosition)
 
   toString: =>
     state = ['player']

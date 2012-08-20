@@ -24,7 +24,7 @@ MapView = (function() {
         "data-row": rownum
       });
       while (colnum < this.map.cols) {
-        cell = this.map.getCell(rownum, colnum);
+        cell = this.map.getCell(colnum, rownum);
         td = $("<td>", {
           "data-row": rownum,
           "data-col": colnum,
