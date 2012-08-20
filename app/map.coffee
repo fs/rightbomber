@@ -1,6 +1,6 @@
 class Map
-  rows: 40
-  cols: 100
+  rows: 20
+  cols: 20
 
   constructor: ->
     console.log "map: init"
@@ -35,7 +35,7 @@ class Map
     while rownum < @rows
       colnum = 0
       while colnum < @cols
-        if (rownum + colnum) % 8 == 0
+        if (rownum + colnum) % 8 == 4 && Math.random() < 0.75
           @cells[rownum][colnum].passable = false
         colnum++
       rownum++

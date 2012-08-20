@@ -14,6 +14,10 @@ MapView = (function() {
     table = $("<table/>", {
       id: "map"
     });
+    table.css({
+      width: this.map.cols * 16,
+      height: this.map.rows * 16
+    });
     while (rownum < this.map.rows) {
       colnum = 0;
       tr = $("<tr>", {

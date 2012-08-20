@@ -4,9 +4,9 @@ var Map,
 
 Map = (function() {
 
-  Map.prototype.rows = 40;
+  Map.prototype.rows = 20;
 
-  Map.prototype.cols = 100;
+  Map.prototype.cols = 20;
 
   function Map() {
     this.getCell = __bind(this.getCell, this);
@@ -54,7 +54,7 @@ Map = (function() {
     while (rownum < this.rows) {
       colnum = 0;
       while (colnum < this.cols) {
-        if ((rownum + colnum) % 8 === 0) {
+        if ((rownum + colnum) % 8 === 4 && Math.random() < 0.75) {
           this.cells[rownum][colnum].passable = false;
         }
         colnum++;

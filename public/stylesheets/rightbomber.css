@@ -1,6 +1,11 @@
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
 .player {
-  width: 16px;
-  height: 16px;
+  width: 12px;
+  height: 12px;
   border: 2px solid blue;
 
   position: absolute;
@@ -23,12 +28,13 @@
   border-bottom-color: red;
 }
 
-#map tr td {
-  display: block;
-  height: 16px;
-  width: 16px;
+#map {
+  border-collapse: collapse;
 }
 
+#map tr td {
+  outline: 1px solid #ddffdd;
+}
 #map tr td.grass {
   background-color: #CCFFCC;
 }

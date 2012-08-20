@@ -5,6 +5,9 @@ class MapView
   render: ->
     rownum = 0
     table = $("<table/>", id: "map")
+    table.css
+      width:  @map.cols * 16
+      height: @map.rows * 16
 
     while rownum < @map.rows
       colnum = 0
