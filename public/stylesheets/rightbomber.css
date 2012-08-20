@@ -1,0 +1,9 @@
+.player {
+  width: 16px;
+  height: 16px;
+  border: 1px solid grey;
+
+}
+.player.top {
+  border-bottom: none;
+}
