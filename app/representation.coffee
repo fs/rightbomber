@@ -14,4 +14,3 @@ class Representation
     element.css
       left:  @object.position.x * 16 + 'px'
       top:  -@object.position.y * 16 + 'px'
-    debugger

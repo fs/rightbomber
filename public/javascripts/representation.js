@@ -27,11 +27,10 @@ Representation = (function() {
     element.attr({
       "class": this.object.toString()
     });
-    element.css({
+    return element.css({
       left: this.object.position.x * 16 + 'px',
       top: -this.object.position.y * 16 + 'px'
     });
-    debugger;
   };
 
   return Representation;

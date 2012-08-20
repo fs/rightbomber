@@ -5,6 +5,14 @@ class Rightbomber
   run: =>
     console.log 'run'
 
+    map = new Map
+    map.generate()
+
+    mapView = new MapView(map)
+    table = mapView.render()
+
+    $(document.body).append(table)
+
     @keyboard = new Keyboard
     @keyboard.activate()
 
@@ -13,6 +21,9 @@ class Rightbomber
 
     gameLoop = new GameLoop(@tick)
     gameLoop.run()
+
+
+
 
   tick: (timeDelta) =>
     @player.moving = false

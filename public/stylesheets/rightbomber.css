@@ -23,17 +23,15 @@
   border-bottom-color: red;
 }
 
-table#map-grid {
+#map tr td {
   display: block;
-}
-
-table#map-grid tr {
-}
-
-table#map-grid tr td {
   height: 16px;
   width: 16px;
 }
 
-table#map-grid tr td.grass { background-color: #CCFFCC; }
-table#map-grid tr td.stone { background-color: #999999; }
+#map tr td.grass {
+  background-color: #CCFFCC;
+}
+#map tr td.stone {
+  background-color: #999999;
+}
