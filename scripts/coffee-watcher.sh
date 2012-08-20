@@ -1,3 +1,6 @@
 #!/usr/bin/env sh
 
-coffee -o public/javascripts/ -w app/*.coffee
+coffee -b -o public/javascripts/ -w app/*.coffee
+
+# -b is evil !
+# so we are using it coz we are evil !
