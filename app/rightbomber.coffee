@@ -31,8 +31,8 @@ class Rightbomber
       x1 = Math.floor(position.x + epsilon)
       y1 = Math.floor(position.y + epsilon)
 
-      x2 = Math.floor(position.x + 1 - epsilon)
-      y2 = Math.floor(position.y + 1 - epsilon)
+      x2 = Math.floor(position.x + 0.5 - epsilon)
+      y2 = Math.floor(position.y + 0.5 - epsilon)
 
       # console.log(x1, y1, x2, y2)
 
