@@ -8,7 +8,12 @@ class GameLoop
 
     @loopFunction(delta / 1000.0) # seconds
 
-    # setTimeout @run, 0
-    webkitRequestAnimationFrame @run, document.body
+    window.requestAnimationFrame = window.webkitRequestAnimationFrame ||
+      window.mozRequestAnimationFrame ||
+      window.oRequestAnimationFrame ||
+      window.msRequestAnimationFrame ||
+      (callback, element) -> window.setTimeout(callback, 0)
+
+    requestAnimationFrame @run, document.body
 
   time: -> (new Date).getTime()

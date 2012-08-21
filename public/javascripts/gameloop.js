@@ -17,7 +17,10 @@ GameLoop = (function() {
     delta = time - this.lastRunTime;
     this.lastRunTime = time;
     this.loopFunction(delta / 1000.0);
-    return webkitRequestAnimationFrame(this.run, document.body);
+    window.requestAnimationFrame = window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame || function(callback, element) {
+      return window.setTimeout(callback, 0);
+    };
+    return requestAnimationFrame(this.run, document.body);
   };
 
   GameLoop.prototype.time = function() {
