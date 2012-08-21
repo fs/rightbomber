@@ -10,7 +10,14 @@ class Representation
 
   update: =>
     element = @getElement()
-    element.attr class: @object.toString()
-    element.css
-      left: @object.position.x * 16 + 'px'
-      top:  @object.position.y * 16 + 'px'
+
+    newX = parseInt(@object.position.x * 16)
+    newY = parseInt(@object.position.y * 16)
+    newClass = @object.toString()
+
+    if (newX != @oldX) || (newY != @oldY) || (newClass != @oldClass)
+      element.attr class: newClass
+      element.css
+        left: newX + 'px'
+        top:  newY + 'px'
+      [@oldX, @oldY, @oldClass] = [newX, newY, newClass]

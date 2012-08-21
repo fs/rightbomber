@@ -22,15 +22,21 @@ Representation = (function() {
   };
 
   Representation.prototype.update = function() {
-    var element;
+    var element, newClass, newX, newY, _ref;
     element = this.getElement();
-    element.attr({
-      "class": this.object.toString()
-    });
-    return element.css({
-      left: this.object.position.x * 16 + 'px',
-      top: this.object.position.y * 16 + 'px'
-    });
+    newX = parseInt(this.object.position.x * 16);
+    newY = parseInt(this.object.position.y * 16);
+    newClass = this.object.toString();
+    if ((newX !== this.oldX) || (newY !== this.oldY) || (newClass !== this.oldClass)) {
+      element.attr({
+        "class": newClass
+      });
+      element.css({
+        left: newX + 'px',
+        top: newY + 'px'
+      });
+      return _ref = [newX, newY, newClass], this.oldX = _ref[0], this.oldY = _ref[1], this.oldClass = _ref[2], _ref;
+    }
   };
 
   return Representation;
