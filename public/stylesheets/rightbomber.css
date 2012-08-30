@@ -9,19 +9,19 @@ html, body {
   background: #fff;
 }
 
-.player.right {
+.player.right, .player.d {
   border-right-color: red;
 }
 
-.player.up {
+.player.up, .player.w {
   border-top-color: red;
 }
 
-.player.left {
+.player.left, .player.a {
   border-left-color: red;
 }
 
-.player.down {
+.player.down, .player.s {
   border-bottom-color: red;
 }
 
