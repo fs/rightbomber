@@ -39,8 +39,8 @@ Rightbomber = (function() {
         this.player.direction = direction;
       }
     }
-    if (this.keyboard.keys['slash']) {
-      this.bombs.push(this.player.getBomb());
+    if (this.keyboard.keys['/']) {
+      this.bombs.push(this.player.placeBomb());
     }
     _ref1 = this.bombs;
     for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {

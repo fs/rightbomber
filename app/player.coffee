@@ -26,7 +26,7 @@ class Player # controller
       if @square.move(timeDelta)
         @update()
 
-  getBomb: =>
+  placeBomb: =>
     new Bomb(@)
 
   getState: ->

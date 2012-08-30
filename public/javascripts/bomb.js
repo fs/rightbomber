@@ -21,14 +21,11 @@ Bomb = (function() {
     this.update();
   }
 
-  Bomb.prototype.move = function(timeDelta) {
-    return this.update();
-  };
+  Bomb.prototype.move = function(timeDelta) {};
 
   Bomb.prototype.update = function() {
     this.representation.state = ['bomb'];
-    this.representation.update();
-    return this.updated = true;
+    return this.representation.update();
   };
 
   return Bomb;

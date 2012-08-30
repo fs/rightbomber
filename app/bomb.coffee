@@ -13,10 +13,8 @@ class Bomb
     @update()
 
   move: (timeDelta) =>
-    @update()
 
   update: ->
     @representation.state = ['bomb']
     @representation.update()
-    @updated = true
 

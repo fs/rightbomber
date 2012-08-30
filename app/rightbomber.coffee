@@ -31,8 +31,8 @@ class Rightbomber
         @player.moving = true
         @player.direction = direction
 
-    if @keyboard.keys['slash']
-      @bombs.push @player.getBomb()
+    if @keyboard.keys['/']
+      @bombs.push @player.placeBomb()
 
     for bomb in @bombs
       bomb.move(timeDelta)

@@ -23,7 +23,7 @@ Player = (function() {
 
   function Player(map) {
     this.map = map;
-    this.getBomb = __bind(this.getBomb, this);
+    this.placeBomb = __bind(this.placeBomb, this);
 
     this.move = __bind(this.move, this);
 
@@ -43,7 +43,7 @@ Player = (function() {
     }
   };
 
-  Player.prototype.getBomb = function() {
+  Player.prototype.placeBomb = function() {
     return new Bomb(this);
   };
 

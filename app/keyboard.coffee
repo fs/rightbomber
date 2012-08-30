@@ -4,7 +4,7 @@ class Keyboard
     40: 'down'
     37: 'left'
     39: 'right'
-    191: 'slash'
+    191: '/'
     87: 'w'
     83: 's'
     65: 'a'
