@@ -14,10 +14,33 @@ class Square # model
       y: 0
 
   move: (timeDelta) =>
-    dx = 0
-    dy = 0
+    moved = false
     velocity = @velocity * timeDelta
 
+    while velocity > 1
+      if @moveBy(1)
+        moved = true
+        velocity -= 1
+
+    if @moveBy(velocity)
+      moved = true
+      velocity = 0
+
+    if velocity > 0
+      while velocity > @epsilon
+        dv = velocity / 2
+        if @moveBy(dv)
+          moved = true
+          velocity -= dv
+        else
+          velocity = dv
+
+    moved
+
+
+  moveBy: (velocity) ->
+    dx = 0
+    dy = 0
     dx =  velocity if @direction == 0
     dx = -velocity if @direction == 2
     dy =  velocity if @direction == 1

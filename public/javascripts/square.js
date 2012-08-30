@@ -32,10 +32,37 @@ Square = (function() {
   }
 
   Square.prototype.move = function(timeDelta) {
-    var dx, dy, movable, oldPosition, velocity;
+    var dv, moved, velocity;
+    moved = false;
+    velocity = this.velocity * timeDelta;
+    while (velocity > 1) {
+      if (this.moveBy(1)) {
+        moved = true;
+        velocity -= 1;
+      }
+    }
+    if (this.moveBy(velocity)) {
+      moved = true;
+      velocity = 0;
+    }
+    if (velocity > 0) {
+      while (velocity > this.epsilon) {
+        dv = velocity / 2;
+        if (this.moveBy(dv)) {
+          moved = true;
+          velocity -= dv;
+        } else {
+          velocity = dv;
+        }
+      }
+    }
+    return moved;
+  };
+
+  Square.prototype.moveBy = function(velocity) {
+    var dx, dy, movable, oldPosition;
     dx = 0;
     dy = 0;
-    velocity = this.velocity * timeDelta;
     if (this.direction === 0) {
       dx = velocity;
     }
