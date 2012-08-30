@@ -10,11 +10,12 @@ html, body {
 }
 
 .player {
-  border: 2px solid blue;
+  /*border: 2px solid blue;
+  margin: -2px;*/
   position: absolute;
   background: #fff;
 }
-
+/*
 .player.right {
   border-right-color: red;
 }
@@ -30,13 +31,13 @@ html, body {
 .player.down {
   border-bottom-color: red;
 }
-
+*/
 #map {
   border-collapse: collapse;
 }
 
 #map tr td {
-  outline: 1px solid #ddffdd;
+  /* outline: 1px solid #ddffdd; */
 }
 #map tr td.grass {
   background-color: #CCFFCC;

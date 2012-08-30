@@ -6,16 +6,22 @@ Square = (function() {
 
   Square.prototype.map = null;
 
-  Square.prototype.direction = 0;
+  Square.prototype.size = 1;
 
   Square.prototype.velocity = 0;
 
-  Square.prototype.size = 1;
+  Square.prototype.position = null;
+
+  Square.prototype.direction = 0;
 
   Square.prototype.epsilon = 0.05;
 
   function Square(map) {
     this.map = map;
+    this.getRect = __bind(this.getRect, this);
+
+    this.intersectsWith = __bind(this.intersectsWith, this);
+
     this.move = __bind(this.move, this);
 
     this.position = {
@@ -25,7 +31,7 @@ Square = (function() {
   }
 
   Square.prototype.move = function(timeDelta) {
-    var dx, dy, moved, newPosition, velocity;
+    var dx, dy, movable, oldPosition, velocity;
     dx = 0;
     dy = 0;
     velocity = this.velocity * timeDelta;
@@ -41,24 +47,44 @@ Square = (function() {
     if (this.direction === 3) {
       dy = -velocity;
     }
-    newPosition = {
-      x: this.position.x + dx,
-      y: this.position.y + dy
+    oldPosition = this.position;
+    this.position = {
+      x: oldPosition.x + dx,
+      y: oldPosition.y + dy
     };
-    moved = this.isPassable(newPosition);
-    if (moved) {
-      this.position = newPosition;
+    movable = this.isMovable();
+    if (!movable) {
+      this.position = oldPosition;
     }
-    return moved;
+    return movable;
   };
 
-  Square.prototype.isPassable = function(position) {
-    var x1, x2, y1, y2;
-    x1 = Math.floor(position.x + this.epsilon);
-    y1 = Math.floor(position.y + this.epsilon);
-    x2 = Math.floor(position.x + this.size - this.epsilon);
-    y2 = Math.floor(position.y + this.size - this.epsilon);
-    return (x1 >= 0) && (y1 >= 0) && (x2 < this.map.cols) && (y2 < this.map.rows) && this.map.getCell(x1, y1).passable && this.map.getCell(x1, y2).passable && this.map.getCell(x2, y1).passable && this.map.getCell(x2, y2).passable;
+  Square.prototype.intersectsWith = function(square) {
+    return getRect().intersectsWith(square.getRect());
+  };
+
+  Square.prototype.getRect = function() {
+    return new Rect({
+      left: this.position.x,
+      top: this.position.y,
+      size: this.size
+    });
+  };
+
+  Square.prototype.isMovable = function() {
+    var cell, cells, rect, _i, _len;
+    rect = this.getRect();
+    if (!this.map.getRect().contains(rect)) {
+      return false;
+    }
+    cells = [this.map.getCell(rect.left, rect.top), this.map.getCell(rect.left, rect.bottom), this.map.getCell(rect.right, rect.top), this.map.getCell(rect.right, rect.bottom)];
+    for (_i = 0, _len = cells.length; _i < _len; _i++) {
+      cell = cells[_i];
+      if (!cell.passable) {
+        return false;
+      }
+    }
+    return true;
   };
 
   return Square;

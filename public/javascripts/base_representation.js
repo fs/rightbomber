@@ -5,7 +5,7 @@ BaseRepresentation = (function() {
 
   function BaseRepresentation() {}
 
-  BaseRepresentation.prototype.tileSize = 16;
+  BaseRepresentation.prototype.tileSize = 24;
 
   return BaseRepresentation;
 

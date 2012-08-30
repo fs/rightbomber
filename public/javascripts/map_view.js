@@ -9,7 +9,6 @@ MapView = (function(_super) {
 
   function MapView(map) {
     this.map = map;
-    console.log("map: view init");
   }
 
   MapView.prototype.render = function() {

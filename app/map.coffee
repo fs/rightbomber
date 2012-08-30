@@ -2,21 +2,23 @@ class Map
   rows: 20
   cols: 40
 
-  constructor: ->
-    console.log "map: init"
-
   generate: (options = {}) =>
-    console.log "map: generate"
     @initCells()
     @generateTerrain()
 
+  getRect: =>
+    new Rect
+      left: 0
+      top: 0
+      width: @cols
+      height: @rows
+
   getCell: (x, y) =>
-    @cells[y][x]
+    @cells[Math.floor(y)][Math.floor(x)]
 
   # private functions
   # init cells array
   initCells: ->
-    console.log "map: init cells"
 
     @cells = []
     rownum = 0
@@ -30,7 +32,6 @@ class Map
 
   # add some more interesting objects to map
   generateTerrain: ->
-    console.log "map: generateTerrain"
     rownum = 0
     while rownum < @rows
       colnum = 0

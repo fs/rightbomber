@@ -11,7 +11,17 @@ MapCell = (function() {
     this.colnum = colnum;
     this.getType = __bind(this.getType, this);
 
+    this.getRect = __bind(this.getRect, this);
+
   }
+
+  MapCell.prototype.getRect = function() {
+    return new Rect({
+      left: this.rownum,
+      top: this.rownum,
+      size: 1
+    });
+  };
 
   MapCell.prototype.getType = function() {
     if (this.passable) {
