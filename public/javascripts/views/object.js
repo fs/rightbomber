@@ -8,25 +8,15 @@ ObjectView = (function(_super) {
 
   __extends(ObjectView, _super);
 
-  ObjectView.prototype.square = null;
-
   ObjectView.prototype.state = null;
+
+  ObjectView.prototype.square = null;
 
   function ObjectView(square) {
     this.square = square;
     this.update = __bind(this.update, this);
 
-    this.getElement = __bind(this.getElement, this);
-
   }
-
-  ObjectView.prototype.getElement = function() {
-    if (!this.element) {
-      this.element = $("<div>");
-      $(document.body).append(this.element);
-    }
-    return this.element;
-  };
 
   ObjectView.prototype.update = function() {
     var element, newX, newY;

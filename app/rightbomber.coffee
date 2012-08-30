@@ -3,10 +3,7 @@ class Rightbomber
     map = new Map
     map.generate()
 
-    mapView = new MapView(map)
-    table = mapView.render()
-
-    $(document.body).append(table)
+    (new MapView(map)).update()
 
     @keyboard = new Keyboard
     @keyboard.activate()

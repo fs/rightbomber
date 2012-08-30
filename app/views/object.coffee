@@ -1,14 +1,8 @@
 class ObjectView extends BaseView
-  square: null
   state: null
+  square: null
 
   constructor: (@square) ->
-
-  getElement: =>
-    unless @element
-      @element = $("<div>")
-      $(document.body).append(@element)
-    @element
 
   update: =>
     element = @getElement()

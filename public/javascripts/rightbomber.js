@@ -12,12 +12,10 @@ Rightbomber = (function() {
   }
 
   Rightbomber.prototype.run = function() {
-    var gameLoop, map, mapView, table;
+    var gameLoop, map;
     map = new Map;
     map.generate();
-    mapView = new MapView(map);
-    table = mapView.render();
-    $(document.body).append(table);
+    (new MapView(map)).update();
     this.keyboard = new Keyboard;
     this.keyboard.activate();
     this.player = new Player(map);

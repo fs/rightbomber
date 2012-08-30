@@ -1,8 +1,12 @@
 class MapView extends BaseView
+  baseElement: '<table>'
+
   constructor: (@map) ->
 
-  render: ->
-    table = $ "<table>", id: "map"
+  update: =>
+    table = @getElement()
+
+    table.attr id: "map"
     
     table.css
       width:  @map.width * @tileSize
@@ -16,5 +20,3 @@ class MapView extends BaseView
         tr.append(td)
 
       table.append(tr)
-
-    table
