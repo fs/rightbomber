@@ -1,6 +1,5 @@
 class MapView extends BaseRepresentation
   constructor: (@map) ->
-    console.log "map: view init"
 
   render: ->
     rownum = 0

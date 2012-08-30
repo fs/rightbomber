@@ -4,33 +4,42 @@ var Map,
 
 Map = (function() {
 
-  Map.prototype.rows = 20;
-
-  Map.prototype.cols = 40;
-
   function Map() {
     this.getCell = __bind(this.getCell, this);
 
+    this.getRect = __bind(this.getRect, this);
+
     this.generate = __bind(this.generate, this);
-    console.log("map: init");
+
   }
+
+  Map.prototype.rows = 20;
+
+  Map.prototype.cols = 40;
 
   Map.prototype.generate = function(options) {
     if (options == null) {
       options = {};
     }
-    console.log("map: generate");
     this.initCells();
     return this.generateTerrain();
   };
 
+  Map.prototype.getRect = function() {
+    return new Rect({
+      left: 0,
+      top: 0,
+      width: this.cols,
+      height: this.rows
+    });
+  };
+
   Map.prototype.getCell = function(x, y) {
-    return this.cells[y][x];
+    return this.cells[Math.floor(y)][Math.floor(x)];
   };
 
   Map.prototype.initCells = function() {
     var colnum, rownum, _results;
-    console.log("map: init cells");
     this.cells = [];
     rownum = 0;
     _results = [];
@@ -48,7 +57,6 @@ Map = (function() {
 
   Map.prototype.generateTerrain = function() {
     var colnum, rownum, _results;
-    console.log("map: generateTerrain");
     rownum = 0;
     _results = [];
     while (rownum < this.rows) {

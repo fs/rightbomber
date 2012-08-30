@@ -8,12 +8,11 @@ Rightbomber = (function() {
     this.tick = __bind(this.tick, this);
 
     this.run = __bind(this.run, this);
-    console.log('init');
+
   }
 
   Rightbomber.prototype.run = function() {
     var gameLoop, map, mapView, table;
-    console.log('run');
     map = new Map;
     map.generate();
     mapView = new MapView(map);
