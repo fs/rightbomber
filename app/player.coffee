@@ -3,7 +3,7 @@ class Player # controller
   square: null
 
   moving: false
-  velocity: 4 # grid element per second
+  velocity: 10 # grid element per second
   direction: 'up'
 
   directionMap:
@@ -16,7 +16,7 @@ class Player # controller
     @square = new Square(@map)
     @square.size = 0.5
 
-    @representation = new Representation(@square)
+    @representation = new ObjectView(@square)
     @update()
 
   move: (timeDelta) =>

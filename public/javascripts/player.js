@@ -10,7 +10,7 @@ Player = (function() {
 
   Player.prototype.moving = false;
 
-  Player.prototype.velocity = 4;
+  Player.prototype.velocity = 10;
 
   Player.prototype.direction = 'up';
 
@@ -27,7 +27,7 @@ Player = (function() {
 
     this.square = new Square(this.map);
     this.square.size = 0.5;
-    this.representation = new Representation(this.square);
+    this.representation = new ObjectView(this.square);
     this.update();
   }
 

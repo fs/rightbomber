@@ -8,6 +8,7 @@ class Square # model
   epsilon: 0.05
 
   constructor: (@map) ->
+    @map.objects << @
     @position =
       x: 0
       y: 0

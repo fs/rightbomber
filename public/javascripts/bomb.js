@@ -13,7 +13,7 @@ Bomb = (function() {
     this.square.size = 0.6;
     this.square.position.x = 5.2;
     this.square.position.y = 2.2;
-    this.representation = new Representation(this.square);
+    this.representation = new ObjectView(this.square);
     this.update();
   }
 

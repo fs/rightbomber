@@ -1,4 +1,4 @@
-class MapView extends BaseRepresentation
+class MapView extends BaseView
   constructor: (@map) ->
 
   render: ->

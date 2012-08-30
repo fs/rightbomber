@@ -1,4 +1,4 @@
-class Representation extends BaseRepresentation # view
+class ObjectView extends BaseView
   square: null
   state: null
 

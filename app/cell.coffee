@@ -1,12 +1,14 @@
-class MapCell
+class Cell
+  x: 0
+  y: 0
   passable: true
 
-  constructor: (@rownum, @colnum) ->
+  constructor: (@x, @y) ->
 
   getRect: =>
     new Rect
-      left: @rownum
-      top: @rownum
+      left: @x
+      top: @y
       size: 1
 
   getType: =>

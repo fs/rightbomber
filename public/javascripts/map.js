@@ -4,18 +4,18 @@ var Map,
 
 Map = (function() {
 
+  Map.prototype.width = 30;
+
+  Map.prototype.height = 20;
+
   function Map() {
     this.getCell = __bind(this.getCell, this);
 
     this.getRect = __bind(this.getRect, this);
 
     this.generate = __bind(this.generate, this);
-
+    this.objects = [];
   }
-
-  Map.prototype.width = 30;
-
-  Map.prototype.height = 20;
 
   Map.prototype.generate = function(options) {
     if (options == null) {
@@ -48,7 +48,7 @@ Map = (function() {
         var _j, _ref1, _results1;
         _results1 = [];
         for (y = _j = 0, _ref1 = this.height; 0 <= _ref1 ? _j < _ref1 : _j > _ref1; y = 0 <= _ref1 ? ++_j : --_j) {
-          _results1.push(column[y] = new MapCell());
+          _results1.push(column[y] = new Cell(x, y));
         }
         return _results1;
       }).call(this));

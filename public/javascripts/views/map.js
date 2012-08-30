@@ -35,4 +35,4 @@ MapView = (function(_super) {
 
   return MapView;
 
-})(BaseRepresentation);
+})(BaseView);

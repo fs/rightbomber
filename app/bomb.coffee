@@ -8,7 +8,7 @@ class Bomb
     @square.position.x = 5.2
     @square.position.y = 2.2
 
-    @representation = new Representation(@square)
+    @representation = new ObjectView(@square)
     @update()
 
   update: ->

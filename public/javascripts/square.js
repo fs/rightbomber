@@ -24,6 +24,7 @@ Square = (function() {
 
     this.move = __bind(this.move, this);
 
+    this.map.objects << this;
     this.position = {
       x: 0,
       y: 0

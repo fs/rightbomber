@@ -2,6 +2,9 @@ class Map
   width: 30
   height: 20
 
+  constructor: ->
+    @objects = []
+
   generate: (options = {}) =>
     @initCells()
     @generateTerrain()
@@ -23,7 +26,7 @@ class Map
     for x in [0...@width]
       @cells[x] = column = new Array(@height)
       for y in [0...@height]
-        column[y] = new MapCell()
+        column[y] = new Cell(x, y)
 
   # add some more interesting objects to map
   generateTerrain: ->
