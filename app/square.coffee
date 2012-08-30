@@ -21,8 +21,10 @@ class Square # model
       if @moveBy(1)
         moved = true
         velocity -= 1
+      else
+        break
 
-    if @moveBy(velocity)
+    if velocity <= 1 && @moveBy(velocity)
       moved = true
       velocity = 0
 

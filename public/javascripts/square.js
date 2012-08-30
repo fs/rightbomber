@@ -39,9 +39,11 @@ Square = (function() {
       if (this.moveBy(1)) {
         moved = true;
         velocity -= 1;
+      } else {
+        break;
       }
     }
-    if (this.moveBy(velocity)) {
+    if (velocity <= 1 && this.moveBy(velocity)) {
       moved = true;
       velocity = 0;
     }
