@@ -13,9 +13,9 @@ Map = (function() {
 
   }
 
-  Map.prototype.rows = 20;
+  Map.prototype.width = 30;
 
-  Map.prototype.cols = 40;
+  Map.prototype.height = 20;
 
   Map.prototype.generate = function(options) {
     if (options == null) {
@@ -29,45 +29,49 @@ Map = (function() {
     return new Rect({
       left: 0,
       top: 0,
-      width: this.cols,
-      height: this.rows
+      width: this.width,
+      height: this.height
     });
   };
 
   Map.prototype.getCell = function(x, y) {
-    return this.cells[Math.floor(y)][Math.floor(x)];
+    return this.cells[Math.floor(x)][Math.floor(y)];
   };
 
   Map.prototype.initCells = function() {
-    var colnum, rownum, _results;
+    var column, x, y, _i, _ref, _results;
     this.cells = [];
-    rownum = 0;
     _results = [];
-    while (rownum < this.rows) {
-      colnum = 0;
-      this.cells[rownum] = new Array(this.cols);
-      while (colnum < this.cols) {
-        this.cells[rownum][colnum] = new MapCell();
-        colnum++;
-      }
-      _results.push(rownum++);
+    for (x = _i = 0, _ref = this.width; 0 <= _ref ? _i < _ref : _i > _ref; x = 0 <= _ref ? ++_i : --_i) {
+      this.cells[x] = column = new Array(this.height);
+      _results.push((function() {
+        var _j, _ref1, _results1;
+        _results1 = [];
+        for (y = _j = 0, _ref1 = this.height; 0 <= _ref1 ? _j < _ref1 : _j > _ref1; y = 0 <= _ref1 ? ++_j : --_j) {
+          _results1.push(column[y] = new MapCell());
+        }
+        return _results1;
+      }).call(this));
     }
     return _results;
   };
 
   Map.prototype.generateTerrain = function() {
-    var colnum, rownum, _results;
-    rownum = 0;
+    var x, y, _i, _ref, _results;
     _results = [];
-    while (rownum < this.rows) {
-      colnum = 0;
-      while (colnum < this.cols) {
-        if ((rownum % 4 === 3 || colnum % 4 === 3) && Math.random() < 0.5) {
-          this.cells[rownum][colnum].passable = false;
+    for (x = _i = 0, _ref = this.width; 0 <= _ref ? _i < _ref : _i > _ref; x = 0 <= _ref ? ++_i : --_i) {
+      _results.push((function() {
+        var _j, _ref1, _results1;
+        _results1 = [];
+        for (y = _j = 0, _ref1 = this.height; 0 <= _ref1 ? _j < _ref1 : _j > _ref1; y = 0 <= _ref1 ? ++_j : --_j) {
+          if ((x % 4 === 3 || y % 4 === 3) && Math.random() < 0.5) {
+            _results1.push(this.getCell(x, y).passable = false);
+          } else {
+            _results1.push(void 0);
+          }
         }
-        colnum++;
-      }
-      _results.push(rownum++);
+        return _results1;
+      }).call(this));
     }
     return _results;
   };

@@ -12,31 +12,22 @@ MapView = (function(_super) {
   }
 
   MapView.prototype.render = function() {
-    var cell, colnum, rownum, table, td, tr;
-    rownum = 0;
-    table = $("<table/>", {
+    var table, td, tr, x, y, _i, _j, _ref, _ref1;
+    table = $("<table>", {
       id: "map"
     });
     table.css({
-      width: this.map.cols * this.tileSize,
-      height: this.map.rows * this.tileSize
+      width: this.map.width * this.tileSize,
+      height: this.map.height * this.tileSize
     });
-    while (rownum < this.map.rows) {
-      colnum = 0;
-      tr = $("<tr>", {
-        "data-row": rownum
-      });
-      while (colnum < this.map.cols) {
-        cell = this.map.getCell(colnum, rownum);
+    for (y = _i = 0, _ref = this.map.height; 0 <= _ref ? _i < _ref : _i > _ref; y = 0 <= _ref ? ++_i : --_i) {
+      tr = $("<tr>");
+      for (x = _j = 0, _ref1 = this.map.width; 0 <= _ref1 ? _j < _ref1 : _j > _ref1; x = 0 <= _ref1 ? ++_j : --_j) {
         td = $("<td>", {
-          "data-row": rownum,
-          "data-col": colnum,
-          "class": cell.getType()
+          "class": this.map.getCell(x, y).getType()
         });
         tr.append(td);
-        colnum++;
       }
-      rownum++;
       table.append(tr);
     }
     return table;

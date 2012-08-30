@@ -2,26 +2,19 @@ class MapView extends BaseRepresentation
   constructor: (@map) ->
 
   render: ->
-    rownum = 0
-    table = $("<table/>", id: "map")
+    table = $ "<table>", id: "map"
+    
     table.css
-      width:  @map.cols * @tileSize
-      height: @map.rows * @tileSize
+      width:  @map.width * @tileSize
+      height: @map.height * @tileSize
 
-    while rownum < @map.rows
-      colnum = 0
-      tr = $("<tr>", { "data-row": rownum })
+    for y in [0...@map.height]
+      tr = $ "<tr>"
 
-      while colnum < @map.cols
-        cell = @map.getCell(colnum, rownum)
-        td = $ "<td>",
-          "data-row": rownum,
-          "data-col": colnum,
-          class: cell.getType()
+      for x in [0...@map.width]
+        td = $ "<td>", class: @map.getCell(x, y).getType()
         tr.append(td)
-        colnum++
 
-      rownum++
       table.append(tr)
 
     table

@@ -1,6 +1,6 @@
 class Map
-  rows: 20
-  cols: 40
+  width: 30
+  height: 20
 
   generate: (options = {}) =>
     @initCells()
@@ -10,33 +10,24 @@ class Map
     new Rect
       left: 0
       top: 0
-      width: @cols
-      height: @rows
+      width: @width
+      height: @height
 
   getCell: (x, y) =>
-    @cells[Math.floor(y)][Math.floor(x)]
+    @cells[Math.floor(x)][Math.floor(y)]
 
   # private functions
   # init cells array
   initCells: ->
-
     @cells = []
-    rownum = 0
-    while rownum < @rows
-      colnum = 0
-      @cells[rownum] = new Array(@cols)
-      while colnum < @cols
-        @cells[rownum][colnum] = new MapCell()
-        colnum++
-      rownum++
+    for x in [0...@width]
+      @cells[x] = column = new Array(@height)
+      for y in [0...@height]
+        column[y] = new MapCell()
 
   # add some more interesting objects to map
   generateTerrain: ->
-    rownum = 0
-    while rownum < @rows
-      colnum = 0
-      while colnum < @cols
-        if (rownum % 4 == 3 || colnum % 4 == 3) && Math.random() < 0.5
-          @cells[rownum][colnum].passable = false
-        colnum++
-      rownum++
+    for x in [0...@width]
+      for y in [0...@height]
+        if (x % 4 == 3 || y % 4 == 3) && Math.random() < 0.5
+          @getCell(x, y).passable = false
