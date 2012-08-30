@@ -1,8 +1,5 @@
 class Square # model
   map: null
-  position:
-    x: 0
-    y: 0
   direction: 0
   velocity: 0
   size: 1
@@ -10,6 +7,9 @@ class Square # model
   epsilon: 0.05
 
   constructor: (@map) ->
+    @position =
+      x: 0
+      y: 0
 
   move: (timeDelta) =>
     dx = 0

@@ -3,6 +3,12 @@ html, body {
   padding: 0;
 }
 
+.bomb {
+  position: absolute;
+  background: black;
+  border-radius: 100px;
+}
+
 .player {
   border: 2px solid blue;
   position: absolute;

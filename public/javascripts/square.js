@@ -6,11 +6,6 @@ Square = (function() {
 
   Square.prototype.map = null;
 
-  Square.prototype.position = {
-    x: 0,
-    y: 0
-  };
-
   Square.prototype.direction = 0;
 
   Square.prototype.velocity = 0;
@@ -23,6 +18,10 @@ Square = (function() {
     this.map = map;
     this.move = __bind(this.move, this);
 
+    this.position = {
+      x: 0,
+      y: 0
+    };
   }
 
   Square.prototype.move = function(timeDelta) {

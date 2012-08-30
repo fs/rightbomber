@@ -22,6 +22,7 @@ Rightbomber = (function() {
     this.keyboard = new Keyboard;
     this.keyboard.activate();
     this.player = new Player(map);
+    this.bomb = new Bomb(map);
     gameLoop = new GameLoop(this.tick);
     return gameLoop.run();
   };

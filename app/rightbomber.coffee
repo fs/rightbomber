@@ -17,6 +17,7 @@ class Rightbomber
     @keyboard.activate()
 
     @player = new Player(map) # controller
+    @bomb = new Bomb(map)
 
     gameLoop = new GameLoop(@tick)
     gameLoop.run()
