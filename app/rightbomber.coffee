@@ -1,10 +1,5 @@
 class Rightbomber
-  constructor: ->
-    console.log 'init'
-
   run: =>
-    console.log 'run'
-
     map = new Map
     map.generate()
 

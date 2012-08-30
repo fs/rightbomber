@@ -1,2 +1,2 @@
 class BaseRepresentation
-  tileSize: 16
+  tileSize: 24

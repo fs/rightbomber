@@ -1,8 +1,9 @@
 class Square # model
   map: null
-  direction: 0
-  velocity: 0
   size: 1
+  velocity: 0
+  position: null
+  direction: 0
 
   epsilon: 0.05
 
@@ -21,28 +22,40 @@ class Square # model
     dy =  velocity if @direction == 1
     dy = -velocity if @direction == 3
 
-    newPosition =
-      x: @position.x + dx
-      y: @position.y + dy
+    oldPosition = @position
 
-    moved = @isPassable(newPosition)
+    @position =
+      x: oldPosition.x + dx
+      y: oldPosition.y + dy
 
-    @position = newPosition if moved
+    movable = @isMovable()
 
-    return moved
+    @position = oldPosition unless movable
 
+    return movable
 
-  isPassable: (position) ->
-    x1 = Math.floor(position.x + @epsilon)
-    y1 = Math.floor(position.y + @epsilon)
+  intersectsWith: (square) =>
+    getRect().intersectsWith square.getRect()
 
-    x2 = Math.floor(position.x + @size - @epsilon)
-    y2 = Math.floor(position.y + @size - @epsilon)
+  getRect: =>
+    new Rect
+      left: @position.x
+      top: @position.y
+      size: @size
 
-    (x1 >= 0) && (y1 >= 0) &&
-    (x2 < @map.cols) && (y2 < @map.rows) &&
-    @map.getCell(x1, y1).passable &&
-    @map.getCell(x1, y2).passable &&
-    @map.getCell(x2, y1).passable &&
-    @map.getCell(x2, y2).passable
+  isMovable: ->
+    rect = @getRect()
 
+    return false unless @map.getRect().contains(rect)
+
+    cells = [
+      @map.getCell(rect.left, rect.top),
+      @map.getCell(rect.left, rect.bottom),
+      @map.getCell(rect.right, rect.top),
+      @map.getCell(rect.right, rect.bottom)
+    ]
+
+    for cell in cells
+      return false unless cell.passable
+
+    return true
