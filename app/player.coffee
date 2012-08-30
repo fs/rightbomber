@@ -17,18 +17,21 @@ class Player # controller
     @square.size = 0.5
 
     @representation = new Representation(@square)
-    # @representation.update()
+    @update()
 
   move: (timeDelta) =>
     if @moving
       @square.velocity = @velocity
       @square.direction = @directionMap[@direction]
       if @square.move(timeDelta)
-        @representation.state = @getState()
-        @representation.update()
+        @update()
 
-  getState: =>
+  getState: ->
     state = ['player']
     state.push 'moving' if @moving
     state.push @direction
     state
+
+  update: ->
+    @representation.state = @getState()
+    @representation.update()

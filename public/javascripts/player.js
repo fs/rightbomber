@@ -23,13 +23,12 @@ Player = (function() {
 
   function Player(map) {
     this.map = map;
-    this.getState = __bind(this.getState, this);
-
     this.move = __bind(this.move, this);
 
     this.square = new Square(this.map);
     this.square.size = 0.5;
     this.representation = new Representation(this.square);
+    this.update();
   }
 
   Player.prototype.move = function(timeDelta) {
@@ -37,8 +36,7 @@ Player = (function() {
       this.square.velocity = this.velocity;
       this.square.direction = this.directionMap[this.direction];
       if (this.square.move(timeDelta)) {
-        this.representation.state = this.getState();
-        return this.representation.update();
+        return this.update();
       }
     }
   };
@@ -51,6 +49,11 @@ Player = (function() {
     }
     state.push(this.direction);
     return state;
+  };
+
+  Player.prototype.update = function() {
+    this.representation.state = this.getState();
+    return this.representation.update();
   };
 
   return Player;
