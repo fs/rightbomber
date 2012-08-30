@@ -17,6 +17,7 @@ class Rightbomber
     @keyboard.activate()
 
     @player = new Player(map) # controller
+    @player_2 = new Player(map) # controller
 
     gameLoop = new GameLoop(@tick)
     gameLoop.run()
@@ -29,3 +30,11 @@ class Rightbomber
         @player.direction = direction
 
     @player.move(timeDelta)
+
+    @player_2.moving = false
+    for direction in ['d', 'w', 'a', 's']
+      if @keyboard.keys[direction]
+        @player_2.moving = true
+        @player_2.direction = direction
+
+    @player_2.move(timeDelta)

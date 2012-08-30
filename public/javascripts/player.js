@@ -18,7 +18,11 @@ Player = (function() {
     'right': 0,
     'up': 3,
     'left': 2,
-    'down': 1
+    'down': 1,
+    'd': 0,
+    'w': 3,
+    'a': 2,
+    's': 1
   };
 
   function Player(map) {

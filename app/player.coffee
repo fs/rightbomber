@@ -11,7 +11,10 @@ class Player # controller
     'up'   : 3
     'left' : 2
     'down' : 1
-
+    'd'    : 0
+    'w'    : 3
+    'a'    : 2
+    's'    : 1
   constructor: (@map) -> # @renderer = new PlayerRenderer
     @square = new Square(@map)
     @square.size = 0.5

@@ -8,7 +8,11 @@ Keyboard = (function() {
     38: 'up',
     40: 'down',
     37: 'left',
-    39: 'right'
+    39: 'right',
+    87: 'w',
+    83: 's',
+    65: 'a',
+    68: 'd'
   };
 
   Keyboard.prototype.keys = {};
