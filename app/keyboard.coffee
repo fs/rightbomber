@@ -5,6 +5,11 @@ class Keyboard
     37: 'left'
     39: 'right'
     191: 'slash'
+    87: 'w'
+    83: 's'
+    65: 'a'
+    68: 'd'
+
   keys: {} # pressed keys
   constructor: ->
   activate: =>
