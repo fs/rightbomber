@@ -1,4 +1,4 @@
-class MapView
+class MapView extends BaseRepresentation
   constructor: (@map) ->
     console.log "map: view init"
 
@@ -6,8 +6,8 @@ class MapView
     rownum = 0
     table = $("<table/>", id: "map")
     table.css
-      width:  @map.cols * 16
-      height: @map.rows * 16
+      width:  @map.cols * @tileSize
+      height: @map.rows * @tileSize
 
     while rownum < @map.rows
       colnum = 0

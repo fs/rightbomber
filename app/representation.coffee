@@ -1,4 +1,5 @@
-class Representation # view
+class Representation extends BaseRepresentation # view
+  square: null
   state: null
 
   constructor: (@square) ->
@@ -12,11 +13,13 @@ class Representation # view
   update: =>
     element = @getElement()
 
-    newX = parseInt(@square.position.x * 16)
-    newY = parseInt(@square.position.y * 16)
+    newX = parseInt(@square.position.x * @tileSize)
+    newY = parseInt(@square.position.y * @tileSize)
 
     element.attr class: @state.join ' '
 
     element.css
       left: newX + 'px'
       top:  newY + 'px'
+      width: @tileSize * @square.size + 'px'
+      height: @tileSize * @square.size + 'px'

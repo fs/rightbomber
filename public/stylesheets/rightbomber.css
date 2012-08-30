@@ -4,10 +4,7 @@ html, body {
 }
 
 .player {
-  width: 4px;
-  height: 4px;
   border: 2px solid blue;
-
   position: absolute;
   background: #fff;
 }
