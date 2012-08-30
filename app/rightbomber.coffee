@@ -17,7 +17,8 @@ class Rightbomber
     @keyboard.activate()
 
     @player = new Player(map) # controller
-    @bomb = new Bomb(map)
+
+    @bombs = []
 
     gameLoop = new GameLoop(@tick)
     gameLoop.run()
@@ -28,5 +29,11 @@ class Rightbomber
       if @keyboard.keys[direction]
         @player.moving = true
         @player.direction = direction
+
+    if @keyboard.keys['slash']
+      @bombs.push @player.getBomb()
+
+    for bomb in @bombs
+      bomb.move(timeDelta)
 
     @player.move(timeDelta)

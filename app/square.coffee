@@ -27,7 +27,10 @@ class Square # model
 
     moved = @isPassable(newPosition)
 
-    @position = newPosition if moved
+    # @position = newPosition if moved
+    if moved
+      @position.x = newPosition.x
+      @position.y = newPosition.y
 
     return moved
 
