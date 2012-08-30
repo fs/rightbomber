@@ -21,17 +21,7 @@ Rightbomber = (function() {
     $(document.body).append(table);
     this.keyboard = new Keyboard;
     this.keyboard.activate();
-    this.player = new Player;
-    this.playerRepresentation = new Representation(document.body, this.player);
-    this.player.isPassable = function(position) {
-      var epsilon, x1, x2, y1, y2;
-      epsilon = 0.05;
-      x1 = Math.floor(position.x + epsilon);
-      y1 = Math.floor(position.y + epsilon);
-      x2 = Math.floor(position.x + 0.5 - epsilon);
-      y2 = Math.floor(position.y + 0.5 - epsilon);
-      return (x1 >= 0) && (y1 >= 0) && (x2 < map.cols) && (y2 < map.rows) && map.getCell(x1, y1).passable && map.getCell(x1, y2).passable && map.getCell(x2, y1).passable && map.getCell(x2, y2).passable;
-    };
+    this.player = new Player(map);
     gameLoop = new GameLoop(this.tick);
     return gameLoop.run();
   };
@@ -44,11 +34,10 @@ Rightbomber = (function() {
       direction = _ref[_i];
       if (this.keyboard.keys[direction]) {
         this.player.moving = true;
-        this.player.setDirection(direction);
+        this.player.direction = direction;
       }
     }
-    this.player.move(timeDelta);
-    return this.playerRepresentation.update();
+    return this.player.move(timeDelta);
   };
 
   return Rightbomber;

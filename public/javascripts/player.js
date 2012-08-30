@@ -4,76 +4,53 @@ var Player,
 
 Player = (function() {
 
-  Player.prototype.velocity = 4;
+  Player.prototype.map = null;
 
-  Player.prototype.position = {
-    x: 0,
-    y: 0
-  };
+  Player.prototype.square = null;
 
   Player.prototype.moving = false;
 
-  Player.prototype.direction = 1;
+  Player.prototype.velocity = 4;
+
+  Player.prototype.direction = 'up';
 
   Player.prototype.directionMap = {
-    0: 'right',
-    1: 'up',
-    2: 'left',
-    3: 'down',
     'right': 0,
-    'up': 1,
+    'up': 3,
     'left': 2,
-    'down': 3
+    'down': 1
   };
 
-  function Player() {
-    this.toString = __bind(this.toString, this);
+  function Player(map) {
+    this.map = map;
+    this.getState = __bind(this.getState, this);
 
     this.move = __bind(this.move, this);
 
-    this.setDirection = __bind(this.setDirection, this);
-
+    this.square = new Square(this.map);
+    this.square.size = 0.5;
+    this.representation = new Representation(this.square);
   }
 
-  Player.prototype.setDirection = function(directionString) {
-    return this.direction = this.directionMap[directionString];
-  };
-
   Player.prototype.move = function(timeDelta) {
-    var dx, dy, newPosition, velocity;
     if (this.moving) {
-      dx = 0;
-      dy = 0;
-      velocity = this.velocity * timeDelta;
-      if (this.direction === 0) {
-        dx = velocity;
-      }
-      if (this.direction === 2) {
-        dx = -velocity;
-      }
-      if (this.direction === 1) {
-        dy = -velocity;
-      }
-      if (this.direction === 3) {
-        dy = velocity;
-      }
-      newPosition = {};
-      newPosition.x = this.position.x + dx;
-      newPosition.y = this.position.y + dy;
-      if (this.isPassable(newPosition)) {
-        return this.position = newPosition;
+      this.square.velocity = this.velocity;
+      this.square.direction = this.directionMap[this.direction];
+      if (this.square.move(timeDelta)) {
+        this.representation.state = this.getState();
+        return this.representation.update();
       }
     }
   };
 
-  Player.prototype.toString = function() {
+  Player.prototype.getState = function() {
     var state;
     state = ['player'];
     if (this.moving) {
       state.push('moving');
     }
-    state.push(this.directionMap[this.direction]);
-    return state.join(' ');
+    state.push(this.direction);
+    return state;
   };
 
   return Player;

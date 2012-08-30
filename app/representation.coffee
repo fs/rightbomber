@@ -1,23 +1,22 @@
-class Representation
-  constructor: (@world, @object) ->
+class Representation # view
+  state: null
+
+  constructor: (@square) ->
 
   getElement: =>
     unless @element
       @element = $("<div>")
-      $(@world).append(@element)
-
+      $(document.body).append(@element)
     @element
 
   update: =>
     element = @getElement()
 
-    newX = parseInt(@object.position.x * 16)
-    newY = parseInt(@object.position.y * 16)
-    newClass = @object.toString()
+    newX = parseInt(@square.position.x * 16)
+    newY = parseInt(@square.position.y * 16)
 
-    if (newX != @oldX) || (newY != @oldY) || (newClass != @oldClass)
-      element.attr class: newClass
-      element.css
-        left: newX + 'px'
-        top:  newY + 'px'
-      [@oldX, @oldY, @oldClass] = [newX, newY, newClass]
+    element.attr class: @state.join ' '
+
+    element.css
+      left: newX + 'px'
+      top:  newY + 'px'

@@ -4,9 +4,10 @@ var Representation,
 
 Representation = (function() {
 
-  function Representation(world, object) {
-    this.world = world;
-    this.object = object;
+  Representation.prototype.state = null;
+
+  function Representation(square) {
+    this.square = square;
     this.update = __bind(this.update, this);
 
     this.getElement = __bind(this.getElement, this);
@@ -16,27 +17,23 @@ Representation = (function() {
   Representation.prototype.getElement = function() {
     if (!this.element) {
       this.element = $("<div>");
-      $(this.world).append(this.element);
+      $(document.body).append(this.element);
     }
     return this.element;
   };
 
   Representation.prototype.update = function() {
-    var element, newClass, newX, newY, _ref;
+    var element, newX, newY;
     element = this.getElement();
-    newX = parseInt(this.object.position.x * 16);
-    newY = parseInt(this.object.position.y * 16);
-    newClass = this.object.toString();
-    if ((newX !== this.oldX) || (newY !== this.oldY) || (newClass !== this.oldClass)) {
-      element.attr({
-        "class": newClass
-      });
-      element.css({
-        left: newX + 'px',
-        top: newY + 'px'
-      });
-      return _ref = [newX, newY, newClass], this.oldX = _ref[0], this.oldY = _ref[1], this.oldClass = _ref[2], _ref;
-    }
+    newX = parseInt(this.square.position.x * 16);
+    newY = parseInt(this.square.position.y * 16);
+    element.attr({
+      "class": this.state.join(' ')
+    });
+    return element.css({
+      left: newX + 'px',
+      top: newY + 'px'
+    });
   };
 
   return Representation;
