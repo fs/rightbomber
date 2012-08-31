@@ -9,6 +9,22 @@ Map = (function() {
   Map.prototype.height = 20;
 
   function Map() {
+    this.forEachCellOnLine = __bind(this.forEachCellOnLine, this);
+
+    this.makePassable = __bind(this.makePassable, this);
+
+    this.makeImpassable = __bind(this.makeImpassable, this);
+
+    this.getCorners = __bind(this.getCorners, this);
+
+    this.eachCell = __bind(this.eachCell, this);
+
+    this.generateCrissCrossMap = __bind(this.generateCrissCrossMap, this);
+
+    this.generateRoughTerrainMap = __bind(this.generateRoughTerrainMap, this);
+
+    this.initCells = __bind(this.initCells, this);
+
     this.getCell = __bind(this.getCell, this);
 
     this.getRect = __bind(this.getRect, this);
@@ -22,7 +38,7 @@ Map = (function() {
       options = {};
     }
     this.initCells();
-    return this.generateTerrain();
+    return this.generateCrissCrossMap();
   };
 
   Map.prototype.getRect = function() {
@@ -56,7 +72,7 @@ Map = (function() {
     return _results;
   };
 
-  Map.prototype.generateTerrain = function() {
+  Map.prototype.generateRoughTerrainMap = function() {
     var x, y, _i, _ref, _results;
     _results = [];
     for (x = _i = 0, _ref = this.width; 0 <= _ref ? _i < _ref : _i > _ref; x = 0 <= _ref ? ++_i : --_i) {
@@ -74,6 +90,77 @@ Map = (function() {
       }).call(this));
     }
     return _results;
+  };
+
+  Map.prototype.generateCrissCrossMap = function() {
+    var corners, line_width;
+    this.eachCell(this.makeImpassable);
+    corners = this.getCorners();
+    line_width = 1;
+    this.forEachCellOnLine(corners[0], corners[2], line_width, this.makePassable);
+    return this.forEachCellOnLine(corners[1], corners[3], line_width, this.makePassable);
+  };
+
+  Map.prototype.eachCell = function(cb_func) {
+    var x, y, _i, _ref, _results;
+    _results = [];
+    for (x = _i = 0, _ref = this.width; 0 <= _ref ? _i < _ref : _i > _ref; x = 0 <= _ref ? ++_i : --_i) {
+      _results.push((function() {
+        var _j, _ref1, _results1;
+        _results1 = [];
+        for (y = _j = 0, _ref1 = this.height; 0 <= _ref1 ? _j < _ref1 : _j > _ref1; y = 0 <= _ref1 ? ++_j : --_j) {
+          _results1.push(cb_func.call(this, this.getCell(x, y)));
+        }
+        return _results1;
+      }).call(this));
+    }
+    return _results;
+  };
+
+  Map.prototype.getCorners = function() {
+    return [this.getCell(0, 0), this.getCell(0, this.height - 1), this.getCell(this.width - 1, this.height - 1), this.getCell(this.width - 1, 0)];
+  };
+
+  Map.prototype.makeImpassable = function(cell) {
+    return cell.passable = false;
+  };
+
+  Map.prototype.makePassable = function(cell) {
+    return cell.passable = true;
+  };
+
+  Map.prototype.forEachCellOnLine = function(from, to, width, cb_func) {
+    var cursor, dx, dy, i, neigbours_by_x, new_x, new_y, results, steps_num, _i, _j, _ref, _ref1, _ref2, _ref3;
+    results = [];
+    dx = to.x - from.x;
+    dy = to.y - from.y;
+    neigbours_by_x = Math.abs(dx) < Math.abs(dy);
+    steps_num = Math.abs(dx) + Math.abs(dy);
+    i = 0;
+    while (i <= steps_num) {
+      cursor = {
+        x: from.x + dx * i / steps_num,
+        y: from.y + dy * i / steps_num
+      };
+      if (neigbours_by_x) {
+        for (new_x = _i = _ref = cursor.x - width, _ref1 = cursor.x + width; _ref <= _ref1 ? _i <= _ref1 : _i >= _ref1; new_x = _ref <= _ref1 ? ++_i : --_i) {
+          if (new_x >= 0 && new_x < this.width) {
+            results.push(this.getCell(new_x, cursor.y));
+          }
+        }
+      } else {
+        for (new_y = _j = _ref2 = cursor.y - width, _ref3 = cursor.y + width; _ref2 <= _ref3 ? _j <= _ref3 : _j >= _ref3; new_y = _ref2 <= _ref3 ? ++_j : --_j) {
+          if (new_y >= 0 && new_y < this.height) {
+            results.push(this.getCell(cursor.x, new_y));
+          }
+        }
+      }
+      i++;
+    }
+    for (i in results) {
+      cb_func.call(this, results[i]);
+    }
+    return true;
   };
 
   return Map;
