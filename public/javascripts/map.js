@@ -11,6 +11,8 @@ Map = (function() {
   function Map() {
     this.getCell = __bind(this.getCell, this);
 
+    this.constrain = __bind(this.constrain, this);
+
     this.getRect = __bind(this.getRect, this);
 
     this.generate = __bind(this.generate, this);
@@ -34,8 +36,12 @@ Map = (function() {
     });
   };
 
+  Map.prototype.constrain = function(coordinate, max) {
+    return Math.max(0, Math.min(max, Math.floor(coordinate)));
+  };
+
   Map.prototype.getCell = function(x, y) {
-    return this.cells[Math.floor(x)][Math.floor(y)];
+    return this.cells[this.constrain(x, this.width - 1)][this.constrain(y, this.height - 1)];
   };
 
   Map.prototype.initCells = function() {

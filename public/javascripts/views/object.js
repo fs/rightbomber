@@ -19,18 +19,19 @@ ObjectView = (function(_super) {
   }
 
   ObjectView.prototype.update = function() {
-    var element, newX, newY;
+    var element, size, x, y;
     element = this.getElement();
-    newX = parseInt(this.square.position.x * this.tileSize);
-    newY = parseInt(this.square.position.y * this.tileSize);
+    x = Math.round(this.tileSize * this.square.position.x);
+    y = Math.round(this.tileSize * this.square.position.y);
+    size = Math.round(this.tileSize * this.square.size);
     element.attr({
       "class": this.state.join(' ')
     });
     return element.css({
-      left: newX + 'px',
-      top: newY + 'px',
-      width: this.tileSize * this.square.size + 'px',
-      height: this.tileSize * this.square.size + 'px'
+      left: x + 'px',
+      top: y + 'px',
+      width: size + 'px',
+      height: size + 'px'
     });
   };
 

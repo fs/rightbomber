@@ -5,7 +5,7 @@ class Square # model
   position: null
   direction: 0
 
-  epsilon: 0.05
+  epsilon: 0.001
 
   constructor: (@map) ->
     @map.objects << @
@@ -13,32 +13,38 @@ class Square # model
       x: 0
       y: 0
 
+  intersectsWith: (square) =>
+    getRect().intersectsWith square.getRect()
+
+  getRect: =>
+    new Rect
+      left: @position.x
+      top: @position.y
+      size: @size
+
   move: (timeDelta) =>
     moved = false
-    velocity = @velocity * timeDelta
+    distance = @velocity * timeDelta
 
-    while velocity > 1
-      if @moveBy(1)
+    while distance > @size
+      if @moveBy(@size)
         moved = true
-        velocity -= 1
+        distance -= @size
       else
         break
 
-    if velocity <= 1 && @moveBy(velocity)
-      moved = true
-      velocity = 0
+    if distance > 0
+      distance = Math.min(@size, distance)
+      step = distance
 
-    if velocity > 0
-      while velocity > @epsilon
-        dv = velocity / 2
-        if @moveBy(dv)
+      while Math.min(step, distance) > @epsilon
+        if @moveBy(step)
           moved = true
-          velocity -= dv
+          distance -= step
         else
-          velocity = dv
+          step /= 2
 
     moved
-
 
   moveBy: (velocity) ->
     dx = 0
@@ -59,15 +65,6 @@ class Square # model
     @position = oldPosition unless movable
 
     return movable
-
-  intersectsWith: (square) =>
-    getRect().intersectsWith square.getRect()
-
-  getRect: =>
-    new Rect
-      left: @position.x
-      top: @position.y
-      size: @size
 
   isMovable: ->
     rect = @getRect()

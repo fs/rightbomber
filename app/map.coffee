@@ -16,8 +16,11 @@ class Map
       width: @width
       height: @height
 
+  constrain: (coordinate, max) =>
+    Math.max(0, Math.min(max, Math.floor(coordinate)))
+
   getCell: (x, y) =>
-    @cells[Math.floor(x)][Math.floor(y)]
+    @cells[@constrain(x, @width - 1)][@constrain(y, @height - 1)]
 
   # private functions
   # init cells array

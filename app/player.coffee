@@ -3,14 +3,14 @@ class Player # controller
   square: null
 
   moving: false
-  velocity: 100 # grid element per second
+  velocity: 8 # grid element per second
   direction: 'up'
 
   directionMap:
-    'right': 0
-    'up'   : 3
-    'left' : 2
-    'down' : 1
+    right: 0
+    up   : 3
+    left : 2
+    down : 1
 
   constructor: (@map) -> # @renderer = new PlayerRenderer
     @square = new Square(@map)

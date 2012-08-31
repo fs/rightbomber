@@ -14,15 +14,15 @@ Square = (function() {
 
   Square.prototype.direction = 0;
 
-  Square.prototype.epsilon = 0.05;
+  Square.prototype.epsilon = 0.001;
 
   function Square(map) {
     this.map = map;
+    this.move = __bind(this.move, this);
+
     this.getRect = __bind(this.getRect, this);
 
     this.intersectsWith = __bind(this.intersectsWith, this);
-
-    this.move = __bind(this.move, this);
 
     this.map.objects << this;
     this.position = {
@@ -31,30 +31,39 @@ Square = (function() {
     };
   }
 
+  Square.prototype.intersectsWith = function(square) {
+    return getRect().intersectsWith(square.getRect());
+  };
+
+  Square.prototype.getRect = function() {
+    return new Rect({
+      left: this.position.x,
+      top: this.position.y,
+      size: this.size
+    });
+  };
+
   Square.prototype.move = function(timeDelta) {
-    var dv, moved, velocity;
+    var distance, moved, step;
     moved = false;
-    velocity = this.velocity * timeDelta;
-    while (velocity > 1) {
-      if (this.moveBy(1)) {
+    distance = this.velocity * timeDelta;
+    while (distance > this.size) {
+      if (this.moveBy(this.size)) {
         moved = true;
-        velocity -= 1;
+        distance -= this.size;
       } else {
         break;
       }
     }
-    if (velocity <= 1 && this.moveBy(velocity)) {
-      moved = true;
-      velocity = 0;
-    }
-    if (velocity > 0) {
-      while (velocity > this.epsilon) {
-        dv = velocity / 2;
-        if (this.moveBy(dv)) {
+    if (distance > 0) {
+      distance = Math.min(this.size, distance);
+      step = distance;
+      while (Math.min(step, distance) > this.epsilon) {
+        if (this.moveBy(step)) {
           moved = true;
-          velocity -= dv;
+          distance -= step;
         } else {
-          velocity = dv;
+          step /= 2;
         }
       }
     }
@@ -87,18 +96,6 @@ Square = (function() {
       this.position = oldPosition;
     }
     return movable;
-  };
-
-  Square.prototype.intersectsWith = function(square) {
-    return getRect().intersectsWith(square.getRect());
-  };
-
-  Square.prototype.getRect = function() {
-    return new Rect({
-      left: this.position.x,
-      top: this.position.y,
-      size: this.size
-    });
   };
 
   Square.prototype.isMovable = function() {

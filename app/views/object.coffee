@@ -7,13 +7,14 @@ class ObjectView extends BaseView
   update: =>
     element = @getElement()
 
-    newX = parseInt(@square.position.x * @tileSize)
-    newY = parseInt(@square.position.y * @tileSize)
+    x    = Math.round(@tileSize * @square.position.x)
+    y    = Math.round(@tileSize * @square.position.y)
+    size = Math.round(@tileSize * @square.size)
 
     element.attr class: @state.join ' '
 
     element.css
-      left: newX + 'px'
-      top:  newY + 'px'
-      width: @tileSize * @square.size + 'px'
-      height: @tileSize * @square.size + 'px'
+      left  : x + 'px'
+      top   : y + 'px'
+      width : size + 'px'
+      height: size + 'px'

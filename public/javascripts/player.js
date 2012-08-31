@@ -10,15 +10,15 @@ Player = (function() {
 
   Player.prototype.moving = false;
 
-  Player.prototype.velocity = 100;
+  Player.prototype.velocity = 8;
 
   Player.prototype.direction = 'up';
 
   Player.prototype.directionMap = {
-    'right': 0,
-    'up': 3,
-    'left': 2,
-    'down': 1
+    right: 0,
+    up: 3,
+    left: 2,
+    down: 1
   };
 
   function Player(map) {
