@@ -9,7 +9,15 @@ Map = (function() {
   Map.prototype.height = 20;
 
   function Map() {
-    this.forEachCellOnLine = __bind(this.forEachCellOnLine, this);
+    this.getUnvisitedNeighbourNodes = __bind(this.getUnvisitedNeighbourNodes, this);
+
+    this.getCellsBetween = __bind(this.getCellsBetween, this);
+
+    this.connectMazeNodes = __bind(this.connectMazeNodes, this);
+
+    this.getMazeNodes = __bind(this.getMazeNodes, this);
+
+    this.forEachCellInLine = __bind(this.forEachCellInLine, this);
 
     this.makePassable = __bind(this.makePassable, this);
 
@@ -18,6 +26,8 @@ Map = (function() {
     this.getCorners = __bind(this.getCorners, this);
 
     this.eachCell = __bind(this.eachCell, this);
+
+    this.generateMazeMap = __bind(this.generateMazeMap, this);
 
     this.generateCrissCrossMap = __bind(this.generateCrissCrossMap, this);
 
@@ -38,7 +48,7 @@ Map = (function() {
       options = {};
     }
     this.initCells();
-    return this.generateCrissCrossMap();
+    return this.generateMazeMap();
   };
 
   Map.prototype.getRect = function() {
@@ -94,11 +104,18 @@ Map = (function() {
 
   Map.prototype.generateCrissCrossMap = function() {
     var corners, line_width;
+    line_width = 1;
     this.eachCell(this.makeImpassable);
     corners = this.getCorners();
-    line_width = 1;
-    this.forEachCellOnLine(corners[0], corners[2], line_width, this.makePassable);
-    return this.forEachCellOnLine(corners[1], corners[3], line_width, this.makePassable);
+    this.forEachCellInLine(corners[0], corners[2], line_width, this.makePassable);
+    return this.forEachCellInLine(corners[1], corners[3], line_width, this.makePassable);
+  };
+
+  Map.prototype.generateMazeMap = function() {
+    var nodes;
+    this.eachCell(this.makeImpassable);
+    nodes = this.getMazeNodes();
+    return this.connectMazeNodes(nodes, this.makePassable);
   };
 
   Map.prototype.eachCell = function(cb_func) {
@@ -129,7 +146,7 @@ Map = (function() {
     return cell.passable = true;
   };
 
-  Map.prototype.forEachCellOnLine = function(from, to, width, cb_func) {
+  Map.prototype.forEachCellInLine = function(from, to, width, cb_func) {
     var cursor, dx, dy, i, neigbours_by_x, new_x, new_y, results, steps_num, _i, _j, _ref, _ref1, _ref2, _ref3;
     results = [];
     dx = to.x - from.x;
@@ -161,6 +178,104 @@ Map = (function() {
       cb_func.call(this, results[i]);
     }
     return true;
+  };
+
+  Map.prototype.getMazeNodes = function() {
+    var cell, cols_num, horizontal_shift, i, j, maze_nodes, rows_num, vertical_shift;
+    rows_num = [];
+    cols_num = [];
+    vertical_shift = 1 - (this.width % 2);
+    horizontal_shift = 1 - (this.height % 2);
+    i = 0;
+    while (i < this.width / 2) {
+      if (i >= this.width / 4) {
+        cols_num.push(i * 2 + vertical_shift);
+      } else {
+        cols_num.push(i * 2);
+      }
+      i++;
+    }
+    j = 0;
+    while (j < this.height / 2) {
+      if (j >= this.height / 4) {
+        rows_num.push(j * 2 + horizontal_shift);
+      } else {
+        rows_num.push(j * 2);
+      }
+      j++;
+    }
+    maze_nodes = [];
+    for (i in cols_num) {
+      maze_nodes[i] = [];
+      for (j in rows_num) {
+        cell = this.getCell(cols_num[i], rows_num[j]);
+        maze_nodes[i][j] = cell;
+      }
+    }
+    return maze_nodes;
+  };
+
+  Map.prototype.connectMazeNodes = function(maze_nodes, cb_func) {
+    var cell, cells, i, neighbours, new_cell, new_point, path, point, _results;
+    path = [[0, 0]];
+    cells = [];
+    while (path.length > 0) {
+      point = path[path.length - 1];
+      cell = maze_nodes[point[0]][point[1]];
+      cell.visited = true;
+      cells.push(cell);
+      neighbours = this.getUnvisitedNeighbourNodes(maze_nodes, point[0], point[1]);
+      if (neighbours.length > 0) {
+        new_point = neighbours[Math.floor(Math.random() * neighbours.length)];
+        path.push(new_point);
+        new_cell = maze_nodes[new_point[0]][new_point[1]];
+        cells = cells.concat(this.getCellsBetween(cell, new_cell));
+      } else {
+        path.pop();
+      }
+    }
+    _results = [];
+    for (i in cells) {
+      _results.push(cb_func.call(this, cells[i]));
+    }
+    return _results;
+  };
+
+  Map.prototype.getCellsBetween = function(from, to) {
+    var result, x, y, _i, _j, _ref, _ref1, _ref2, _ref3;
+    result = [];
+    if (from.x === to.x) {
+      for (y = _i = _ref = from.y, _ref1 = to.y; _ref <= _ref1 ? _i < _ref1 : _i > _ref1; y = _ref <= _ref1 ? ++_i : --_i) {
+        result.push(this.getCell(from.x, y));
+      }
+    } else if (from.y === to.y) {
+      for (x = _j = _ref2 = from.x, _ref3 = to.x; _ref2 <= _ref3 ? _j < _ref3 : _j > _ref3; x = _ref2 <= _ref3 ? ++_j : --_j) {
+        result.push(this.getCell(x, from.y));
+      }
+    } else {
+
+    }
+    return result.slice(1);
+  };
+
+  Map.prototype.getUnvisitedNeighbourNodes = function(maze_nodes, x, y) {
+    var max_x, max_y, neighbours;
+    max_x = (this.width / 2) - 1;
+    max_y = (this.height / 2) - 1;
+    neighbours = [];
+    if (x > 0 && !maze_nodes[x - 1][y].visited) {
+      neighbours.push([x - 1, y]);
+    }
+    if (x < max_x && !maze_nodes[x + 1][y].visited) {
+      neighbours.push([x + 1, y]);
+    }
+    if (y > 0 && !maze_nodes[x][y - 1].visited) {
+      neighbours.push([x, y - 1]);
+    }
+    if (y < max_y && !maze_nodes[x][y + 1].visited) {
+      neighbours.push([x, y + 1]);
+    }
+    return neighbours;
   };
 
   return Map;
