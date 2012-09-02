@@ -1,4 +1,11 @@
 class Rightbomber
+  keyMap:
+    d: 'right'
+    w: 'up'
+    a: 'left'
+    s: 'down'
+
+
   run: =>
     map = new Map(30, 20)
     map.generate()
@@ -6,7 +13,6 @@ class Rightbomber
     (new MapView(map)).update()
 
     @keyboard = new Keyboard
-    @keyboard.activate()
 
     @player = new Player(map) # controller
     @bomb = new Bomb(map)
@@ -16,18 +22,14 @@ class Rightbomber
     gameLoop.run()
 
   tick: (timeDelta) =>
-    @player.moving = false
-    for direction in ['right', 'up', 'left', 'down']
-      if @keyboard.keys[direction]
-        @player.moving = true
-        @player.direction = direction
+    key = @keyboard.latestOf(['right', 'up', 'left', 'down'])
+    if (@player.moving = !!key)
+      @player.direction = key
 
     @player.olderBy(timeDelta)
 
-    @player2.moving = false
-    for key, direction of {d: 'right', w: 'up', a: 'left', s: 'down'}
-      if @keyboard.keys[key]
-        @player2.moving = true
-        @player2.direction = direction
-
+    key = @keyboard.latestOf(['d', 'w', 's', 'a'])
+    if (@player2.moving = !!key)
+      @player2.direction = @keyMap[key]
+    
     @player2.olderBy(timeDelta)

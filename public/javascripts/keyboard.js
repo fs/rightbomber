@@ -4,7 +4,7 @@ var Keyboard,
 
 Keyboard = (function() {
 
-  Keyboard.prototype.keyMap = {
+  Keyboard.prototype.keyNames = {
     38: 'up',
     40: 'down',
     37: 'left',
@@ -15,21 +15,46 @@ Keyboard = (function() {
     68: 'd'
   };
 
-  Keyboard.prototype.keys = {};
-
   function Keyboard() {
-    this.activate = __bind(this.activate, this);
+    this.keyUp = __bind(this.keyUp, this);
 
+    this.keyDown = __bind(this.keyDown, this);
+
+    this.latestOf = __bind(this.latestOf, this);
+    this.keys = {};
+    $(document).keydown(this.keyDown);
+    $(document).keyup(this.keyUp);
   }
 
-  Keyboard.prototype.activate = function() {
-    var _this = this;
-    $(document).keydown(function(e) {
-      return _this.keys[_this.keyMap[e.keyCode]] = true;
-    });
-    return $(document).keyup(function(e) {
-      return _this.keys[_this.keyMap[e.keyCode]] = false;
-    });
+  Keyboard.prototype.latestOf = function(keyNames) {
+    var key, latest, _i, _len, _ref;
+    if (keyNames == null) {
+      keyNames = [];
+    }
+    latest = null;
+    for (_i = 0, _len = keyNames.length; _i < _len; _i++) {
+      key = keyNames[_i];
+      if (this.keys[key] > ((_ref = this.keys[latest]) != null ? _ref : 0)) {
+        latest = key;
+      }
+    }
+    return latest;
+  };
+
+  Keyboard.prototype.keyDown = function(event) {
+    var keyName;
+    keyName = this.keyNames[event.keyCode];
+    if (!this.keys[keyName]) {
+      return this.keys[keyName] = this.time();
+    }
+  };
+
+  Keyboard.prototype.keyUp = function(event) {
+    return this.keys[this.keyNames[event.keyCode]] = 0;
+  };
+
+  Keyboard.prototype.time = function() {
+    return (new Date).getTime();
   };
 
   return Keyboard;
