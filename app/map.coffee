@@ -16,14 +16,13 @@ class Map
       width: @width
       height: @height
 
-  constrain: (coordinate, max) =>
-    Math.max(0, Math.min(max, Math.floor(coordinate)))
-
   getCell: (x, y) =>
     @cells[@constrain(x, @width - 1)][@constrain(y, @height - 1)]
 
-  # private functions
-  # init cells array
+  # private
+  constrain: (coordinate, max) ->
+    Math.max(0, Math.min(max, Math.floor(coordinate)))
+
   initCells: ->
     @cells = []
     for x in [0...@width]
