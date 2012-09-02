@@ -1,20 +1,15 @@
-class Map
-  width: 30
-  height: 20
+class Map extends Rect
+  width: 10
+  height: 10
 
-  constructor: ->
+  constructor: (@width, @height) ->
+    @setWidth(@width)
+    @setHeight(@height)
     @objects = []
 
   generate: (options = {}) =>
     @initCells()
     @generateTerrain()
-
-  getRect: =>
-    new Rect
-      left: 0
-      top: 0
-      width: @width
-      height: @height
 
   getCell: (x, y) =>
     @cells[@constrain(x, @width - 1)][@constrain(y, @height - 1)]

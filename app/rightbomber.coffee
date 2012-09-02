@@ -1,6 +1,6 @@
 class Rightbomber
   run: =>
-    map = new Map
+    map = new Map(30, 20)
     map.generate()
 
     (new MapView(map)).update()
@@ -22,7 +22,7 @@ class Rightbomber
         @player.moving = true
         @player.direction = direction
 
-    @player.move(timeDelta)
+    @player.olderBy(timeDelta)
 
     @player2.moving = false
     for key, direction of {d: 'right', w: 'up', a: 'left', s: 'down'}
@@ -30,4 +30,4 @@ class Rightbomber
         @player2.moving = true
         @player2.direction = direction
 
-    @player2.move(timeDelta)
+    @player2.olderBy(timeDelta)

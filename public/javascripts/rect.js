@@ -4,6 +4,25 @@ var Rect,
 
 Rect = (function() {
 
+  function Rect() {
+    this.contains = __bind(this.contains, this);
+
+    this.instersectsWith = __bind(this.instersectsWith, this);
+
+    this.setSize = __bind(this.setSize, this);
+
+    this.setHeight = __bind(this.setHeight, this);
+
+    this.setWidth = __bind(this.setWidth, this);
+
+    this.getHeight = __bind(this.getHeight, this);
+
+    this.getWidth = __bind(this.getWidth, this);
+
+    this.moveBy = __bind(this.moveBy, this);
+
+  }
+
   Rect.prototype.left = 0;
 
   Rect.prototype.top = 0;
@@ -12,19 +31,33 @@ Rect = (function() {
 
   Rect.prototype.bottom = 1;
 
-  function Rect(dimensions) {
-    this.contains = __bind(this.contains, this);
+  Rect.prototype.moveBy = function(dx, dy) {
+    this.left += dx;
+    this.right += dx;
+    this.top += dy;
+    return this.bottom += dy;
+  };
 
-    this.instersectsWith = __bind(this.instersectsWith, this);
+  Rect.prototype.getWidth = function() {
+    return this.right - this.left;
+  };
 
-    var height, width, _ref, _ref1, _ref2, _ref3, _ref4, _ref5;
-    width = (_ref = dimensions.width) != null ? _ref : dimensions.size;
-    height = (_ref1 = dimensions.height) != null ? _ref1 : dimensions.size;
-    this.left = (_ref2 = dimensions.left) != null ? _ref2 : dimensions.right - width;
-    this.top = (_ref3 = dimensions.top) != null ? _ref3 : dimensions.bottom - height;
-    this.right = (_ref4 = dimensions.right) != null ? _ref4 : this.left + width;
-    this.bottom = (_ref5 = dimensions.bottom) != null ? _ref5 : this.top + height;
-  }
+  Rect.prototype.getHeight = function() {
+    return this.bottom - this.top;
+  };
+
+  Rect.prototype.setWidth = function(newWidth) {
+    return this.right = this.left + newWidth;
+  };
+
+  Rect.prototype.setHeight = function(newHeight) {
+    return this.bottom = this.top + newHeight;
+  };
+
+  Rect.prototype.setSize = function(newSize) {
+    this.setWidth(newSize);
+    return this.setHeight(newSize);
+  };
 
   Rect.prototype.instersectsWith = function(rect) {
     var clear;

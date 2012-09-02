@@ -21,8 +21,8 @@ ObjectView = (function(_super) {
   ObjectView.prototype.update = function() {
     var element, size, x, y;
     element = this.getElement();
-    x = Math.round(this.tileSize * this.square.position.x);
-    y = Math.round(this.tileSize * this.square.position.y);
+    x = Math.round(this.tileSize * this.square.left);
+    y = Math.round(this.tileSize * this.square.top);
     size = Math.round(this.tileSize * this.square.size);
     element.attr({
       "class": this.state.join(' ')

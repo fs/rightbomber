@@ -13,7 +13,7 @@ Rightbomber = (function() {
 
   Rightbomber.prototype.run = function() {
     var gameLoop, map;
-    map = new Map;
+    map = new Map(30, 20);
     map.generate();
     (new MapView(map)).update();
     this.keyboard = new Keyboard;
@@ -36,7 +36,7 @@ Rightbomber = (function() {
         this.player.direction = direction;
       }
     }
-    this.player.move(timeDelta);
+    this.player.olderBy(timeDelta);
     this.player2.moving = false;
     _ref1 = {
       d: 'right',
@@ -51,7 +51,7 @@ Rightbomber = (function() {
         this.player2.direction = direction;
       }
     }
-    return this.player2.move(timeDelta);
+    return this.player2.olderBy(timeDelta);
   };
 
   return Rightbomber;

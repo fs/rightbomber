@@ -3,10 +3,10 @@ class Bomb
   square: null
 
   constructor: (@map) ->
-    @square = new Square(@map)
+    @square = new SquaredObject(@map)
     @square.size = 0.6
-    @square.position.x = 5.2
-    @square.position.y = 2.2
+    @square.left = 5.2
+    @square.top = 2.2
 
     @representation = new ObjectView(@square)
     @update()

@@ -13,17 +13,17 @@ class Player # controller
     down : 1
 
   constructor: (@map) -> # @renderer = new PlayerRenderer
-    @square = new Square(@map)
-    @square.size = 0.5
+    @square = new SquaredObject(@map)
+    @square.setSize(0.5)
 
-    @representation = new ObjectView(@square)
+    @view = new ObjectView(@square)
     @update()
 
-  move: (timeDelta) =>
+  olderBy: (timeDelta) =>
     if @moving
       @square.velocity = @velocity
       @square.direction = @directionMap[@direction]
-      if @square.move(timeDelta)
+      if @square.olderBy(timeDelta)
         @update()
 
   getState: ->
@@ -33,5 +33,5 @@ class Player # controller
     state
 
   update: ->
-    @representation.state = @getState()
-    @representation.update()
+    @view.state = @getState()
+    @view.update()

@@ -1,15 +1,8 @@
-class Cell
-  x: 0
-  y: 0
+class Cell extends Rect
   passable: true
 
-  constructor: (@x, @y) ->
-
-  getRect: =>
-    new Rect
-      left: @x
-      top: @y
-      size: 1
+  constructor: (x, y) ->
+    @moveBy(x, y)
 
   getType: =>
     if @passable
