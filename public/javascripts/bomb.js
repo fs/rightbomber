@@ -9,10 +9,10 @@ Bomb = (function() {
 
   function Bomb(map) {
     this.map = map;
-    this.square = new Square(this.map);
+    this.square = new SquaredObject(this.map);
     this.square.size = 0.6;
-    this.square.position.x = 5.2;
-    this.square.position.y = 2.2;
+    this.square.left = 5.2;
+    this.square.top = 2.2;
     this.representation = new ObjectView(this.square);
     this.update();
   }

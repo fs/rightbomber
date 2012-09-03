@@ -4,14 +4,28 @@ class Rect
   right: 1
   bottom: 1
 
-  constructor: (dimensions) ->
-    width = dimensions.width ? dimensions.size
-    height = dimensions.height ? dimensions.size
+  moveBy: (dx, dy) =>
+    @left += dx
+    @right += dx
 
-    @left = dimensions.left ? (dimensions.right - width)
-    @top = dimensions.top ? (dimensions.bottom - height)
-    @right = dimensions.right ? @left + width
-    @bottom = dimensions.bottom ? @top + height
+    @top += dy
+    @bottom += dy
+
+  getWidth: =>
+    @right - @left
+
+  getHeight: =>
+    @bottom - @top
+
+  setWidth: (newWidth) =>
+    @right = @left + newWidth
+
+  setHeight: (newHeight) =>
+    @bottom = @top + newHeight
+
+  setSize: (newSize) =>
+    @setWidth(newSize)
+    @setHeight(newSize)
 
   instersectsWith: (rect) =>
     clear =
