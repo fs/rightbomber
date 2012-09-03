@@ -11,13 +11,19 @@ Rightbomber = (function() {
 
   }
 
+  Rightbomber.prototype.keyMap = {
+    d: 'right',
+    w: 'up',
+    a: 'left',
+    s: 'down'
+  };
+
   Rightbomber.prototype.run = function() {
     var gameLoop, map;
-    map = new Map;
+    map = new Map(30, 20);
     map.generate();
     (new MapView(map)).update();
     this.keyboard = new Keyboard;
-    this.keyboard.activate();
     this.player = new Player(map);
     this.bomb = new Bomb(map);
     this.player2 = new Player(map);
@@ -26,32 +32,17 @@ Rightbomber = (function() {
   };
 
   Rightbomber.prototype.tick = function(timeDelta) {
-    var direction, key, _i, _len, _ref, _ref1;
-    this.player.moving = false;
-    _ref = ['right', 'up', 'left', 'down'];
-    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-      direction = _ref[_i];
-      if (this.keyboard.keys[direction]) {
-        this.player.moving = true;
-        this.player.direction = direction;
-      }
+    var key;
+    key = this.keyboard.latestOf(['right', 'up', 'left', 'down']);
+    if ((this.player.moving = !!key)) {
+      this.player.direction = key;
     }
-    this.player.move(timeDelta);
-    this.player2.moving = false;
-    _ref1 = {
-      d: 'right',
-      w: 'up',
-      a: 'left',
-      s: 'down'
-    };
-    for (key in _ref1) {
-      direction = _ref1[key];
-      if (this.keyboard.keys[key]) {
-        this.player2.moving = true;
-        this.player2.direction = direction;
-      }
+    this.player.olderBy(timeDelta);
+    key = this.keyboard.latestOf(['d', 'w', 's', 'a']);
+    if ((this.player2.moving = !!key)) {
+      this.player2.direction = this.keyMap[key];
     }
-    return this.player2.move(timeDelta);
+    return this.player2.olderBy(timeDelta);
   };
 
   return Rightbomber;
