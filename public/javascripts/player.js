@@ -23,6 +23,8 @@ Player = (function() {
 
   function Player(map) {
     this.map = map;
+    this.update = __bind(this.update, this);
+
     this.olderBy = __bind(this.olderBy, this);
 
     this.square = new SquaredObject(this.map);

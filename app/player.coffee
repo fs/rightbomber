@@ -32,6 +32,6 @@ class Player # controller
     state.push @direction
     state
 
-  update: ->
+  update: =>
     @view.state = @getState()
     @view.update()

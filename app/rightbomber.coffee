@@ -17,6 +17,8 @@ class Rightbomber
     @player = new Player(map) # controller
     @bomb = new Bomb(map)
     @player2 = new Player(map) # controller
+    @player2.square.moveBy(2, 2)
+    @player2.update()
 
     gameLoop = new GameLoop(@tick)
     gameLoop.run()

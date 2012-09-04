@@ -7,7 +7,7 @@ Rect = (function() {
   function Rect() {
     this.contains = __bind(this.contains, this);
 
-    this.instersectsWith = __bind(this.instersectsWith, this);
+    this.intersectsWith = __bind(this.intersectsWith, this);
 
     this.setSize = __bind(this.setSize, this);
 
@@ -59,7 +59,7 @@ Rect = (function() {
     return this.setHeight(newSize);
   };
 
-  Rect.prototype.instersectsWith = function(rect) {
+  Rect.prototype.intersectsWith = function(rect) {
     var clear;
     clear = (this.left > rect.right) || (this.right < rect.left) || (this.top > rect.bottom) || (this.bottom < rect.top);
     return !clear;

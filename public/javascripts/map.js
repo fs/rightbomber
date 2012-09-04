@@ -33,7 +33,10 @@ Map = (function(_super) {
   };
 
   Map.prototype.getCell = function(x, y) {
-    return this.cells[this.constrain(x, this.width - 1)][this.constrain(y, this.height - 1)];
+    var cell;
+    cell = this.cells[this.constrain(x, this.width - 1)][this.constrain(y, this.height - 1)];
+    cell.objects = this.objects;
+    return cell;
   };
 
   Map.prototype.constrain = function(coordinate, max) {

@@ -1,17 +1,13 @@
-class Bomb
-  map: null
-  square: null
+class Bomb extends SquaredObject
 
   constructor: (@map) ->
-    @square = new SquaredObject(@map)
-    @square.size = 0.6
-    @square.left = 5.2
-    @square.top = 2.2
+    super(@map)
+    @setSize(0.6)
+    @moveBy(5.2, 2.2)
 
-    @representation = new ObjectView(@square)
+    @representation = new ObjectView(@)
     @update()
 
   update: ->
     @representation.state = ['bomb']
     @representation.update()
-

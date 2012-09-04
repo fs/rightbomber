@@ -27,6 +27,8 @@ Rightbomber = (function() {
     this.player = new Player(map);
     this.bomb = new Bomb(map);
     this.player2 = new Player(map);
+    this.player2.square.moveBy(2, 2);
+    this.player2.update();
     gameLoop = new GameLoop(this.tick);
     return gameLoop.run();
   };
