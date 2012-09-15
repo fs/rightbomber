@@ -16,15 +16,15 @@ class SquaredObject extends Rect
     super(newSize)
 
   olderBy: (timeDelta) ->
-    distance = distanceToGo = @velocity * timeDelta
+    distanceToGo = distance = @velocity * timeDelta
 
-    distance = @sprint(distance) if distance > 0
+    distanceToGo = @sprint(distanceToGo) if distanceToGo > 0
 
-    distance = @comeCloser(distance) if distance > 0
+    distanceToGo = @comeCloser(distanceToGo) if distanceToGo > 0
 
-    distance = @cutCorners(distance) if distance > 0
+    distanceToGo = @cutCorners(distanceToGo) if distanceToGo > 0
 
-    distance < distanceToGo
+    distanceToGo < distance
 
   sprint: (distance) ->
     step = @size

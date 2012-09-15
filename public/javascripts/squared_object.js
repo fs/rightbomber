@@ -32,17 +32,17 @@ SquaredObject = (function(_super) {
 
   SquaredObject.prototype.olderBy = function(timeDelta) {
     var distance, distanceToGo;
-    distance = distanceToGo = this.velocity * timeDelta;
-    if (distance > 0) {
-      distance = this.sprint(distance);
+    distanceToGo = distance = this.velocity * timeDelta;
+    if (distanceToGo > 0) {
+      distanceToGo = this.sprint(distanceToGo);
     }
-    if (distance > 0) {
-      distance = this.comeCloser(distance);
+    if (distanceToGo > 0) {
+      distanceToGo = this.comeCloser(distanceToGo);
     }
-    if (distance > 0) {
-      distance = this.cutCorners(distance);
+    if (distanceToGo > 0) {
+      distanceToGo = this.cutCorners(distanceToGo);
     }
-    return distance < distanceToGo;
+    return distanceToGo < distance;
   };
 
   SquaredObject.prototype.sprint = function(distance) {
