@@ -7,11 +7,11 @@ class Map extends Rect
     @setHeight(@height)
     @objects = []
 
-  generate: (options = {}) =>
+  generate: (options = {}) ->
     @initCells()
     @generateTerrain()
 
-  getCell: (x, y) =>
+  getCell: (x, y) ->
     cell = @cells[@constrain(x, @width - 1)][@constrain(y, @height - 1)]
     cell.objects = @objects
     cell

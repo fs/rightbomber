@@ -19,8 +19,6 @@ Keyboard = (function() {
     this.keyUp = __bind(this.keyUp, this);
 
     this.keyDown = __bind(this.keyDown, this);
-
-    this.latestOf = __bind(this.latestOf, this);
     this.keys = {};
     $(document).keydown(this.keyDown);
     $(document).keyup(this.keyUp);

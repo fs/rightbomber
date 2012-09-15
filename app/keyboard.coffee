@@ -14,7 +14,7 @@ class Keyboard
     $(document).keydown(@keyDown)
     $(document).keyup(@keyUp)
 
-  latestOf: (keyNames = []) =>
+  latestOf: (keyNames = []) ->
     latest = null
     for key in keyNames
       if @keys[key] > (@keys[latest] ? 0)

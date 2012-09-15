@@ -5,7 +5,7 @@ class Cell extends Rect
     @objects = []
     @moveBy(x, y)
 
-  getType: =>
+  getType: ->
     if @passable
       'grass'
     else

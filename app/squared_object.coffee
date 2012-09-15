@@ -11,11 +11,11 @@ class SquaredObject extends Rect
     @map.objects.push @
     @setSize(@size)
 
-  setSize: (newSize) =>
+  setSize: (newSize) ->
     @size = newSize
     super(newSize)
 
-  olderBy: (timeDelta) =>
+  olderBy: (timeDelta) ->
     @moved = false
     distance = @velocity * timeDelta
 

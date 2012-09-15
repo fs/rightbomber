@@ -4,30 +4,30 @@ class Rect
   right: 1
   bottom: 1
 
-  moveBy: (dx, dy) =>
+  moveBy: (dx, dy) ->
     @left += dx
     @right += dx
 
     @top += dy
     @bottom += dy
 
-  getWidth: =>
+  getWidth: ->
     @right - @left
 
-  getHeight: =>
+  getHeight: ->
     @bottom - @top
 
-  setWidth: (newWidth) =>
+  setWidth: (newWidth) ->
     @right = @left + newWidth
 
-  setHeight: (newHeight) =>
+  setHeight: (newHeight) ->
     @bottom = @top + newHeight
 
-  setSize: (newSize) =>
+  setSize: (newSize) ->
     @setWidth(newSize)
     @setHeight(newSize)
 
-  intersectsWith: (rect) =>
+  intersectsWith: (rect) ->
     clear =
       (@left > rect.right) ||
       (@right < rect.left) ||
@@ -36,7 +36,7 @@ class Rect
 
     ! clear
 
-  contains: (rect) =>
+  contains: (rect) ->
     (@left <= rect.left) &&
     (@right >= rect.right) &&
     (@top <= rect.top) &&

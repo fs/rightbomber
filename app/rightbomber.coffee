@@ -33,5 +33,5 @@ class Rightbomber
     key = @keyboard.latestOf(['d', 'w', 's', 'a'])
     if (@player2.moving = !!key)
       @player2.direction = @keyMap[key]
-    
+
     @player2.olderBy(timeDelta)

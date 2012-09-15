@@ -3,11 +3,11 @@ class MapView extends BaseView
 
   constructor: (@map) ->
 
-  update: =>
+  update: ->
     table = @getElement()
 
     table.attr id: "map"
-    
+
     table.css
       width:  @map.width * @tileSize
       height: @map.height * @tileSize

@@ -3,7 +3,7 @@ class BaseView
   element: null
   baseElement: '<div>'
 
-  getElement: =>
+  getElement: ->
     unless @element
       @element = $ @baseElement
       $(document.body).append(@element)
