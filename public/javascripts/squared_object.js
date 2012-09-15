@@ -73,18 +73,23 @@ SquaredObject = (function(_super) {
   };
 
   SquaredObject.prototype.cutCorners = function(distance) {
-    var direction, moved;
-    direction = this.rotateLeft(this.direction);
-    moved = this.move(distance, direction);
-    if (!moved) {
-      direction = this.rotateRight(this.direction);
-      moved = this.move(distance, direction);
+    var direction, dx, dy, left, leftArea, right, rightArea;
+    dx = this.dx(distance, this.direction);
+    dy = this.dy(distance, this.direction);
+    this.moveBy(dx, dy);
+    left = this.rotateLeft(this.direction);
+    leftArea = this.blockedAreaAt(distance, left);
+    right = this.rotateRight(this.direction);
+    rightArea = this.blockedAreaAt(distance, right);
+    this.moveBy(-dx, -dy);
+    if (Math.random() > 0.8) {
+      console.log(left, right, leftArea, rightArea);
     }
-    if (moved) {
+    direction = leftArea > rightArea ? right : left;
+    if (this.move(distance, direction)) {
       return 0;
-    } else {
-      return distance;
     }
+    return distance;
   };
 
   SquaredObject.prototype.move = function(distance, direction) {
@@ -96,6 +101,16 @@ SquaredObject = (function(_super) {
       this.moveBy(-dx, -dy);
     }
     return movable;
+  };
+
+  SquaredObject.prototype.blockedAreaAt = function(distance, direction) {
+    var area, dx, dy;
+    dx = this.dx(distance, direction);
+    dy = this.dy(distance, direction);
+    this.moveBy(dx, dy);
+    area = this.blockedArea();
+    this.moveBy(-dx, -dy);
+    return area;
   };
 
   SquaredObject.prototype.dx = function(distance, direction) {
@@ -121,33 +136,66 @@ SquaredObject = (function(_super) {
   };
 
   SquaredObject.prototype.rotateLeft = function(direction) {
-    return (direction + 5) % 4;
+    return (direction + 3) % 4;
   };
 
   SquaredObject.prototype.rotateRight = function(direction) {
-    return (direction + 7) % 4;
+    return (direction + 1) % 4;
+  };
+
+  SquaredObject.prototype.intersectsWith = function(rect) {
+    if (this === rect) {
+      return false;
+    } else {
+      return SquaredObject.__super__.intersectsWith.call(this, rect);
+    }
+  };
+
+  SquaredObject.prototype.cells = function() {
+    return [this.map.getCell(this.left, this.top), this.map.getCell(this.left, this.bottom), this.map.getCell(this.right, this.top), this.map.getCell(this.right, this.bottom)];
   };
 
   SquaredObject.prototype.isMovable = function() {
-    var cell, cells, object, _i, _j, _len, _len1, _ref;
+    var cell, object, _i, _j, _len, _len1, _ref, _ref1;
     if (!this.map.contains(this)) {
       return false;
     }
-    cells = [this.map.getCell(this.left, this.top), this.map.getCell(this.left, this.bottom), this.map.getCell(this.right, this.top), this.map.getCell(this.right, this.bottom)];
-    for (_i = 0, _len = cells.length; _i < _len; _i++) {
-      cell = cells[_i];
+    _ref = this.cells();
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      cell = _ref[_i];
       if (!cell.passable) {
         return false;
       }
-      _ref = cell.objects;
-      for (_j = 0, _len1 = _ref.length; _j < _len1; _j++) {
-        object = _ref[_j];
-        if (this !== object && this.intersectsWith(object)) {
+      _ref1 = cell.objects;
+      for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
+        object = _ref1[_j];
+        if (this.intersectsWith(object)) {
           return false;
         }
       }
     }
     return true;
+  };
+
+  SquaredObject.prototype.blockedArea = function() {
+    var area, cell, object, _i, _j, _len, _len1, _ref, _ref1;
+    if (!this.map.contains(this)) {
+      return this.size * this.size;
+    }
+    area = 0;
+    _ref = this.cells();
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      cell = _ref[_i];
+      if (!cell.passable) {
+        area += this.intersectionArea(cell);
+      }
+      _ref1 = cell.objects;
+      for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
+        object = _ref1[_j];
+        area += this.intersectionArea(object);
+      }
+    }
+    return area;
   };
 
   return SquaredObject;

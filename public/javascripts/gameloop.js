@@ -17,7 +17,7 @@ GameLoop = (function() {
     delta = time - this.lastRunTime;
     this.lastRunTime = time;
     this.loopFunction(delta / 1000.0);
-    return setTimeout(this.run, 1);
+    return setTimeout(this.run, 0);
   };
 
   GameLoop.prototype.time = function() {

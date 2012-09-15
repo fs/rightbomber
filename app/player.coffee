@@ -3,7 +3,7 @@ class Player # controller
   square: null
 
   moving: false
-  velocity: 8 # grid element per second
+  velocity: 4 # grid element per second
   direction: 'up'
 
   directionMap:

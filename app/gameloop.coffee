@@ -9,6 +9,6 @@ class GameLoop
 
     @loopFunction(delta / 1000.0) # seconds
 
-    setTimeout @run, 1
+    setTimeout @run, 0
 
   time: -> (new Date).getTime()

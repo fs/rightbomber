@@ -9,7 +9,7 @@ Player = (function() {
 
   Player.prototype.moving = false;
 
-  Player.prototype.velocity = 8;
+  Player.prototype.velocity = 4;
 
   Player.prototype.direction = 'up';
 

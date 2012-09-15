@@ -47,8 +47,38 @@ Rect = (function() {
     return !clear;
   };
 
+  Rect.prototype.intersectionArea = function(rect) {
+    var x1, x2, y1, y2;
+    if (!this.intersectsWith(rect)) {
+      return 0;
+    }
+    x1 = this.getInsideCornerX(rect);
+    y1 = this.getInsideCornerY(rect);
+    x2 = rect.getInsideCornerX(this);
+    y2 = rect.getInsideCornerY(this);
+    return Math.abs((x1 - x2) * (y1 - y2));
+  };
+
+  Rect.prototype.getInsideCornerX = function(rect) {
+    var _ref;
+    if ((this.left < (_ref = rect.left) && _ref < this.right)) {
+      return rect.left;
+    } else {
+      return rect.right;
+    }
+  };
+
+  Rect.prototype.getInsideCornerY = function(rect) {
+    var _ref;
+    if ((this.top < (_ref = rect.top) && _ref < this.bottom)) {
+      return rect.top;
+    } else {
+      return rect.bottom;
+    }
+  };
+
   Rect.prototype.contains = function(rect) {
-    return (this.left <= rect.left) && (this.right >= rect.right) && (this.top <= rect.top) && (this.bottom >= rect.bottom);
+    return this.top <= rect.top && this.left <= rect.left && this.right >= rect.right && this.bottom >= rect.bottom;
   };
 
   return Rect;

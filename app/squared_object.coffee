@@ -50,14 +50,27 @@ class SquaredObject extends Rect
     distance
 
   cutCorners: (distance) ->
-    direction = @rotateLeft(@direction)
-    moved = @move(distance, direction)
+    dx = @dx(distance, @direction)
+    dy = @dy(distance, @direction)
 
-    unless moved
-      direction = @rotateRight(@direction)
-      moved = @move(distance, direction)
+    @moveBy(dx, dy)
 
-    if moved then 0 else distance
+    left = @rotateLeft(@direction)
+    leftArea = @blockedAreaAt(distance, left)
+
+    right = @rotateRight(@direction)
+    rightArea = @blockedAreaAt(distance, right)
+
+    @moveBy(-dx, -dy)
+
+    console.log(left, right, leftArea, rightArea) if Math.random() > 0.8
+
+    direction = if leftArea > rightArea then right else left
+
+    if @move(distance, direction)
+      return 0
+
+    distance
 
   move: (distance, direction) ->
     dx = @dx(distance, direction)
@@ -69,6 +82,18 @@ class SquaredObject extends Rect
       @moveBy(-dx, -dy)
 
     movable
+
+  blockedAreaAt: (distance, direction) ->
+    dx = @dx(distance, direction)
+    dy = @dy(distance, direction)
+
+    @moveBy(dx, dy)
+
+    area = @blockedArea()
+
+    @moveBy(-dx, -dy)
+
+    area
 
   dx: (distance, direction) ->
     switch direction
@@ -89,25 +114,44 @@ class SquaredObject extends Rect
         0
 
   rotateLeft: (direction) ->
-    (direction + 5) % 4
+    (direction + 3) % 4
 
   rotateRight: (direction) ->
-    (direction + 7) % 4
+    (direction + 1) % 4
 
-  isMovable: ->
-    return false unless @map.contains(@)
+  intersectsWith: (rect) ->
+    if @ == rect
+      false
+    else
+      super(rect)
 
-    cells = [
+  cells: ->
+    [
       @map.getCell(@left, @top),
       @map.getCell(@left, @bottom),
       @map.getCell(@right, @top),
       @map.getCell(@right, @bottom)
     ]
 
-    for cell in cells
+  isMovable: ->
+    return false unless @map.contains(@)
+
+    for cell in @cells()
       return false unless cell.passable
 
       for object in cell.objects
-        return false if @ != object && @intersectsWith(object)
+        return false if @intersectsWith(object)
 
     return true
+
+  blockedArea: ->
+    return @size * @size unless @map.contains(@)
+
+    area = 0
+    for cell in @cells()
+      area += @intersectionArea(cell) unless cell.passable
+
+      for object in cell.objects
+        area += @intersectionArea(object)
+
+    area
