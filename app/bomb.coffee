@@ -3,7 +3,7 @@ class Bomb extends SquaredObject
   constructor: (@map, @player) ->
     super(@map)
     @setSize(0.6)
-    @moveBy(@player.square.left, @player.square.top)
+    @moveBy(@player.left, @player.top)
 
     @representation = new ObjectView(@)
 
@@ -15,5 +15,4 @@ class Bomb extends SquaredObject
     @representation.update()
 
   intersectsWith: (object) ->
-    console.log 'int with bo'
     @player != object && super(object)

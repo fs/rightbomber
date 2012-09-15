@@ -15,7 +15,7 @@ Bomb = (function(_super) {
 
     Bomb.__super__.constructor.call(this, this.map);
     this.setSize(0.6);
-    this.moveBy(this.player.square.left, this.player.square.top);
+    this.moveBy(this.player.left, this.player.top);
     this.representation = new ObjectView(this);
   }
 
@@ -29,7 +29,6 @@ Bomb = (function(_super) {
   };
 
   Bomb.prototype.intersectsWith = function(object) {
-    console.log('int with bo');
     return this.player !== object && Bomb.__super__.intersectsWith.call(this, object);
   };
 

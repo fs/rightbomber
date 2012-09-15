@@ -29,7 +29,6 @@ class Rightbomber
       bomb = @player.getBomb()
       if bomb.isMovable()
         @bombs.push(bomb)
-        console.log 'bomb'
 
     key = @keyboard.latestOf(['right', 'up', 'left', 'down'])
     if (@player.moving = !!key)

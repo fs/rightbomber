@@ -39,7 +39,6 @@ Rightbomber = (function() {
       bomb = this.player.getBomb();
       if (bomb.isMovable()) {
         this.bombs.push(bomb);
-        console.log('bomb');
       }
     }
     key = this.keyboard.latestOf(['right', 'up', 'left', 'down']);
