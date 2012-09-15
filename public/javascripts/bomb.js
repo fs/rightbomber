@@ -12,12 +12,11 @@ Bomb = (function() {
     this.player = player;
     this.move = __bind(this.move, this);
 
-    this.map = this.player.map;
-    this.square = new Square(this.map);
+    this.square = new SquaredObject(this.player);
     this.square.size = 0.6;
-    this.square.position.x = this.player.square.position.x;
-    this.square.position.y = this.player.square.position.y;
-    this.representation = new Representation(this.square);
+    this.square.left = this.player.square.left;
+    this.square.top = this.player.square.top;
+    this.representation = new ObjectView(this.square);
     this.update();
   }
 

@@ -1,41 +1,33 @@
-class Map
-  rows: 20
-  cols: 40
+class Map extends Rect
+  width: 10
+  height: 10
 
-  constructor: ->
-    console.log "map: init"
+  constructor: (@width, @height) ->
+    @setWidth(@width)
+    @setHeight(@height)
+    @objects = []
 
   generate: (options = {}) =>
-    console.log "map: generate"
     @initCells()
     @generateTerrain()
 
   getCell: (x, y) =>
-    @cells[y][x]
+    @cells[@constrain(x, @width - 1)][@constrain(y, @height - 1)]
 
-  # private functions
-  # init cells array
+  # private
+  constrain: (coordinate, max) ->
+    Math.max(0, Math.min(max, Math.floor(coordinate)))
+
   initCells: ->
-    console.log "map: init cells"
-
     @cells = []
-    rownum = 0
-    while rownum < @rows
-      colnum = 0
-      @cells[rownum] = new Array(@cols)
-      while colnum < @cols
-        @cells[rownum][colnum] = new MapCell()
-        colnum++
-      rownum++
+    for x in [0...@width]
+      @cells[x] = column = new Array(@height)
+      for y in [0...@height]
+        column[y] = new Cell(x, y)
 
   # add some more interesting objects to map
   generateTerrain: ->
-    console.log "map: generateTerrain"
-    rownum = 0
-    while rownum < @rows
-      colnum = 0
-      while colnum < @cols
-        if (rownum % 4 == 3 || colnum % 4 == 3) && Math.random() < 0.5
-          @cells[rownum][colnum].passable = false
-        colnum++
-      rownum++
+    for x in [0...@width]
+      for y in [0...@height]
+        if (x % 4 == 3 || y % 4 == 3) && Math.random() < 0.5
+          @getCell(x, y).passable = false

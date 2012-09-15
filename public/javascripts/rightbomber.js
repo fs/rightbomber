@@ -8,19 +8,22 @@ Rightbomber = (function() {
     this.tick = __bind(this.tick, this);
 
     this.run = __bind(this.run, this);
-    console.log('init');
+
   }
 
+  Rightbomber.prototype.keyMap = {
+    d: 'right',
+    w: 'up',
+    a: 'left',
+    s: 'down'
+  };
+
   Rightbomber.prototype.run = function() {
-    var gameLoop, map, mapView, table;
-    console.log('run');
-    map = new Map;
+    var gameLoop, map;
+    map = new Map(30, 20);
     map.generate();
-    mapView = new MapView(map);
-    table = mapView.render();
-    $(document.body).append(table);
+    (new MapView(map)).update();
     this.keyboard = new Keyboard;
-    this.keyboard.activate();
     this.player = new Player(map);
     this.player2 = new Player(map);
     this.bombs = [];
@@ -29,40 +32,30 @@ Rightbomber = (function() {
   };
 
   Rightbomber.prototype.tick = function(timeDelta) {
-    var bomb, direction, key, _i, _j, _len, _len1, _ref, _ref1, _ref2;
-    this.player.moving = false;
-    _ref = ['right', 'up', 'left', 'down'];
-    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-      direction = _ref[_i];
-      if (this.keyboard.keys[direction]) {
-        this.player.moving = true;
-        this.player.direction = direction;
-      }
-    }
-    if (this.keyboard.keys['/']) {
+    var bomb, key, _i, _len, _ref, _results;
+    if (this.keyboard.isKeyPressed('/')) {
       this.bombs.push(this.player.placeBomb());
     }
-    _ref1 = this.bombs;
-    for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
-      bomb = _ref1[_j];
-      bomb.move(timeDelta);
+    key = this.keyboard.latestOf(['right', 'up', 'left', 'down']);
+    if ((this.player.moving = !!key)) {
+      this.player.direction = key;
     }
-    this.player.move(timeDelta);
-    this.player2.moving = false;
-    _ref2 = {
-      d: 'right',
-      w: 'up',
-      a: 'left',
-      s: 'down'
-    };
-    for (key in _ref2) {
-      direction = _ref2[key];
-      if (this.keyboard.keys[key]) {
-        this.player2.moving = true;
-        this.player2.direction = direction;
-      }
+    this.player.olderBy(timeDelta);
+    if (this.keyboard.isKeyPressed('/')) {
+      this.bombs.push(this.player2.placeBomb());
     }
-    return this.player2.move(timeDelta);
+    key = this.keyboard.latestOf(['d', 'w', 's', 'a']);
+    if ((this.player2.moving = !!key)) {
+      this.player2.direction = this.keyMap[key];
+    }
+    this.player2.olderBy(timeDelta);
+    _ref = this.bombs;
+    _results = [];
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      bomb = _ref[_i];
+      _results.push(bomb.move(timeDelta));
+    }
+    return _results;
   };
 
   return Rightbomber;

@@ -1,6 +1,7 @@
 class GameLoop
   constructor: (@loopFunction) ->
     @lastRunTime = @time()
+
   run: =>
     time = @time()
     delta = time - @lastRunTime
@@ -8,12 +9,6 @@ class GameLoop
 
     @loopFunction(delta / 1000.0) # seconds
 
-    window.requestAnimationFrame = window.webkitRequestAnimationFrame ||
-      window.mozRequestAnimationFrame ||
-      window.oRequestAnimationFrame ||
-      window.msRequestAnimationFrame ||
-      (callback, element) -> window.setTimeout(callback, 0)
-
-    requestAnimationFrame @run, document.body
+    setTimeout @run, 1
 
   time: -> (new Date).getTime()

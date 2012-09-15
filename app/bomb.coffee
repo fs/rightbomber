@@ -3,13 +3,12 @@ class Bomb
   square: null
 
   constructor: (@player) ->
-    @map = @player.map
-    @square = new Square(@map)
+    @square = new SquaredObject(@player)
     @square.size = 0.6
-    @square.position.x = @player.square.position.x
-    @square.position.y = @player.square.position.y
+    @square.left = @player.square.left
+    @square.top = @player.square.top
 
-    @representation = new Representation(@square)
+    @representation = new ObjectView(@square)
     @update()
 
   move: (timeDelta) =>

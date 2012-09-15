@@ -10,25 +10,28 @@ html, body {
 }
 
 .player {
-  border: 2px solid blue;
+  box-shadow:
+    0px 2px red inset,
+    2px 0px blue inset,
+    -2px 0px blue inset,
+    0px -2px blue inset;
   position: absolute;
   background: #fff;
 }
 
 .player.right {
-  border-right-color: red;
+  -webkit-transform: rotate(90deg);
 }
 
 .player.up {
-  border-top-color: red;
 }
 
 .player.left {
-  border-left-color: red;
+  -webkit-transform: rotate(-90deg);
 }
 
 .player.down {
-  border-bottom-color: red;
+  -webkit-transform: rotate(180deg);
 }
 
 #map {
@@ -36,7 +39,7 @@ html, body {
 }
 
 #map tr td {
-  outline: 1px solid #ddffdd;
+  /* outline: 1px solid #ddffdd; */
 }
 #map tr td.grass {
   background-color: #CCFFCC;

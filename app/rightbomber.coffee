@@ -1,20 +1,18 @@
 class Rightbomber
-  constructor: ->
-    console.log 'init'
+  keyMap:
+    d: 'right'
+    w: 'up'
+    a: 'left'
+    s: 'down'
+
 
   run: =>
-    console.log 'run'
-
-    map = new Map
+    map = new Map(30, 20)
     map.generate()
 
-    mapView = new MapView(map)
-    table = mapView.render()
-
-    $(document.body).append(table)
+    (new MapView(map)).update()
 
     @keyboard = new Keyboard
-    @keyboard.activate()
 
     @player = new Player(map) # controller
     @player2 = new Player(map) # controller
@@ -25,24 +23,20 @@ class Rightbomber
     gameLoop.run()
 
   tick: (timeDelta) =>
-    @player.moving = false
-    for direction in ['right', 'up', 'left', 'down']
-      if @keyboard.keys[direction]
-        @player.moving = true
-        @player.direction = direction
-
-    if @keyboard.keys['/']
+    if @keyboard.isKeyPressed('/')
       @bombs.push @player.placeBomb()
 
-    for bomb in @bombs
-      bomb.move(timeDelta)
+    key = @keyboard.latestOf(['right', 'up', 'left', 'down'])
+    if (@player.moving = !!key)
+      @player.direction = key
+    @player.olderBy(timeDelta)
 
-    @player.move(timeDelta)
+    if @keyboard.isKeyPressed('/')
+      @bombs.push @player2.placeBomb()
 
-    @player2.moving = false
-    for key, direction of {d: 'right', w: 'up', a: 'left', s: 'down'}
-      if @keyboard.keys[key]
-        @player2.moving = true
-        @player2.direction = direction
+    key = @keyboard.latestOf(['d', 'w', 's', 'a'])
+    if (@player2.moving = !!key)
+      @player2.direction = @keyMap[key]
+    @player2.olderBy(timeDelta)
 
-    @player2.move(timeDelta)
+    bomb.move(timeDelta) for bomb in @bombs

@@ -1,7 +1,8 @@
-class MapCell
+class Cell extends Rect
   passable: true
 
-  constructor: (@rownum, @colnum) ->
+  constructor: (x, y) ->
+    @moveBy(x, y)
 
   getType: =>
     if @passable
