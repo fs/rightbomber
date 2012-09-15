@@ -31,53 +31,101 @@ SquaredObject = (function(_super) {
   };
 
   SquaredObject.prototype.olderBy = function(timeDelta) {
-    var distance, step;
-    this.moved = false;
-    distance = this.velocity * timeDelta;
-    while (distance > this.size) {
-      if (this.move(this.size)) {
-        this.moved = true;
-        distance -= this.size;
+    var distance, distanceToGo;
+    distance = distanceToGo = this.velocity * timeDelta;
+    if (distance > 0) {
+      distance = this.sprint(distance);
+    }
+    if (distance > 0) {
+      distance = this.comeCloser(distance);
+    }
+    if (distance > 0) {
+      distance = this.cutCorners(distance);
+    }
+    return distance < distanceToGo;
+  };
+
+  SquaredObject.prototype.sprint = function(distance) {
+    var step;
+    step = this.size;
+    while (distance > step) {
+      if (this.move(step, this.direction)) {
+        distance -= step;
       } else {
         break;
       }
     }
-    if (distance > 0) {
-      distance = Math.min(this.size, distance);
-      step = distance;
-      while (Math.min(step, distance) > this.epsilon) {
-        if (this.move(step)) {
-          this.moved = true;
-          distance -= step;
-        } else {
-          step /= 2;
-        }
-      }
-    }
-    return this.moved;
+    return distance;
   };
 
-  SquaredObject.prototype.move = function(distance) {
+  SquaredObject.prototype.comeCloser = function(distance) {
+    var step;
+    distance = Math.min(this.size, distance);
+    step = distance;
+    while (Math.min(step, distance) > this.epsilon) {
+      if (this.move(step, this.direction)) {
+        distance -= step;
+      } else {
+        step /= 2;
+      }
+    }
+    return distance;
+  };
+
+  SquaredObject.prototype.cutCorners = function(distance) {
+    var direction, moved;
+    direction = this.rotateLeft(this.direction);
+    moved = this.move(distance, direction);
+    if (!moved) {
+      direction = this.rotateRight(this.direction);
+      moved = this.move(distance, direction);
+    }
+    if (moved) {
+      return 0;
+    } else {
+      return distance;
+    }
+  };
+
+  SquaredObject.prototype.move = function(distance, direction) {
     var dx, dy, movable;
-    dx = 0;
-    dy = 0;
-    if (this.direction === 0) {
-      dx = distance;
-    }
-    if (this.direction === 2) {
-      dx = -distance;
-    }
-    if (this.direction === 1) {
-      dy = distance;
-    }
-    if (this.direction === 3) {
-      dy = -distance;
-    }
+    dx = this.dx(distance, direction);
+    dy = this.dy(distance, direction);
     this.moveBy(dx, dy);
     if (!(movable = this.isMovable())) {
       this.moveBy(-dx, -dy);
     }
     return movable;
+  };
+
+  SquaredObject.prototype.dx = function(distance, direction) {
+    switch (direction) {
+      case 0:
+        return distance;
+      case 2:
+        return -distance;
+      default:
+        return 0;
+    }
+  };
+
+  SquaredObject.prototype.dy = function(distance, direction) {
+    switch (direction) {
+      case 1:
+        return distance;
+      case 3:
+        return -distance;
+      default:
+        return 0;
+    }
+  };
+
+  SquaredObject.prototype.rotateLeft = function(direction) {
+    return (direction + 5) % 4;
+  };
+
+  SquaredObject.prototype.rotateRight = function(direction) {
+    return (direction + 7) % 4;
   };
 
   SquaredObject.prototype.isMovable = function() {
