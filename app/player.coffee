@@ -19,7 +19,7 @@ class Player # controller
     @view = new ObjectView(@square)
     @update()
 
-  olderBy: (timeDelta) =>
+  olderBy: (timeDelta) ->
     if @moving
       @square.velocity = @velocity
       @square.direction = @directionMap[@direction]

@@ -17,6 +17,8 @@ class Rightbomber
     @player = new Player(map) # controller
     @bomb = new Bomb(map)
     @player2 = new Player(map) # controller
+    @player2.square.moveBy(2, 2)
+    @player2.update()
 
     gameLoop = new GameLoop(@tick)
     gameLoop.run()
@@ -31,5 +33,5 @@ class Rightbomber
     key = @keyboard.latestOf(['d', 'w', 's', 'a'])
     if (@player2.moving = !!key)
       @player2.direction = @keyMap[key]
-    
+
     @player2.olderBy(timeDelta)

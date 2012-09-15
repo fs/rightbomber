@@ -4,7 +4,7 @@ class ObjectView extends BaseView
 
   constructor: (@square) ->
 
-  update: =>
+  update: ->
     element = @getElement()
 
     x    = Math.round(@tileSize * @square.left)
