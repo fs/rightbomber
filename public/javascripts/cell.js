@@ -12,6 +12,7 @@ Cell = (function(_super) {
 
   function Cell(x, y) {
     this.getType = __bind(this.getType, this);
+    this.objects = [];
     this.moveBy(x, y);
   }
 

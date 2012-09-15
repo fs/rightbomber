@@ -12,7 +12,9 @@ class Map extends Rect
     @generateTerrain()
 
   getCell: (x, y) =>
-    @cells[@constrain(x, @width - 1)][@constrain(y, @height - 1)]
+    cell = @cells[@constrain(x, @width - 1)][@constrain(y, @height - 1)]
+    cell.objects = @objects
+    cell
 
   # private
   constrain: (coordinate, max) ->

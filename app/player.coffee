@@ -1,37 +1,54 @@
-class Player # controller
-  map: null
-  square: null
-
+class Player extends SquaredObject
   moving: false
-  velocity: 8 # grid element per second
-  direction: 'up'
+  size: 0.5
+  velocity: 4
 
   directionMap:
     right: 0
-    up   : 3
-    left : 2
     down : 1
+    left : 2
+    up   : 3
 
   constructor: (@map) -> # @renderer = new PlayerRenderer
-    @square = new SquaredObject(@map)
-    @square.setSize(0.5)
+    super(@map)
 
-    @view = new ObjectView(@square)
+    @view = new ObjectView(@)
     @update()
 
+  setDirection: (@directionKey) ->
+    @direction = @directionMap[@directionKey]
+
   olderBy: (timeDelta) =>
-    if @moving
-      @square.velocity = @velocity
-      @square.direction = @directionMap[@direction]
-      if @square.olderBy(timeDelta)
-        @update()
+    if @moving && super(timeDelta)
+      @update()
+
+  plantBomb: =>
+    unless @lastBomb
+      console.log 'plant bomb'
+      @lastBomb = new Bomb(@map, @) # adding to map and display
+      # @onBomb = true
+
 
   getState: ->
     state = ['player']
     state.push 'moving' if @moving
-    state.push @direction
+    state.push @directionKey
     state
 
-  update: ->
+  update: =>
     @view.state = @getState()
     @view.update()
+
+  intersectsWith: (object) ->
+    intersects = super(object)
+
+    if intersects
+      if @lastBomb == object
+        return false
+    else
+      @lastBomb = null if @lastBomb == object
+
+    return intersects
+
+
+

@@ -26,7 +26,7 @@ SquaredObject = (function(_super) {
 
     this.setSize = __bind(this.setSize, this);
 
-    this.map.objects << this;
+    this.map.objects.push(this);
     this.setSize(this.size);
   }
 
@@ -86,7 +86,7 @@ SquaredObject = (function(_super) {
   };
 
   SquaredObject.prototype.isMovable = function() {
-    var cell, cells, _i, _len;
+    var cell, cells, object, _i, _j, _len, _len1, _ref;
     if (!this.map.contains(this)) {
       return false;
     }
@@ -96,8 +96,19 @@ SquaredObject = (function(_super) {
       if (!cell.passable) {
         return false;
       }
+      _ref = cell.objects;
+      for (_j = 0, _len1 = _ref.length; _j < _len1; _j++) {
+        object = _ref[_j];
+        if (this.intersectsWith(object)) {
+          return false;
+        }
+      }
     }
     return true;
+  };
+
+  SquaredObject.prototype.intersectsWith = function(object) {
+    return this !== object && SquaredObject.__super__.intersectsWith.call(this, object);
   };
 
   return SquaredObject;

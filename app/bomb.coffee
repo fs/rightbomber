@@ -1,17 +1,27 @@
-class Bomb
-  map: null
-  square: null
+class Bomb extends SquaredObject
+  size: 0.6
+  TTL: 3.0 # sec
 
-  constructor: (@map) ->
-    @square = new SquaredObject(@map)
-    @square.size = 0.6
-    @square.left = 5.2
-    @square.top = 2.2
+  constructor: (@map, @player) ->
+    super(@map)
 
-    @representation = new ObjectView(@square)
+    @moveBy(@player.left, @player.top)
+
+    @exploded = false
+    @representation = new ObjectView(@)
     @update()
+
+  olderBy: (timeDelta) =>
+    if @TTL < 0
+      @exploded = true
+      @update()
+    else
+      @TTL -= timeDelta
 
   update: ->
     @representation.state = ['bomb']
+    @representation.state.push 'exploded' if @exploded
     @representation.update()
 
+  intersectsWith: (object) ->
+    @player != object && super(object)
