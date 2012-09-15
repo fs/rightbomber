@@ -22,8 +22,11 @@ class Player extends SquaredObject
     if @moving && super(timeDelta)
       @update()
 
-  getBomb: =>
-    new Bomb(@map, @)
+  plantBomb: =>
+    unless @lastBomb
+      @lastBomb = new Bomb(@map, @) # adding to map and display
+      # @onBomb = true
+      console.log 'plant bomb'
 
   getState: ->
     state = ['player']
@@ -34,3 +37,17 @@ class Player extends SquaredObject
   update: =>
     @view.state = @getState()
     @view.update()
+
+  intersectsWith: (object) ->
+    intersects = super(object)
+
+    if intersects
+      if @lastBomb == object
+        return false
+    else
+      @lastBomb = null if @lastBomb == object
+
+    return intersects
+
+
+

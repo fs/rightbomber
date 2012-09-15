@@ -25,7 +25,7 @@ Player = (function(_super) {
     this.map = map;
     this.update = __bind(this.update, this);
 
-    this.getBomb = __bind(this.getBomb, this);
+    this.plantBomb = __bind(this.plantBomb, this);
 
     this.olderBy = __bind(this.olderBy, this);
 
@@ -45,8 +45,11 @@ Player = (function(_super) {
     }
   };
 
-  Player.prototype.getBomb = function() {
-    return new Bomb(this.map, this);
+  Player.prototype.plantBomb = function() {
+    if (!this.lastBomb) {
+      this.lastBomb = new Bomb(this.map, this);
+      return console.log('plant bomb');
+    }
   };
 
   Player.prototype.getState = function() {
@@ -62,6 +65,21 @@ Player = (function(_super) {
   Player.prototype.update = function() {
     this.view.state = this.getState();
     return this.view.update();
+  };
+
+  Player.prototype.intersectsWith = function(object) {
+    var intersects;
+    intersects = Player.__super__.intersectsWith.call(this, object);
+    if (intersects) {
+      if (this.lastBomb === object) {
+        return false;
+      }
+    } else {
+      if (this.lastBomb === object) {
+        this.lastBomb = null;
+      }
+    }
+    return intersects;
   };
 
   return Player;

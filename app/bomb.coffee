@@ -1,14 +1,15 @@
 class Bomb extends SquaredObject
+  size: 0.6
 
   constructor: (@map, @player) ->
     super(@map)
-    @setSize(0.6)
+
     @moveBy(@player.left, @player.top)
 
     @representation = new ObjectView(@)
+    @update()
 
   olderBy: (timeDelta) =>
-    @update()
 
   update: ->
     @representation.state = ['bomb']

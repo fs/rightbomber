@@ -8,20 +8,20 @@ Bomb = (function(_super) {
 
   __extends(Bomb, _super);
 
+  Bomb.prototype.size = 0.6;
+
   function Bomb(map, player) {
     this.map = map;
     this.player = player;
     this.olderBy = __bind(this.olderBy, this);
 
     Bomb.__super__.constructor.call(this, this.map);
-    this.setSize(0.6);
     this.moveBy(this.player.left, this.player.top);
     this.representation = new ObjectView(this);
+    this.update();
   }
 
-  Bomb.prototype.olderBy = function(timeDelta) {
-    return this.update();
-  };
+  Bomb.prototype.olderBy = function(timeDelta) {};
 
   Bomb.prototype.update = function() {
     this.representation.state = ['bomb'];

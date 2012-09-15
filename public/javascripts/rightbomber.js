@@ -36,8 +36,8 @@ Rightbomber = (function() {
   Rightbomber.prototype.tick = function(timeDelta) {
     var bomb, key, _i, _len, _ref, _results;
     if (this.keyboard.isKeyPressed('/')) {
-      bomb = this.player.getBomb();
-      if (bomb.isMovable()) {
+      bomb = this.player.plantBomb();
+      if (bomb != null) {
         this.bombs.push(bomb);
       }
     }
@@ -48,7 +48,7 @@ Rightbomber = (function() {
     this.player.olderBy(timeDelta);
     key = this.keyboard.latestOf(['d', 'w', 's', 'a']);
     if ((this.player2.moving = !!key)) {
-      this.player2.direction = this.keyMap[key];
+      this.player2.setDirection(this.keyMap[key]);
     }
     this.player2.olderBy(timeDelta);
     _ref = this.bombs;
