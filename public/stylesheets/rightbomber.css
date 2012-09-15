@@ -7,6 +7,9 @@ html, body {
   position: absolute;
   background: rgba(255, 0, 0, .25);
 }
+.bomb.exploded {
+  background: red;
+}
 
 .player {
   box-shadow:

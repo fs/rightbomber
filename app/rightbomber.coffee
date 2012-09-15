@@ -39,4 +39,5 @@ class Rightbomber
       @player2.setDirection(@keyMap[key])
     @player2.olderBy(timeDelta)
 
-    bomb.olderBy(timeDelta) for bomb in @bombs
+    for bomb in @bombs
+      bomb.olderBy(timeDelta)

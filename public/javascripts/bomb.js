@@ -10,6 +10,8 @@ Bomb = (function(_super) {
 
   Bomb.prototype.size = 0.6;
 
+  Bomb.prototype.TTL = 3.0;
+
   function Bomb(map, player) {
     this.map = map;
     this.player = player;
@@ -17,14 +19,25 @@ Bomb = (function(_super) {
 
     Bomb.__super__.constructor.call(this, this.map);
     this.moveBy(this.player.left, this.player.top);
+    this.exploded = false;
     this.representation = new ObjectView(this);
     this.update();
   }
 
-  Bomb.prototype.olderBy = function(timeDelta) {};
+  Bomb.prototype.olderBy = function(timeDelta) {
+    if (this.TTL < 0) {
+      this.exploded = true;
+      return this.update();
+    } else {
+      return this.TTL -= timeDelta;
+    }
+  };
 
   Bomb.prototype.update = function() {
     this.representation.state = ['bomb'];
+    if (this.exploded) {
+      this.representation.state.push('exploded');
+    }
     return this.representation.update();
   };
 

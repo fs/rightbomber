@@ -47,8 +47,8 @@ Player = (function(_super) {
 
   Player.prototype.plantBomb = function() {
     if (!this.lastBomb) {
-      this.lastBomb = new Bomb(this.map, this);
-      return console.log('plant bomb');
+      console.log('plant bomb');
+      return this.lastBomb = new Bomb(this.map, this);
     }
   };
 

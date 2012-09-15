@@ -24,9 +24,10 @@ class Player extends SquaredObject
 
   plantBomb: =>
     unless @lastBomb
+      console.log 'plant bomb'
       @lastBomb = new Bomb(@map, @) # adding to map and display
       # @onBomb = true
-      console.log 'plant bomb'
+
 
   getState: ->
     state = ['player']
