@@ -1,15 +1,11 @@
-class Bomb
-  map: null
-  square: null
+class Bomb extends SquaredObject
 
-  constructor: (@player) ->
-    @square = new SquaredObject(@player)
-    @square.size = 0.6
-    @square.left = @player.square.left
-    @square.top = @player.square.top
+  constructor: (@map, @player) ->
+    super(@map)
+    @setSize(0.6)
+    @moveBy(@player.square.left, @player.square.top)
 
-    @representation = new ObjectView(@square)
-    # @update()
+    @representation = new ObjectView(@)
 
   olderBy: (timeDelta) =>
     @update()
@@ -18,3 +14,6 @@ class Bomb
     @representation.state = ['bomb']
     @representation.update()
 
+  intersectsWith: (object) ->
+    console.log 'int with bo'
+    @player != object && super(object)

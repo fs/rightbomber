@@ -8,7 +8,7 @@ class SquaredObject extends Rect
   epsilon: 0.001
 
   constructor: (@map) ->
-    @map.objects << @
+    @map.objects.push @
     @setSize(@size)
 
   setSize: (newSize) =>
@@ -67,4 +67,10 @@ class SquaredObject extends Rect
     for cell in cells
       return false unless cell.passable
 
+      for object in cell.objects
+        return false if @intersectsWith(object)
+
     return true
+
+  intersectsWith: (object) ->
+    @ != object && super(object)

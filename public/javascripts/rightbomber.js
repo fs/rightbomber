@@ -26,6 +26,8 @@ Rightbomber = (function() {
     this.keyboard = new Keyboard;
     this.player = new Player(map);
     this.player2 = new Player(map);
+    this.player2.moveBy(2, 2);
+    this.player2.update();
     this.bombs = [];
     gameLoop = new GameLoop(this.tick);
     return gameLoop.run();
@@ -35,13 +37,14 @@ Rightbomber = (function() {
     var bomb, key, _i, _len, _ref, _results;
     if (this.keyboard.isKeyPressed('/')) {
       bomb = this.player.getBomb();
-      if (bomb.square.isMovable) {
+      if (bomb.isMovable()) {
         this.bombs.push(bomb);
+        console.log('bomb');
       }
     }
     key = this.keyboard.latestOf(['right', 'up', 'left', 'down']);
     if ((this.player.moving = !!key)) {
-      this.player.direction = key;
+      this.player.setDirection(key);
     }
     this.player.olderBy(timeDelta);
     key = this.keyboard.latestOf(['d', 'w', 's', 'a']);

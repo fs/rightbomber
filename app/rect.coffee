@@ -27,7 +27,7 @@ class Rect
     @setWidth(newSize)
     @setHeight(newSize)
 
-  instersectsWith: (rect) =>
+  intersectsWith: (rect) =>
     clear =
       (@left > rect.right) ||
       (@right < rect.left) ||

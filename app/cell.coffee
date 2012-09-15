@@ -2,6 +2,7 @@ class Cell extends Rect
   passable: true
 
   constructor: (x, y) ->
+    @objects = []
     @moveBy(x, y)
 
   getType: =>

@@ -5,7 +5,6 @@ class Rightbomber
     a: 'left'
     s: 'down'
 
-
   run: =>
     map = new Map(30, 20)
     map.generate()
@@ -14,8 +13,11 @@ class Rightbomber
 
     @keyboard = new Keyboard
 
-    @player = new Player(map) # controller
-    @player2 = new Player(map) # controller
+    @player = new Player(map)
+
+    @player2 = new Player(map)
+    @player2.moveBy(2, 2)
+    @player2.update()
 
     @bombs = []
 
@@ -25,12 +27,13 @@ class Rightbomber
   tick: (timeDelta) =>
     if @keyboard.isKeyPressed('/')
       bomb = @player.getBomb()
-      if bomb.square.isMovable
+      if bomb.isMovable()
         @bombs.push(bomb)
+        console.log 'bomb'
 
     key = @keyboard.latestOf(['right', 'up', 'left', 'down'])
     if (@player.moving = !!key)
-      @player.direction = key
+      @player.setDirection(key)
     @player.olderBy(timeDelta)
 
     key = @keyboard.latestOf(['d', 'w', 's', 'a'])
