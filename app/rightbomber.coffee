@@ -24,19 +24,18 @@ class Rightbomber
 
   tick: (timeDelta) =>
     if @keyboard.isKeyPressed('/')
-      @bombs.push @player.placeBomb()
+      bomb = @player.getBomb()
+      if bomb.square.isMovable
+        @bombs.push(bomb)
 
     key = @keyboard.latestOf(['right', 'up', 'left', 'down'])
     if (@player.moving = !!key)
       @player.direction = key
     @player.olderBy(timeDelta)
 
-    if @keyboard.isKeyPressed('/')
-      @bombs.push @player2.placeBomb()
-
     key = @keyboard.latestOf(['d', 'w', 's', 'a'])
     if (@player2.moving = !!key)
       @player2.direction = @keyMap[key]
     @player2.olderBy(timeDelta)
 
-    bomb.move(timeDelta) for bomb in @bombs
+    bomb.olderBy(timeDelta) for bomb in @bombs

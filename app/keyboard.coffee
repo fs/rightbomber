@@ -9,6 +9,7 @@ class Keyboard
     83: 's'
     65: 'a'
     68: 'd'
+    86: 'v'
 
   constructor: ->
     @keys = {}
@@ -27,6 +28,7 @@ class Keyboard
 
   keyDown: (event) =>
     keyName = @keyNames[event.keyCode]
+    # console.log(event.keyCode) unless keyName
     unless @keys[keyName]
       @keys[keyName] = @time()
 

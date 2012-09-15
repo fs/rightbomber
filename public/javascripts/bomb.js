@@ -10,17 +10,18 @@ Bomb = (function() {
 
   function Bomb(player) {
     this.player = player;
-    this.move = __bind(this.move, this);
+    this.olderBy = __bind(this.olderBy, this);
 
     this.square = new SquaredObject(this.player);
     this.square.size = 0.6;
     this.square.left = this.player.square.left;
     this.square.top = this.player.square.top;
     this.representation = new ObjectView(this.square);
-    this.update();
   }
 
-  Bomb.prototype.move = function(timeDelta) {};
+  Bomb.prototype.olderBy = function(timeDelta) {
+    return this.update();
+  };
 
   Bomb.prototype.update = function() {
     this.representation.state = ['bomb'];

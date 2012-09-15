@@ -13,7 +13,8 @@ Keyboard = (function() {
     87: 'w',
     83: 's',
     65: 'a',
-    68: 'd'
+    68: 'd',
+    86: 'v'
   };
 
   function Keyboard() {

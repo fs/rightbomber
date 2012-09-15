@@ -26,7 +26,7 @@ class Player # controller
       if @square.olderBy(timeDelta)
         @update()
 
-  placeBomb: =>
+  getBomb: =>
     new Bomb(@)
 
   getState: ->

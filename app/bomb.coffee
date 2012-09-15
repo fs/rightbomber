@@ -9,9 +9,10 @@ class Bomb
     @square.top = @player.square.top
 
     @representation = new ObjectView(@square)
-    @update()
+    # @update()
 
-  move: (timeDelta) =>
+  olderBy: (timeDelta) =>
+    @update()
 
   update: ->
     @representation.state = ['bomb']
