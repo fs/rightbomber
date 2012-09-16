@@ -39,25 +39,17 @@ class Rect
   intersectionArea: (rect) ->
     return 0 unless @intersectsWith(rect)
 
-    x1 = @getInsideCornerX(rect)
-    y1 = @getInsideCornerY(rect)
+    # x1 = if @left <= rect.left <= @right then rect.left else rect.right
+    # y1 = if @top <= rect.top <= @bottom then rect.top else rect.bottom
 
-    x2 = rect.getInsideCornerX(@)
-    y2 = rect.getInsideCornerY(@)
+    # x2 = if @left < rect.left < @right then rect.left else rect.right
+    # y2 = if @top < rect.top < @bottom then rect.top else rect.bottom
 
-    Math.abs( (x1 - x2) * (y1 - y2) )
+    # TODO: rewrite it with `if`s
+    xes = [@left, rect.left, @right, rect.right].sort()
+    ys =[@top, rect.top, @bottom, rect.bottom].sort()
 
-  getInsideCornerX: (rect) ->
-    if @left < rect.left < @right
-      rect.left
-    else
-      rect.right
-
-  getInsideCornerY: (rect) ->
-    if @top < rect.top < @bottom
-      rect.top
-    else
-      rect.bottom
+    Math.abs( (xes[1] - xes[2]) * (ys[1] - ys[2]) )
 
   contains: (rect) ->
     @top    <= rect.top    &&
