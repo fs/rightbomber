@@ -55,6 +55,8 @@ class SquaredObject extends Rect
 
     @moveBy(dx, dy)
 
+    impactArea = @blockedArea()
+
     left = @rotateLeft(@direction)
     leftArea = @blockedAreaAt(distance, left)
 
@@ -63,10 +65,11 @@ class SquaredObject extends Rect
 
     @moveBy(-dx, -dy)
 
-    direction = if leftArea > rightArea then right else left
+    if impactArea / distance < @size
+      direction = if leftArea > rightArea then right else left
 
-    if @move(distance, direction)
-      return 0
+      if @move(distance, direction)
+        return 0
 
     distance
 

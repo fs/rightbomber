@@ -1,6 +1,6 @@
 class Player extends SquaredObject
   moving: false
-  size: 0.5
+  size: 0.75
   velocity: 4 # grid element per second
   direction: 'up'
 

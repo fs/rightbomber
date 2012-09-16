@@ -1,5 +1,5 @@
 class Bomb extends SquaredObject
-  size: 0.6
+  size: 0.5
   TTL: 3.0 # sec
 
   constructor: (@map, @player) ->

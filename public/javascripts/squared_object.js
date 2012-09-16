@@ -73,18 +73,21 @@ SquaredObject = (function(_super) {
   };
 
   SquaredObject.prototype.cutCorners = function(distance) {
-    var direction, dx, dy, left, leftArea, right, rightArea;
+    var direction, dx, dy, impactArea, left, leftArea, right, rightArea;
     dx = this.dx(distance, this.direction);
     dy = this.dy(distance, this.direction);
     this.moveBy(dx, dy);
+    impactArea = this.blockedArea();
     left = this.rotateLeft(this.direction);
     leftArea = this.blockedAreaAt(distance, left);
     right = this.rotateRight(this.direction);
     rightArea = this.blockedAreaAt(distance, right);
     this.moveBy(-dx, -dy);
-    direction = leftArea > rightArea ? right : left;
-    if (this.move(distance, direction)) {
-      return 0;
+    if (impactArea / distance < this.size) {
+      direction = leftArea > rightArea ? right : left;
+      if (this.move(distance, direction)) {
+        return 0;
+      }
     }
     return distance;
   };

@@ -8,7 +8,7 @@ Bomb = (function(_super) {
 
   __extends(Bomb, _super);
 
-  Bomb.prototype.size = 0.6;
+  Bomb.prototype.size = 0.5;
 
   Bomb.prototype.TTL = 3.0;
 
