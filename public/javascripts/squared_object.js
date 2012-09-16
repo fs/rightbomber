@@ -143,12 +143,8 @@ SquaredObject = (function(_super) {
     return (direction + 1) % 4;
   };
 
-  SquaredObject.prototype.intersectsWith = function(rect) {
-    if (this === rect) {
-      return false;
-    } else {
-      return SquaredObject.__super__.intersectsWith.call(this, rect);
-    }
+  SquaredObject.prototype.intersectsWith = function(object) {
+    return this !== object && SquaredObject.__super__.intersectsWith.call(this, object);
   };
 
   SquaredObject.prototype.cells = function() {

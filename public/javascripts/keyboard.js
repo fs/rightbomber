@@ -9,10 +9,12 @@ Keyboard = (function() {
     40: 'down',
     37: 'left',
     39: 'right',
+    191: '/',
     87: 'w',
     83: 's',
     65: 'a',
-    68: 'd'
+    68: 'd',
+    86: 'v'
   };
 
   function Keyboard() {
@@ -39,6 +41,10 @@ Keyboard = (function() {
     return latest;
   };
 
+  Keyboard.prototype.isKeyPressed = function(keyName) {
+    return !!this.keys[keyName];
+  };
+
   Keyboard.prototype.keyDown = function(event) {
     var keyName;
     keyName = this.keyNames[event.keyCode];
@@ -48,7 +54,9 @@ Keyboard = (function() {
   };
 
   Keyboard.prototype.keyUp = function(event) {
-    return this.keys[this.keyNames[event.keyCode]] = 0;
+    var keyName;
+    keyName = this.keyNames[event.keyCode];
+    return this.keys[keyName] = 0;
   };
 
   Keyboard.prototype.time = function() {

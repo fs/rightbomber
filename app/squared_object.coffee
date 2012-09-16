@@ -119,11 +119,8 @@ class SquaredObject extends Rect
   rotateRight: (direction) ->
     (direction + 1) % 4
 
-  intersectsWith: (rect) ->
-    if @ == rect
-      false
-    else
-      super(rect)
+  intersectsWith: (object) ->
+    @ != object && super(object)
 
   cells: ->
     [
