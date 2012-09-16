@@ -14,7 +14,7 @@ BaseView = (function() {
   BaseView.prototype.getElement = function() {
     if (!this.element) {
       this.element = $(this.baseElement);
-      $(document.body).append(this.element);
+      $('#game').append(this.element);
     }
     return this.element;
   };

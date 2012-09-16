@@ -3,6 +3,18 @@ html, body {
   padding: 0;
 }
 
+body {
+  text-align: center;
+  background-color: #bbb;
+}
+
+#game {
+  display: inline-block;
+  position: relative;
+  margin-top: 25px;
+  border: 2px solid #ccc;
+}
+
 .bomb {
   position: absolute;
   background: rgba(255, 0, 0, .25);

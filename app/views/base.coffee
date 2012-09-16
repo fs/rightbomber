@@ -6,5 +6,5 @@ class BaseView
   getElement: ->
     unless @element
       @element = $ @baseElement
-      $(document.body).append(@element)
+      $('#game').append(@element)
     @element
