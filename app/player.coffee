@@ -14,7 +14,7 @@ class Player # controller
 
   constructor: (@map) -> # @renderer = new PlayerRenderer
     @square = new SquaredObject(@map)
-    @square.setSize(0.5)
+    @square.setSize(0.75)
 
     @view = new ObjectView(@square)
     @update()

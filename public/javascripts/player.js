@@ -23,7 +23,7 @@ Player = (function() {
   function Player(map) {
     this.map = map;
     this.square = new SquaredObject(this.map);
-    this.square.setSize(0.5);
+    this.square.setSize(0.75);
     this.view = new ObjectView(this.square);
     this.update();
   }
