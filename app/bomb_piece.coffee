@@ -6,7 +6,9 @@ class BombPiece extends SquaredObject
     super(@bomb.map)
 
     @moveBy(@bomb.left, @bomb.top)
-    @velocity = Math.random() * 20
+
+    @maxVelocity = Math.random() * 10 + 5
+    @velocity = @maxVelocity
 
     @direction = 4*Math.random()
     @direction = 0 if @direction == 4
@@ -15,10 +17,20 @@ class BombPiece extends SquaredObject
     @update()
 
   olderBy: (timeDelta) =>
+    @velocity = @velocity - 0.1 # or * 0.98
+    @setSize(@size / 1.01) # if @size < 1
+
+    if @velocity < @epsilon
+      @velocity = 0
+
     if super(timeDelta)
+      @update()
+    else if @velocity > 0
+      @velocity = 0
       @update()
 
   update: ->
+    @representation.opacity = @velocity / @maxVelocity
     @representation.state = ['bomb-piece']
     @representation.update()
 

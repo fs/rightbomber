@@ -69,6 +69,11 @@ Player = (function(_super) {
   Player.prototype.intersectsWith = function(object) {
     var intersects;
     intersects = Player.__super__.intersectsWith.call(this, object);
+    if (object instanceof BombPiece) {
+      if (object.velocity === 0) {
+        return false;
+      }
+    }
     if (object instanceof Bomb) {
       if (intersects) {
         if (object === this.lastBomb || object.exploded) {

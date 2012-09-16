@@ -18,7 +18,8 @@ BombPiece = (function(_super) {
 
     BombPiece.__super__.constructor.call(this, this.bomb.map);
     this.moveBy(this.bomb.left, this.bomb.top);
-    this.velocity = Math.random() * 20;
+    this.maxVelocity = Math.random() * 10 + 5;
+    this.velocity = this.maxVelocity;
     this.direction = 4 * Math.random();
     if (this.direction === 4) {
       this.direction = 0;
@@ -28,12 +29,21 @@ BombPiece = (function(_super) {
   }
 
   BombPiece.prototype.olderBy = function(timeDelta) {
+    this.velocity = this.velocity - 0.1;
+    this.setSize(this.size / 1.01);
+    if (this.velocity < this.epsilon) {
+      this.velocity = 0;
+    }
     if (BombPiece.__super__.olderBy.call(this, timeDelta)) {
+      return this.update();
+    } else if (this.velocity > 0) {
+      this.velocity = 0;
       return this.update();
     }
   };
 
   BombPiece.prototype.update = function() {
+    this.representation.opacity = this.velocity / this.maxVelocity;
     this.representation.state = ['bomb-piece'];
     return this.representation.update();
   };
