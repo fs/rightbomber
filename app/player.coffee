@@ -25,7 +25,7 @@ class Player extends SquaredObject
   plantBomb: =>
     unless @lastBomb
       console.log 'plant bomb'
-      @lastBomb = new Bomb(@map, @) # adding to map and display
+      @lastBomb = new Bomb(@) # adding to map and display
       # @onBomb = true
 
 
@@ -42,11 +42,13 @@ class Player extends SquaredObject
   intersectsWith: (object) ->
     intersects = super(object)
 
-    if intersects
-      if @lastBomb == object
-        return false
-    else
-      @lastBomb = null if @lastBomb == object
+    if object instanceof Bomb
+      if intersects
+        if object == @lastBomb or object.exploded
+          return false
+      else
+        if object == @lastBomb
+          @lastBomb = null
 
     return intersects
 

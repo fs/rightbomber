@@ -48,7 +48,7 @@ Player = (function(_super) {
   Player.prototype.plantBomb = function() {
     if (!this.lastBomb) {
       console.log('plant bomb');
-      return this.lastBomb = new Bomb(this.map, this);
+      return this.lastBomb = new Bomb(this);
     }
   };
 
@@ -70,13 +70,15 @@ Player = (function(_super) {
   Player.prototype.intersectsWith = function(object) {
     var intersects;
     intersects = Player.__super__.intersectsWith.call(this, object);
-    if (intersects) {
-      if (this.lastBomb === object) {
-        return false;
-      }
-    } else {
-      if (this.lastBomb === object) {
-        this.lastBomb = null;
+    if (object instanceof Bomb) {
+      if (intersects) {
+        if (object === this.lastBomb || object.exploded) {
+          return false;
+        }
+      } else {
+        if (object === this.lastBomb) {
+          this.lastBomb = null;
+        }
       }
     }
     return intersects;
