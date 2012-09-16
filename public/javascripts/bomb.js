@@ -12,24 +12,24 @@ Bomb = (function(_super) {
 
   Bomb.prototype.TTL = 3.0;
 
-  function Bomb(map, player) {
-    this.map = map;
+  function Bomb(player) {
     this.player = player;
     this.olderBy = __bind(this.olderBy, this);
 
-    Bomb.__super__.constructor.call(this, this.map);
-    this.moveBy(this.player.left, this.player.top);
     this.exploded = false;
+    this.timer = this.TTL;
+    Bomb.__super__.constructor.call(this, this.player.map);
+    this.moveBy(this.player.left, this.player.top);
     this.representation = new ObjectView(this);
     this.update();
   }
 
   Bomb.prototype.olderBy = function(timeDelta) {
-    if (this.TTL < 0) {
+    if (!this.exploded && this.timer < 0) {
       this.exploded = true;
       return this.update();
     } else {
-      return this.TTL -= timeDelta;
+      return this.timer -= timeDelta;
     }
   };
 
