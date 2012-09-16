@@ -2,21 +2,28 @@ class Bomb extends SquaredObject
   size: 0.5
   TTL: 3.0 # sec
 
-  constructor: (@map, @player) ->
-    super(@map)
+  constructor: (@player) ->
+    @exploded = false
+    @timer = @TTL
+
+    super(@player.map)
 
     @moveBy(@player.left, @player.top)
-
-    @exploded = false
     @representation = new ObjectView(@)
     @update()
 
   olderBy: (timeDelta) =>
-    if @TTL < 0
-      @exploded = true
+    if !@exploded and @timer < 0
+      @explode()
       @update()
     else
-      @TTL -= timeDelta
+      @timer -= timeDelta
+
+  explode: ->
+    @exploded = true
+
+    for i in [0..50]
+      piece = new BombPiece(@)
 
   update: ->
     @representation.state = ['bomb']

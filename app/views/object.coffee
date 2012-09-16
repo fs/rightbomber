@@ -13,6 +13,10 @@ class ObjectView extends BaseView
 
     element.attr class: @state.join ' '
 
+    if @opacity?
+      element.css
+        opacity: @opacity
+
     element.css
       left  : x + 'px'
       top   : y + 'px'

@@ -24,6 +24,11 @@ ObjectView = (function(_super) {
     element.attr({
       "class": this.state.join(' ')
     });
+    if (this.opacity != null) {
+      element.css({
+        opacity: this.opacity
+      });
+    }
     return element.css({
       left: x + 'px',
       top: y + 'px',

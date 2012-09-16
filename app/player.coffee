@@ -25,7 +25,7 @@ class Player extends SquaredObject
 
   plantBomb: =>
     unless @lastBomb
-      @lastBomb = new Bomb(@map, @) # adding to map and display
+      @lastBomb = new Bomb(@) # adding to map and display
 
   getState: ->
     state = ['player']
@@ -40,10 +40,17 @@ class Player extends SquaredObject
   intersectsWith: (object) ->
     intersects = super(object)
 
-    if intersects
-      if @lastBomb == object
+    # kludge
+    if object instanceof BombPiece
+      if object.velocity == 0
         return false
-    else
-      @lastBomb = null if @lastBomb == object
+
+    if object instanceof Bomb
+      if intersects
+        if object == @lastBomb or object.exploded
+          return false
+      else
+        if object == @lastBomb
+          @lastBomb = null
 
     return intersects

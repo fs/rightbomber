@@ -64,7 +64,7 @@ Map = (function(_super) {
         var _j, _ref1, _results1;
         _results1 = [];
         for (y = _j = 0, _ref1 = this.height; 0 <= _ref1 ? _j < _ref1 : _j > _ref1; y = 0 <= _ref1 ? ++_j : --_j) {
-          if ((x % 4 === 3 || y % 4 === 3) && Math.random() < 0.5) {
+          if ((x % 4 === 3 || y % 4 === 3) && Math.random() < 0.25) {
             _results1.push(this.getCell(x, y).passable = false);
           } else {
             _results1.push(void 0);
