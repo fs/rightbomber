@@ -111,25 +111,11 @@ SquaredObject = (function(_super) {
   };
 
   SquaredObject.prototype.dx = function(distance, direction) {
-    switch (direction) {
-      case 0:
-        return distance;
-      case 2:
-        return -distance;
-      default:
-        return 0;
-    }
+    return distance * Math.cos(direction * Math.PI / 2);
   };
 
   SquaredObject.prototype.dy = function(distance, direction) {
-    switch (direction) {
-      case 1:
-        return distance;
-      case 3:
-        return -distance;
-      default:
-        return 0;
-    }
+    return distance * Math.sin(direction * Math.PI / 2);
   };
 
   SquaredObject.prototype.rotateLeft = function(direction) {

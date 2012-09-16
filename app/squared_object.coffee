@@ -94,22 +94,10 @@ class SquaredObject extends Rect
     area
 
   dx: (distance, direction) ->
-    switch direction
-      when 0
-        distance
-      when 2
-        -distance
-      else
-        0
+    distance * Math.cos(direction * Math.PI / 2)
 
   dy: (distance, direction) ->
-    switch direction
-      when 1
-        distance
-      when 3
-        -distance
-      else
-        0
+    distance * Math.sin(direction * Math.PI / 2)
 
   rotateLeft: (direction) ->
     (direction + 3) % 4

@@ -26,11 +26,21 @@ Bomb = (function(_super) {
 
   Bomb.prototype.olderBy = function(timeDelta) {
     if (!this.exploded && this.timer < 0) {
-      this.exploded = true;
+      this.explode();
       return this.update();
     } else {
       return this.timer -= timeDelta;
     }
+  };
+
+  Bomb.prototype.explode = function() {
+    var i, piece, _i, _results;
+    this.exploded = true;
+    _results = [];
+    for (i = _i = 0; _i <= 50; i = ++_i) {
+      _results.push(piece = new BombPiece(this));
+    }
+    return _results;
   };
 
   Bomb.prototype.update = function() {

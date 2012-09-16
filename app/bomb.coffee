@@ -14,10 +14,16 @@ class Bomb extends SquaredObject
 
   olderBy: (timeDelta) =>
     if !@exploded and @timer < 0
-      @exploded = true
+      @explode()
       @update()
     else
       @timer -= timeDelta
+
+  explode: ->
+    @exploded = true
+
+    for i in [0..50]
+      piece = new BombPiece(@)
 
   update: ->
     @representation.state = ['bomb']

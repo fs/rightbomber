@@ -23,6 +23,11 @@ body {
   background: red;
 }
 
+.bomb-piece {
+  position: absolute;
+  background: rgba(255, 0, 100, .25);
+}
+
 .player {
   z-index: 1;
   box-shadow:
