@@ -38,14 +38,26 @@ html, body {
 
 #map {
   border-collapse: collapse;
+  background-color: #ddd;
 }
 
 #map tr td {
   /* outline: 1px solid #ddffdd; */
 }
+
 #map tr td.grass {
-  background-color: #CCFFCC;
+  background:transparent;
+  box-shadow:
+    0px -1px #ccc inset,
+    0px 1px #ccc inset,
+    1px 0px #ccc inset,
+    -1px 0px #ccc inset;
 }
 #map tr td.stone {
-  background-color: #999999;
+  background-color: #999;
+  box-shadow:
+    0px -10px #888 inset,
+    0px 1px #888 inset,
+    1px 0px #888 inset,
+    -1px 0px #888 inset;
 }
