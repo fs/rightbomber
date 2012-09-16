@@ -31,5 +31,5 @@ class Map extends Rect
   generateTerrain: ->
     for x in [0...@width]
       for y in [0...@height]
-        if (x % 4 == 3 || y % 4 == 3) && Math.random() < 0.5
+        if (x % 4 == 3 || y % 4 == 3) && Math.random() < 0.25
           @getCell(x, y).passable = false

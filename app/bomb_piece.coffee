@@ -6,7 +6,7 @@ class BombPiece extends SquaredObject
     super(@bomb.map)
 
     @moveBy(@bomb.left, @bomb.top)
-    @velocity = Math.random() * 20 + 5
+    @velocity = Math.random() * 20
 
     @direction = 4*Math.random()
     @direction = 0 if @direction == 4
@@ -21,6 +21,9 @@ class BombPiece extends SquaredObject
   update: ->
     @representation.state = ['bomb-piece']
     @representation.update()
+
+  cutCorners: (distance) ->
+    distance
 
   intersectsWith: (object) ->
     if object instanceof BombPiece

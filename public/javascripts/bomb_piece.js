@@ -18,7 +18,7 @@ BombPiece = (function(_super) {
 
     BombPiece.__super__.constructor.call(this, this.bomb.map);
     this.moveBy(this.bomb.left, this.bomb.top);
-    this.velocity = Math.random() * 20 + 5;
+    this.velocity = Math.random() * 20;
     this.direction = 4 * Math.random();
     if (this.direction === 4) {
       this.direction = 0;
@@ -36,6 +36,10 @@ BombPiece = (function(_super) {
   BombPiece.prototype.update = function() {
     this.representation.state = ['bomb-piece'];
     return this.representation.update();
+  };
+
+  BombPiece.prototype.cutCorners = function(distance) {
+    return distance;
   };
 
   BombPiece.prototype.intersectsWith = function(object) {
