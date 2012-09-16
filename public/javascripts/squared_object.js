@@ -82,9 +82,6 @@ SquaredObject = (function(_super) {
     right = this.rotateRight(this.direction);
     rightArea = this.blockedAreaAt(distance, right);
     this.moveBy(-dx, -dy);
-    if (Math.random() > 0.8) {
-      console.log(left, right, leftArea, rightArea);
-    }
     direction = leftArea > rightArea ? right : left;
     if (this.move(distance, direction)) {
       return 0;

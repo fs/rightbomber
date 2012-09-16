@@ -63,8 +63,6 @@ class SquaredObject extends Rect
 
     @moveBy(-dx, -dy)
 
-    console.log(left, right, leftArea, rightArea) if Math.random() > 0.8
-
     direction = if leftArea > rightArea then right else left
 
     if @move(distance, direction)
