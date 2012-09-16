@@ -19,43 +19,37 @@ Rightbomber = (function() {
   };
 
   Rightbomber.prototype.run = function() {
-    var gameLoop, map;
-    map = new Map(30, 20);
-    map.generate();
-    (new MapView(map)).update();
+    var gameLoop;
+    this.map = new Map(30, 20);
+    this.map.generate();
+    (new MapView(this.map)).update();
     this.keyboard = new Keyboard;
-    this.player = new Player(map);
-    this.player2 = new Player(map);
+    this.player = new Player(this.map);
+    this.player2 = new Player(this.map);
     this.player2.moveBy(2, 2);
     this.player2.update();
-    this.bombs = [];
     gameLoop = new GameLoop(this.tick);
     return gameLoop.run();
   };
 
   Rightbomber.prototype.tick = function(timeDelta) {
-    var bomb, key, _i, _len, _ref, _results;
+    var key, object, _i, _len, _ref, _results;
     if (this.keyboard.isKeyPressed('/')) {
-      bomb = this.player.plantBomb();
-      if (bomb != null) {
-        this.bombs.push(bomb);
-      }
+      this.player.plantBomb();
     }
     key = this.keyboard.latestOf(['right', 'up', 'left', 'down']);
     if ((this.player.moving = !!key)) {
       this.player.setDirection(key);
     }
-    this.player.olderBy(timeDelta);
     key = this.keyboard.latestOf(['d', 'w', 's', 'a']);
     if ((this.player2.moving = !!key)) {
       this.player2.setDirection(this.keyMap[key]);
     }
-    this.player2.olderBy(timeDelta);
-    _ref = this.bombs;
+    _ref = this.map.objects;
     _results = [];
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-      bomb = _ref[_i];
-      _results.push(bomb.olderBy(timeDelta));
+      object = _ref[_i];
+      _results.push(object.olderBy(timeDelta));
     }
     return _results;
   };
