@@ -29,7 +29,7 @@ BombPiece = (function(_super) {
   }
 
   BombPiece.prototype.olderBy = function(timeDelta) {
-    this.velocity = this.velocity - 0.1;
+    this.velocity *= this.maxVelocity / this.velocity;
     this.setSize(this.size / 1.01);
     if (this.velocity < this.epsilon) {
       this.velocity = 0;
@@ -53,10 +53,10 @@ BombPiece = (function(_super) {
   };
 
   BombPiece.prototype.intersectsWith = function(object) {
-    if (object instanceof BombPiece) {
-      return false;
-    } else {
+    if (object instanceof Cell) {
       return this.bomb !== object && BombPiece.__super__.intersectsWith.call(this, object);
+    } else {
+      return false;
     }
   };
 
