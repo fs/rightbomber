@@ -1,22 +1,24 @@
 class MapView extends BaseView
-  baseElement: '<table>'
+  baseElement: 'table'
 
   constructor: (@map) ->
 
   update: ->
     table = @getElement()
 
-    table.attr id: "map"
+    table.id = "map"
 
-    table.css
-      width:  @map.width * @tileSize
-      height: @map.height * @tileSize
+    style = table.style
+    style.width = @map.width * @tileSize
+    style.height = @map.height * @tileSize
 
     for y in [0...@map.height]
-      tr = $ "<tr>"
+      tr = @newElement('tr')
 
       for x in [0...@map.width]
-        td = $ "<td>", class: @map.getCell(x, y).getType()
-        tr.append(td)
+        td = @newElement('td')
+        td.className = @map.getCell(x, y).getType()
 
-      table.append(tr)
+        tr.appendChild(td)
+
+      table.appendChild(tr)

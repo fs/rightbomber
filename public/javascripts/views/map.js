@@ -7,32 +7,28 @@ MapView = (function(_super) {
 
   __extends(MapView, _super);
 
-  MapView.prototype.baseElement = '<table>';
+  MapView.prototype.baseElement = 'table';
 
   function MapView(map) {
     this.map = map;
   }
 
   MapView.prototype.update = function() {
-    var table, td, tr, x, y, _i, _j, _ref, _ref1, _results;
+    var style, table, td, tr, x, y, _i, _j, _ref, _ref1, _results;
     table = this.getElement();
-    table.attr({
-      id: "map"
-    });
-    table.css({
-      width: this.map.width * this.tileSize,
-      height: this.map.height * this.tileSize
-    });
+    table.id = "map";
+    style = table.style;
+    style.width = this.map.width * this.tileSize;
+    style.height = this.map.height * this.tileSize;
     _results = [];
     for (y = _i = 0, _ref = this.map.height; 0 <= _ref ? _i < _ref : _i > _ref; y = 0 <= _ref ? ++_i : --_i) {
-      tr = $("<tr>");
+      tr = this.newElement('tr');
       for (x = _j = 0, _ref1 = this.map.width; 0 <= _ref1 ? _j < _ref1 : _j > _ref1; x = 0 <= _ref1 ? ++_j : --_j) {
-        td = $("<td>", {
-          "class": this.map.getCell(x, y).getType()
-        });
-        tr.append(td);
+        td = this.newElement('td');
+        td.className = this.map.getCell(x, y).getType();
+        tr.appendChild(td);
       }
-      _results.push(table.append(tr));
+      _results.push(table.appendChild(tr));
     }
     return _results;
   };

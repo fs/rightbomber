@@ -7,14 +7,20 @@ BaseView = (function() {
 
   BaseView.prototype.tileSize = 24;
 
-  BaseView.prototype.element = null;
+  BaseView.prototype.baseElement = 'div';
 
-  BaseView.prototype.baseElement = '<div>';
+  BaseView.prototype.getContainer = function() {
+    return document.getElementById('game');
+  };
+
+  BaseView.prototype.newElement = function(tag) {
+    return document.createElement(tag);
+  };
 
   BaseView.prototype.getElement = function() {
     if (!this.element) {
-      this.element = $(this.baseElement);
-      $('#game').append(this.element);
+      this.element = this.newElement(this.baseElement);
+      this.getContainer().appendChild(this.element);
     }
     return this.element;
   };

@@ -13,8 +13,8 @@ class Keyboard
 
   constructor: ->
     @keys = {}
-    $(document).keydown(@keyDown)
-    $(document).keyup(@keyUp)
+    document.onkeydown = @keyDown
+    document.onkeyup = @keyUp
 
   latestOf: (keyNames = []) ->
     latest = null
