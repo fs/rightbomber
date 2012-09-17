@@ -22,8 +22,8 @@ Keyboard = (function() {
 
     this.keyDown = __bind(this.keyDown, this);
     this.keys = {};
-    $(document).keydown(this.keyDown);
-    $(document).keyup(this.keyUp);
+    document.onkeydown = this.keyDown;
+    document.onkeyup = this.keyUp;
   }
 
   Keyboard.prototype.latestOf = function(keyNames) {

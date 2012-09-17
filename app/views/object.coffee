@@ -11,14 +11,14 @@ class ObjectView extends BaseView
     y    = Math.round(@tileSize * @square.top)
     size = Math.round(@tileSize * @square.size)
 
-    element.attr class: @state.join ' '
+    element.className = @state.join ' '
+
+    style = element.style
 
     if @opacity?
-      element.css
-        opacity: @opacity
+      style.opacity = @opacity
 
-    element.css
-      left  : x + 'px'
-      top   : y + 'px'
-      width : size + 'px'
-      height: size + 'px'
+    style.left   = x + 'px'
+    style.top    = y + 'px'
+    style.width  = size + 'px'
+    style.height = size + 'px'

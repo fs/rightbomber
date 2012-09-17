@@ -16,25 +16,20 @@ ObjectView = (function(_super) {
   }
 
   ObjectView.prototype.update = function() {
-    var element, size, x, y;
+    var element, size, style, x, y;
     element = this.getElement();
     x = Math.round(this.tileSize * this.square.left);
     y = Math.round(this.tileSize * this.square.top);
     size = Math.round(this.tileSize * this.square.size);
-    element.attr({
-      "class": this.state.join(' ')
-    });
+    element.className = this.state.join(' ');
+    style = element.style;
     if (this.opacity != null) {
-      element.css({
-        opacity: this.opacity
-      });
+      style.opacity = this.opacity;
     }
-    return element.css({
-      left: x + 'px',
-      top: y + 'px',
-      width: size + 'px',
-      height: size + 'px'
-    });
+    style.left = x + 'px';
+    style.top = y + 'px';
+    style.width = size + 'px';
+    return style.height = size + 'px';
   };
 
   return ObjectView;

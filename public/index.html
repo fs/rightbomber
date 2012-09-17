@@ -4,8 +4,6 @@
   <title>Rightbomber</title>
   <link rel="stylesheet" type="text/css" href="stylesheets/rightbomber.css">
 
-  <script type="text/javascript" src="http://yandex.st/jquery/1.7.2/jquery.js"></script>
-
   <script type="text/javascript" src="javascripts/rightbomber.js"></script>
   <script type="text/javascript" src="javascripts/rect.js"></script>
   <script type="text/javascript" src="javascripts/map.js"></script>
@@ -20,14 +18,9 @@
   <script type="text/javascript" src="javascripts/views/map.js"></script>
   <script type="text/javascript" src="javascripts/views/object.js"></script>
 
-  <script type="text/javascript">
-    $( (new Rightbomber).run );
-  </script>
 </head>
-<body>
 
-  <div id="game">
-  </div>
-
+<body onload = '(new Rightbomber).run();'>
+  <div id="game"></div>
 </body>
 </html>
