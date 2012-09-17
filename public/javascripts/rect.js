@@ -48,33 +48,13 @@ Rect = (function() {
   };
 
   Rect.prototype.intersectionArea = function(rect) {
-    var x1, x2, y1, y2;
+    var xes, ys;
     if (!this.intersectsWith(rect)) {
       return 0;
     }
-    x1 = this.getInsideCornerX(rect);
-    y1 = this.getInsideCornerY(rect);
-    x2 = rect.getInsideCornerX(this);
-    y2 = rect.getInsideCornerY(this);
-    return Math.abs((x1 - x2) * (y1 - y2));
-  };
-
-  Rect.prototype.getInsideCornerX = function(rect) {
-    var _ref;
-    if ((this.left < (_ref = rect.left) && _ref < this.right)) {
-      return rect.left;
-    } else {
-      return rect.right;
-    }
-  };
-
-  Rect.prototype.getInsideCornerY = function(rect) {
-    var _ref;
-    if ((this.top < (_ref = rect.top) && _ref < this.bottom)) {
-      return rect.top;
-    } else {
-      return rect.bottom;
-    }
+    xes = [this.left, this.right, rect.left, rect.right].sort();
+    ys = [this.top, this.bottom, rect.top, rect.bottom].sort();
+    return Math.abs((xes[1] - xes[2]) * (ys[1] - ys[2]));
   };
 
   Rect.prototype.contains = function(rect) {
