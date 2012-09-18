@@ -55,6 +55,8 @@ class SquaredObject extends Rect
 
     @moveBy(dx, dy)
 
+    impactArea = @blockedArea()
+
     left = @rotateLeft(@direction)
     leftArea = @blockedAreaAt(distance, left)
 
@@ -63,10 +65,16 @@ class SquaredObject extends Rect
 
     @moveBy(-dx, -dy)
 
-    direction = if leftArea > rightArea then right else left
+    if leftArea > rightArea
+      area = rightArea
+      direction = right
+    else
+      area = leftArea
+      direction = left
 
-    if @move(distance, direction)
-      return 0
+    if area < Math.min(impactArea, @size * distance)
+      if @move(distance, direction)
+        return 0
 
     distance
 
@@ -106,24 +114,16 @@ class SquaredObject extends Rect
     (direction + 1) % 4
 
   intersectsWith: (object) ->
-    @ != object && super(object)
-
-  cells: ->
-    [
-      @map.getCell(@left, @top),
-      @map.getCell(@left, @bottom),
-      @map.getCell(@right, @top),
-      @map.getCell(@right, @bottom)
-    ]
+    if object instanceof Cell
+      ! object.passable && super(object)
+    else
+      @ != object && super(object)
 
   isMovable: ->
     return false unless @map.contains(@)
 
-    for cell in @cells()
-      return false unless cell.passable
-
-      for object in cell.objects
-        return false if @intersectsWith(object)
+    for object in @map.objects
+      return false if @intersectsWith(object)
 
     return true
 
@@ -131,10 +131,8 @@ class SquaredObject extends Rect
     return @size * @size unless @map.contains(@)
 
     area = 0
-    for cell in @cells()
-      area += @intersectionArea(cell) unless cell.passable
 
-      for object in cell.objects
-        area += @intersectionArea(object)
+    for object in @map.objects
+      area += @intersectionArea(object)
 
     area

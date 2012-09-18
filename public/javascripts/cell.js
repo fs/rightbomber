@@ -14,6 +14,8 @@ Cell = (function(_super) {
     this.moveBy(x, y);
   }
 
+  Cell.prototype.olderBy = function(timeDelta) {};
+
   Cell.prototype.getType = function() {
     if (this.passable) {
       return 'grass';

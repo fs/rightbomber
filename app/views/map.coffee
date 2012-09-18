@@ -17,7 +17,7 @@ class MapView extends BaseView
 
       for x in [0...@map.width]
         td = @newElement('td')
-        td.className = @map.getCell(x, y).getType()
+        td.className = @map.cells[x][y].getType()
 
         tr.appendChild(td)
 

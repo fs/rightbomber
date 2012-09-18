@@ -5,6 +5,8 @@ class Cell extends Rect
     @objects = []
     @moveBy(x, y)
 
+  olderBy: (timeDelta) ->
+
   getType: ->
     if @passable
       'grass'

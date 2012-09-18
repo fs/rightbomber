@@ -10,7 +10,7 @@ Player = (function(_super) {
 
   Player.prototype.moving = false;
 
-  Player.prototype.size = 0.5;
+  Player.prototype.size = 0.75;
 
   Player.prototype.velocity = 4;
 

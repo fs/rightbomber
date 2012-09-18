@@ -28,6 +28,16 @@ body {
   background: rgb(255, 0, 100);
 }
 
+.dummy {
+  position: absolute;
+  background-color: darkgray;
+  box-shadow:
+    0px 2px gray inset,
+    2px 0px gray inset,
+    -2px 0px gray inset,
+    0px -2px gray inset;
+}
+
 .player {
   z-index: 1;
   box-shadow:

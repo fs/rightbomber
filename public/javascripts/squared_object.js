@@ -73,18 +73,27 @@ SquaredObject = (function(_super) {
   };
 
   SquaredObject.prototype.cutCorners = function(distance) {
-    var direction, dx, dy, left, leftArea, right, rightArea;
+    var area, direction, dx, dy, impactArea, left, leftArea, right, rightArea;
     dx = this.dx(distance, this.direction);
     dy = this.dy(distance, this.direction);
     this.moveBy(dx, dy);
+    impactArea = this.blockedArea();
     left = this.rotateLeft(this.direction);
     leftArea = this.blockedAreaAt(distance, left);
     right = this.rotateRight(this.direction);
     rightArea = this.blockedAreaAt(distance, right);
     this.moveBy(-dx, -dy);
-    direction = leftArea > rightArea ? right : left;
-    if (this.move(distance, direction)) {
-      return 0;
+    if (leftArea > rightArea) {
+      area = rightArea;
+      direction = right;
+    } else {
+      area = leftArea;
+      direction = left;
+    }
+    if (area < Math.min(impactArea, this.size * distance)) {
+      if (this.move(distance, direction)) {
+        return 0;
+      }
     }
     return distance;
   };
@@ -127,52 +136,38 @@ SquaredObject = (function(_super) {
   };
 
   SquaredObject.prototype.intersectsWith = function(object) {
-    return this !== object && SquaredObject.__super__.intersectsWith.call(this, object);
-  };
-
-  SquaredObject.prototype.cells = function() {
-    return [this.map.getCell(this.left, this.top), this.map.getCell(this.left, this.bottom), this.map.getCell(this.right, this.top), this.map.getCell(this.right, this.bottom)];
+    if (object instanceof Cell) {
+      return !object.passable && SquaredObject.__super__.intersectsWith.call(this, object);
+    } else {
+      return this !== object && SquaredObject.__super__.intersectsWith.call(this, object);
+    }
   };
 
   SquaredObject.prototype.isMovable = function() {
-    var cell, object, _i, _j, _len, _len1, _ref, _ref1;
+    var object, _i, _len, _ref;
     if (!this.map.contains(this)) {
       return false;
     }
-    _ref = this.cells();
+    _ref = this.map.objects;
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-      cell = _ref[_i];
-      if (!cell.passable) {
+      object = _ref[_i];
+      if (this.intersectsWith(object)) {
         return false;
-      }
-      _ref1 = cell.objects;
-      for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
-        object = _ref1[_j];
-        if (this.intersectsWith(object)) {
-          return false;
-        }
       }
     }
     return true;
   };
 
   SquaredObject.prototype.blockedArea = function() {
-    var area, cell, object, _i, _j, _len, _len1, _ref, _ref1;
+    var area, object, _i, _len, _ref;
     if (!this.map.contains(this)) {
       return this.size * this.size;
     }
     area = 0;
-    _ref = this.cells();
+    _ref = this.map.objects;
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-      cell = _ref[_i];
-      if (!cell.passable) {
-        area += this.intersectionArea(cell);
-      }
-      _ref1 = cell.objects;
-      for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
-        object = _ref1[_j];
-        area += this.intersectionArea(object);
-      }
+      object = _ref[_i];
+      area += this.intersectionArea(object);
     }
     return area;
   };

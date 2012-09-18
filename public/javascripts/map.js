@@ -27,19 +27,8 @@ Map = (function(_super) {
     return this.generateTerrain();
   };
 
-  Map.prototype.getCell = function(x, y) {
-    var cell;
-    cell = this.cells[this.constrain(x, this.width - 1)][this.constrain(y, this.height - 1)];
-    cell.objects = this.objects;
-    return cell;
-  };
-
-  Map.prototype.constrain = function(coordinate, max) {
-    return Math.max(0, Math.min(max, Math.floor(coordinate)));
-  };
-
   Map.prototype.initCells = function() {
-    var column, x, y, _i, _ref, _results;
+    var cell, column, x, y, _i, _ref, _results;
     this.cells = [];
     _results = [];
     for (x = _i = 0, _ref = this.width; 0 <= _ref ? _i < _ref : _i > _ref; x = 0 <= _ref ? ++_i : --_i) {
@@ -48,7 +37,9 @@ Map = (function(_super) {
         var _j, _ref1, _results1;
         _results1 = [];
         for (y = _j = 0, _ref1 = this.height; 0 <= _ref1 ? _j < _ref1 : _j > _ref1; y = 0 <= _ref1 ? ++_j : --_j) {
-          _results1.push(column[y] = new Cell(x, y));
+          cell = new Cell(x, y);
+          column[y] = cell;
+          _results1.push(this.objects.push(cell));
         }
         return _results1;
       }).call(this));
@@ -65,7 +56,7 @@ Map = (function(_super) {
         _results1 = [];
         for (y = _j = 0, _ref1 = this.height; 0 <= _ref1 ? _j < _ref1 : _j > _ref1; y = 0 <= _ref1 ? ++_j : --_j) {
           if ((x % 4 === 3 || y % 4 === 3) && Math.random() < 0.25) {
-            _results1.push(this.getCell(x, y).passable = false);
+            _results1.push(this.cells[x][y].passable = false);
           } else {
             _results1.push(void 0);
           }
