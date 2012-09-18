@@ -36,11 +36,14 @@ class Rect
 
     ! clear
 
+  compare: (a, b) =>
+    a > b
+
   intersectionArea: (rect) ->
     return 0 unless @intersectsWith(rect)
 
-    xes = [@left, @right, rect.left, rect.right].sort()
-    ys = [@top, @bottom, rect.top, rect.bottom].sort()
+    xes = [@left, @right, rect.left, rect.right].sort(@compare)
+    ys = [@top, @bottom, rect.top, rect.bottom].sort(@compare)
 
     Math.abs( (xes[1] - xes[2]) * (ys[1] - ys[2]) )
 
