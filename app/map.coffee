@@ -11,25 +11,17 @@ class Map extends Rect
     @initCells()
     @generateTerrain()
 
-  getCell: (x, y) ->
-    cell = @cells[@constrain(x, @width - 1)][@constrain(y, @height - 1)]
-    cell.objects = @objects
-    cell
-
-  # private
-  constrain: (coordinate, max) ->
-    Math.max(0, Math.min(max, Math.floor(coordinate)))
-
   initCells: ->
     @cells = []
     for x in [0...@width]
       @cells[x] = column = new Array(@height)
       for y in [0...@height]
-        column[y] = new Cell(x, y)
+        cell = new Cell(x, y)
+        column[y] = cell
+        @objects.push cell
 
-  # add some more interesting objects to map
   generateTerrain: ->
     for x in [0...@width]
       for y in [0...@height]
         if (x % 4 == 3 || y % 4 == 3) && Math.random() < 0.25
-          @getCell(x, y).passable = false
+          @cells[x][y].passable = false

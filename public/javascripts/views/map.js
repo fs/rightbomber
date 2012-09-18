@@ -25,7 +25,7 @@ MapView = (function(_super) {
       tr = this.newElement('tr');
       for (x = _j = 0, _ref1 = this.map.width; 0 <= _ref1 ? _j < _ref1 : _j > _ref1; x = 0 <= _ref1 ? ++_j : --_j) {
         td = this.newElement('td');
-        td.className = this.map.getCell(x, y).getType();
+        td.className = this.map.cells[x][y].getType();
         tr.appendChild(td);
       }
       _results.push(table.appendChild(tr));
