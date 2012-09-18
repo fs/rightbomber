@@ -1,8 +1,5 @@
 class Map extends Rect
-  width: 10
-  height: 10
-
-  constructor: (@width, @height) ->
+  constructor: (@width = 30, @height = 20) ->
     @setWidth(@width)
     @setHeight(@height)
     @objects = []

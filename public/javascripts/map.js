@@ -7,13 +7,9 @@ Map = (function(_super) {
 
   __extends(Map, _super);
 
-  Map.prototype.width = 10;
-
-  Map.prototype.height = 10;
-
   function Map(width, height) {
-    this.width = width;
-    this.height = height;
+    this.width = width != null ? width : 30;
+    this.height = height != null ? height : 20;
     this.setWidth(this.width);
     this.setHeight(this.height);
     this.objects = [];

@@ -20,7 +20,7 @@ Rightbomber = (function() {
 
   Rightbomber.prototype.run = function() {
     var gameLoop;
-    this.map = new Map(30, 20);
+    this.map = new Map;
     this.map.generate();
     (new MapView(this.map)).update();
     this.keyboard = new Keyboard;

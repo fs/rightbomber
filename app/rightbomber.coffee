@@ -6,7 +6,7 @@ class Rightbomber
     s: 'down'
 
   run: =>
-    @map = new Map(30, 20)
+    @map = new Map
     @map.generate()
 
     (new MapView(@map)).update()
