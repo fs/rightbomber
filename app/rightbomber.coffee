@@ -26,13 +26,13 @@ class Rightbomber
     if @keyboard.isKeyPressed('/')
       @player.plantBomb()
 
-    key = @keyboard.latestOf(['right', 'up', 'left', 'down'])
-    if (@player.moving = !!key)
-      @player.setDirection(key)
+    direction = @keyboard.latestOf(['right', 'up', 'left', 'down'])
+    if (@player.moving = !!direction)
+      @player.face(direction)
 
-    key = @keyboard.latestOf(['d', 'w', 's', 'a'])
-    if (@player2.moving = !!key)
-      @player2.setDirection(@keyMap[key])
+    direction = @keyMap[@keyboard.latestOf(['d', 'w', 's', 'a'])]
+    if (@player2.moving = !!direction)
+      @player2.face(direction)
 
     for object in @map.objects
       object.olderBy(timeDelta)

@@ -14,15 +14,6 @@ Player = (function(_super) {
 
   Player.prototype.velocity = 4;
 
-  Player.prototype.direction = 'up';
-
-  Player.prototype.directionMap = {
-    right: 0,
-    down: 1,
-    left: 2,
-    up: 3
-  };
-
   function Player(map) {
     this.map = map;
     this.plantBomb = __bind(this.plantBomb, this);
@@ -34,9 +25,9 @@ Player = (function(_super) {
     this.update();
   }
 
-  Player.prototype.setDirection = function(directionKey) {
-    this.directionKey = directionKey;
-    return this.direction = this.directionMap[this.directionKey];
+  Player.prototype.face = function(direction) {
+    this.facing = direction;
+    return this.direction[this.facing]();
   };
 
   Player.prototype.olderBy = function(timeDelta) {
@@ -57,7 +48,7 @@ Player = (function(_super) {
     if (this.moving) {
       state.push('moving');
     }
-    state.push(this.directionKey);
+    state.push(this.facing);
     return state;
   };
 

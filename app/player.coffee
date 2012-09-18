@@ -2,13 +2,6 @@ class Player extends SquaredObject
   moving: false
   size: 0.75
   velocity: 4 # grid element per second
-  direction: 'up'
-
-  directionMap:
-    right: 0
-    down : 1
-    left : 2
-    up   : 3
 
   constructor: (@map) -> # @renderer = new PlayerRenderer
     super(@map)
@@ -16,8 +9,9 @@ class Player extends SquaredObject
     @view = new ObjectView(@)
     @update()
 
-  setDirection: (@directionKey) ->
-    @direction = @directionMap[@directionKey]
+  face: (direction) ->
+    @facing = direction
+    @direction[@facing]()
 
   olderBy: (timeDelta) =>
     if @moving && super(timeDelta)
@@ -30,7 +24,7 @@ class Player extends SquaredObject
   getState: ->
     state = ['player']
     state.push 'moving' if @moving
-    state.push @directionKey
+    state.push @facing
     state
 
   update: ->

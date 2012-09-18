@@ -10,8 +10,7 @@ class BombPiece extends SquaredObject
     @maxVelocity = Math.random() * 10 + 5
     @velocity = @maxVelocity
 
-    @direction = 4*Math.random()
-    @direction = 0 if @direction == 4
+    @direction.random()
 
     @representation = new ObjectView(@)
     @update()

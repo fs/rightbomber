@@ -3,12 +3,12 @@ class SquaredObject extends Rect
   size: 1
   moved: false
   velocity: 0
-  direction: 0
 
   epsilon: 0.001
 
   constructor: (@map) ->
     @map.objects.push @
+    @direction = new Direction()
     @setSize(@size)
 
   setSize: (newSize) ->
@@ -30,7 +30,7 @@ class SquaredObject extends Rect
     step = @size
 
     while distance > step
-      if @move(step, @direction)
+      if @move(step)
         distance -= step
       else
         break
@@ -42,7 +42,7 @@ class SquaredObject extends Rect
     step = distance
 
     while Math.min(step, distance) > @epsilon
-      if @move(step, @direction)
+      if @move(step)
         distance -= step
       else
         step /= 2
@@ -50,37 +50,39 @@ class SquaredObject extends Rect
     distance
 
   cutCorners: (distance) ->
-    dx = @dx(distance, @direction)
-    dy = @dy(distance, @direction)
+    dx = @direction.dx(distance)
+    dy = @direction.dy(distance)
 
     @moveBy(dx, dy)
+    @direction.save()
 
     impactArea = @blockedArea()
 
-    left = @rotateLeft(@direction)
-    leftArea = @blockedAreaAt(distance, left)
+    @direction.restore().rotateLeft()
+    leftArea = @blockedAreaAt(distance)
 
-    right = @rotateRight(@direction)
-    rightArea = @blockedAreaAt(distance, right)
+    @direction.restore().rotateRight()
+    rightArea = @blockedAreaAt(distance)
 
     @moveBy(-dx, -dy)
 
     if leftArea > rightArea
       area = rightArea
-      direction = right
+      @direction.restore().rotateRight()
     else
       area = leftArea
-      direction = left
+      @direction.restore().rotateLeft()
 
     if area < Math.min(impactArea, @size * distance)
-      if @move(distance, direction)
-        return 0
+      if @move(distance)
+        distance = 0
 
+    @direction.restore()
     distance
 
-  move: (distance, direction) ->
-    dx = @dx(distance, direction)
-    dy = @dy(distance, direction)
+  move: (distance) ->
+    dx = @direction.dx(distance)
+    dy = @direction.dy(distance)
 
     @moveBy(dx, dy)
 
@@ -89,9 +91,9 @@ class SquaredObject extends Rect
 
     movable
 
-  blockedAreaAt: (distance, direction) ->
-    dx = @dx(distance, direction)
-    dy = @dy(distance, direction)
+  blockedAreaAt: (distance) ->
+    dx = @direction.dx(distance)
+    dy = @direction.dy(distance)
 
     @moveBy(dx, dy)
 
@@ -100,18 +102,6 @@ class SquaredObject extends Rect
     @moveBy(-dx, -dy)
 
     area
-
-  dx: (distance, direction) ->
-    distance * Math.cos(direction * Math.PI / 2)
-
-  dy: (distance, direction) ->
-    distance * Math.sin(direction * Math.PI / 2)
-
-  rotateLeft: (direction) ->
-    (direction + 3) % 4
-
-  rotateRight: (direction) ->
-    (direction + 1) % 4
 
   intersectsWith: (object) ->
     if object instanceof Cell

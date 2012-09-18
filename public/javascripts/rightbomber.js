@@ -33,17 +33,17 @@ Rightbomber = (function() {
   };
 
   Rightbomber.prototype.tick = function(timeDelta) {
-    var key, object, _i, _len, _ref, _results;
+    var direction, object, _i, _len, _ref, _results;
     if (this.keyboard.isKeyPressed('/')) {
       this.player.plantBomb();
     }
-    key = this.keyboard.latestOf(['right', 'up', 'left', 'down']);
-    if ((this.player.moving = !!key)) {
-      this.player.setDirection(key);
+    direction = this.keyboard.latestOf(['right', 'up', 'left', 'down']);
+    if ((this.player.moving = !!direction)) {
+      this.player.face(direction);
     }
-    key = this.keyboard.latestOf(['d', 'w', 's', 'a']);
-    if ((this.player2.moving = !!key)) {
-      this.player2.setDirection(this.keyMap[key]);
+    direction = this.keyMap[this.keyboard.latestOf(['d', 'w', 's', 'a'])];
+    if ((this.player2.moving = !!direction)) {
+      this.player2.face(direction);
     }
     _ref = this.map.objects;
     _results = [];

@@ -20,10 +20,7 @@ BombPiece = (function(_super) {
     this.moveBy(this.bomb.left, this.bomb.top);
     this.maxVelocity = Math.random() * 10 + 5;
     this.velocity = this.maxVelocity;
-    this.direction = 4 * Math.random();
-    if (this.direction === 4) {
-      this.direction = 0;
-    }
+    this.direction.random();
     this.representation = new ObjectView(this);
     this.update();
   }

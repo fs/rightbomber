@@ -15,13 +15,12 @@ SquaredObject = (function(_super) {
 
   SquaredObject.prototype.velocity = 0;
 
-  SquaredObject.prototype.direction = 0;
-
   SquaredObject.prototype.epsilon = 0.001;
 
   function SquaredObject(map) {
     this.map = map;
     this.map.objects.push(this);
+    this.direction = new Direction();
     this.setSize(this.size);
   }
 
@@ -49,7 +48,7 @@ SquaredObject = (function(_super) {
     var step;
     step = this.size;
     while (distance > step) {
-      if (this.move(step, this.direction)) {
+      if (this.move(step)) {
         distance -= step;
       } else {
         break;
@@ -63,7 +62,7 @@ SquaredObject = (function(_super) {
     distance = Math.min(this.size, distance);
     step = distance;
     while (Math.min(step, distance) > this.epsilon) {
-      if (this.move(step, this.direction)) {
+      if (this.move(step)) {
         distance -= step;
       } else {
         step /= 2;
@@ -73,35 +72,37 @@ SquaredObject = (function(_super) {
   };
 
   SquaredObject.prototype.cutCorners = function(distance) {
-    var area, direction, dx, dy, impactArea, left, leftArea, right, rightArea;
-    dx = this.dx(distance, this.direction);
-    dy = this.dy(distance, this.direction);
+    var area, dx, dy, impactArea, leftArea, rightArea;
+    dx = this.direction.dx(distance);
+    dy = this.direction.dy(distance);
     this.moveBy(dx, dy);
+    this.direction.save();
     impactArea = this.blockedArea();
-    left = this.rotateLeft(this.direction);
-    leftArea = this.blockedAreaAt(distance, left);
-    right = this.rotateRight(this.direction);
-    rightArea = this.blockedAreaAt(distance, right);
+    this.direction.restore().rotateLeft();
+    leftArea = this.blockedAreaAt(distance);
+    this.direction.restore().rotateRight();
+    rightArea = this.blockedAreaAt(distance);
     this.moveBy(-dx, -dy);
     if (leftArea > rightArea) {
       area = rightArea;
-      direction = right;
+      this.direction.restore().rotateRight();
     } else {
       area = leftArea;
-      direction = left;
+      this.direction.restore().rotateLeft();
     }
     if (area < Math.min(impactArea, this.size * distance)) {
-      if (this.move(distance, direction)) {
-        return 0;
+      if (this.move(distance)) {
+        distance = 0;
       }
     }
+    this.direction.restore();
     return distance;
   };
 
-  SquaredObject.prototype.move = function(distance, direction) {
+  SquaredObject.prototype.move = function(distance) {
     var dx, dy, movable;
-    dx = this.dx(distance, direction);
-    dy = this.dy(distance, direction);
+    dx = this.direction.dx(distance);
+    dy = this.direction.dy(distance);
     this.moveBy(dx, dy);
     if (!(movable = this.isMovable())) {
       this.moveBy(-dx, -dy);
@@ -109,30 +110,14 @@ SquaredObject = (function(_super) {
     return movable;
   };
 
-  SquaredObject.prototype.blockedAreaAt = function(distance, direction) {
+  SquaredObject.prototype.blockedAreaAt = function(distance) {
     var area, dx, dy;
-    dx = this.dx(distance, direction);
-    dy = this.dy(distance, direction);
+    dx = this.direction.dx(distance);
+    dy = this.direction.dy(distance);
     this.moveBy(dx, dy);
     area = this.blockedArea();
     this.moveBy(-dx, -dy);
     return area;
-  };
-
-  SquaredObject.prototype.dx = function(distance, direction) {
-    return distance * Math.cos(direction * Math.PI / 2);
-  };
-
-  SquaredObject.prototype.dy = function(distance, direction) {
-    return distance * Math.sin(direction * Math.PI / 2);
-  };
-
-  SquaredObject.prototype.rotateLeft = function(direction) {
-    return (direction + 3) % 4;
-  };
-
-  SquaredObject.prototype.rotateRight = function(direction) {
-    return (direction + 1) % 4;
   };
 
   SquaredObject.prototype.intersectsWith = function(object) {
