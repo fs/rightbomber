@@ -47,6 +47,9 @@ SquaredObject = (function(_super) {
   SquaredObject.prototype.sprint = function(distance) {
     var step;
     step = this.size;
+    if (distance > step && step / distance < this.epsilon) {
+      throw 'To small to move with high speed';
+    }
     while (distance > step) {
       if (this.move(step)) {
         distance -= step;

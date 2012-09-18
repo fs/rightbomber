@@ -29,6 +29,8 @@ class SquaredObject extends Rect
   sprint: (distance) ->
     step = @size
 
+    throw 'To small to move with high speed' if distance > step && step / distance < @epsilon
+
     while distance > step
       if @move(step)
         distance -= step
