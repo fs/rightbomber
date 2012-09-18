@@ -1,5 +1,6 @@
 class BombPiece extends SquaredObject
-  velocity: 10
+  velocity: 20
+  acceleration: -25
   size: 0.3
 
   constructor: (@bomb) ->
@@ -7,34 +8,31 @@ class BombPiece extends SquaredObject
 
     @moveBy(@bomb.left, @bomb.top)
 
-    @maxVelocity = Math.random() * 10 + 5
-    @velocity = @maxVelocity
+    @initialVelocity = @velocity *= Math.log(Math.random() + 1)
 
-    @direction.random()
+    @direction.random(true)
 
     @representation = new ObjectView(@)
     @update()
 
   olderBy: (timeDelta) =>
-    @velocity *= @maxVelocity/@velocity # or * 0.98
-    @setSize(@size / 1.01) # if @size < 1
+    if @velocity > 0
+      @velocity += @acceleration * timeDelta
 
-    if @velocity < @epsilon
-      @velocity = 0
+      if @velocity < @epsilon
+        @velocity = 0
 
-    if super(timeDelta)
-      @update()
-    else if @velocity > 0
-      @velocity = 0
+      unless super(timeDelta)
+        @velocity = 0
+
       @update()
 
   update: ->
-    @representation.opacity = @velocity / @maxVelocity
+    @representation.opacity = @velocity / @initialVelocity
     @representation.state = ['bomb-piece']
     @representation.update()
 
-  cutCorners: (distance) ->
-    distance
+  cutCorners: (distance) -> distance
 
   intersectsWith: (object) ->
     if object instanceof Cell

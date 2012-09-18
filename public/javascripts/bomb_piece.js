@@ -8,7 +8,9 @@ BombPiece = (function(_super) {
 
   __extends(BombPiece, _super);
 
-  BombPiece.prototype.velocity = 10;
+  BombPiece.prototype.velocity = 20;
+
+  BombPiece.prototype.acceleration = -25;
 
   BombPiece.prototype.size = 0.3;
 
@@ -18,29 +20,27 @@ BombPiece = (function(_super) {
 
     BombPiece.__super__.constructor.call(this, this.bomb.map);
     this.moveBy(this.bomb.left, this.bomb.top);
-    this.maxVelocity = Math.random() * 10 + 5;
-    this.velocity = this.maxVelocity;
-    this.direction.random();
+    this.initialVelocity = this.velocity *= Math.log(Math.random() + 1);
+    this.direction.random(true);
     this.representation = new ObjectView(this);
     this.update();
   }
 
   BombPiece.prototype.olderBy = function(timeDelta) {
-    this.velocity *= this.maxVelocity / this.velocity;
-    this.setSize(this.size / 1.01);
-    if (this.velocity < this.epsilon) {
-      this.velocity = 0;
-    }
-    if (BombPiece.__super__.olderBy.call(this, timeDelta)) {
-      return this.update();
-    } else if (this.velocity > 0) {
-      this.velocity = 0;
+    if (this.velocity > 0) {
+      this.velocity += this.acceleration * timeDelta;
+      if (this.velocity < this.epsilon) {
+        this.velocity = 0;
+      }
+      if (!BombPiece.__super__.olderBy.call(this, timeDelta)) {
+        this.velocity = 0;
+      }
       return this.update();
     }
   };
 
   BombPiece.prototype.update = function() {
-    this.representation.opacity = this.velocity / this.maxVelocity;
+    this.representation.opacity = this.velocity / this.initialVelocity;
     this.representation.state = ['bomb-piece'];
     return this.representation.update();
   };
