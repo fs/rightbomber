@@ -21,11 +21,14 @@ class Direction
   dx: (distance) -> distance * Math.cos(@angle * Math.PI / 2)
   dy: (distance) -> distance * Math.sin(@angle * Math.PI / 2)
 
-  right: -> @angle = 0; @
-  down: -> @angle = 1; @
-  left: -> @angle = 2; @
-  up: -> @angle = 3; @
+  right: -> @angle = 0
+  down: -> @angle = 1
+  left: -> @angle = 2
+  up: -> @angle = 3
 
-  random: -> @angle = Math.random() * 4 % 4; @
-  rotateLeft: -> @angle = (@angle + 3) % 4; @
-  rotateRight: -> @angle = (@angle + 1) % 4; @
+  random: (fixed) ->
+    @angle = Math.random() * 4 % 4
+    @angle = Math.floor(@angle) if fixed
+
+  rotateLeft: -> @angle = (@angle + 3) % 4
+  rotateRight: -> @angle = (@angle + 1) % 4

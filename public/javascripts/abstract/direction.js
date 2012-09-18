@@ -39,38 +39,34 @@ Direction = (function() {
   };
 
   Direction.prototype.right = function() {
-    this.angle = 0;
-    return this;
+    return this.angle = 0;
   };
 
   Direction.prototype.down = function() {
-    this.angle = 1;
-    return this;
+    return this.angle = 1;
   };
 
   Direction.prototype.left = function() {
-    this.angle = 2;
-    return this;
+    return this.angle = 2;
   };
 
   Direction.prototype.up = function() {
-    this.angle = 3;
-    return this;
+    return this.angle = 3;
   };
 
-  Direction.prototype.random = function() {
+  Direction.prototype.random = function(fixed) {
     this.angle = Math.random() * 4 % 4;
-    return this;
+    if (fixed) {
+      return this.angle = Math.floor(this.angle);
+    }
   };
 
   Direction.prototype.rotateLeft = function() {
-    this.angle = (this.angle + 3) % 4;
-    return this;
+    return this.angle = (this.angle + 3) % 4;
   };
 
   Direction.prototype.rotateRight = function() {
-    this.angle = (this.angle + 1) % 4;
-    return this;
+    return this.angle = (this.angle + 1) % 4;
   };
 
   return Direction;
