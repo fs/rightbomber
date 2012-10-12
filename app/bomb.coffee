@@ -16,7 +16,6 @@ class Bomb extends MovingObject
   olderBy: (timeDelta) =>
     if !@exploded and @timer < 0
       @explode()
-      @update()
     else
       @timer -= timeDelta
 
@@ -25,6 +24,8 @@ class Bomb extends MovingObject
 
     for i in [0..50]
       piece = new BombPiece(@)
+
+    @update()
 
   update: ->
     @representation.state = ['bomb']

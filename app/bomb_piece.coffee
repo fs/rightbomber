@@ -39,3 +39,9 @@ class BombPiece extends MovingObject
     @velocity > 0 &&
     ! (object instanceof BombPiece) &&
     super(object)
+
+  intersectsWith: (object) ->
+    intersects = super(object)
+
+    if object instanceof Bomb && intersects
+      object.explode()
