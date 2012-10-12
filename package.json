@@ -5,6 +5,10 @@
     "connect": "*",
     "coffee-script": "*"
   },
+  "devDependencies": {
+    "chai"  : "*",
+    "mocha" : "*"
+  },
   "engines": {
     "node": "0.8.x",
     "npm": "1.1.x"
