@@ -1,6 +1,6 @@
-class BombPiece extends SquaredObject
+class BombPiece extends MovingObject
   velocity: 20
-  acceleration: -25
+  acceleration: -50
   size: 0.3
 
   constructor: (@bomb) ->
@@ -9,6 +9,7 @@ class BombPiece extends SquaredObject
     @moveBy(@bomb.left, @bomb.top)
 
     @initialVelocity = @velocity *= Math.log(Math.random() + 1)
+    @acceleration *= (Math.random() + 1) / 2
 
     @direction.random(false)
 
@@ -34,8 +35,13 @@ class BombPiece extends SquaredObject
 
   cutCorners: (distance) -> distance
 
+  intersectableWith: (object) ->
+    @velocity > 0 &&
+    ! (object instanceof BombPiece) &&
+    super(object)
+
   intersectsWith: (object) ->
-    if object instanceof Cell
-      @bomb != object && super(object)
-    else
-      return false
+    intersects = super(object)
+
+    if object instanceof Bomb && intersects
+      object.explode()

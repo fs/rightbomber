@@ -1,4 +1,4 @@
-class Cell extends Rect
+class Cell extends BasicObject
   passable: true
 
   constructor: (x, y) ->
@@ -6,6 +6,10 @@ class Cell extends Rect
     @moveBy(x, y)
 
   olderBy: (timeDelta) ->
+
+  intersectableWith: (object) ->
+    ! @passable &&
+    super(object)
 
   getType: ->
     if @passable

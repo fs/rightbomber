@@ -8,6 +8,9 @@ class Map extends Rect
     @initCells()
     @generateTerrain()
 
+  push: (object) ->
+    @objects.push object
+
   initCells: ->
     @cells = []
     for x in [0...@width]
