@@ -7,6 +7,8 @@ var
 var port = process.env.PORT || 3000;
 
 var app = connect()
+var app = connect()
+  .use(connect.logger('dev'))
   .use(compiler({
     enabled   : [ 'coffee' ],
     log_level : 'debug',
@@ -14,8 +16,6 @@ var app = connect()
     dest      : 'public',
     options   : { coffee : { bare : true } }
   }))
-  .use(connect.favicon())
-  .use(connect.logger('dev'))
   .use(sass.middleware({
     src   : 'app',
     dest  : 'public',
