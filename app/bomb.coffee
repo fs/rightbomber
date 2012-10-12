@@ -8,7 +8,8 @@ class Bomb extends SquaredObject
 
     super(@player.map)
 
-    @moveBy(@player.left, @player.top)
+    @moveBy(@player.left + (@player.size - @size) / 2, # coords of player`s center position
+            @player.top + (@player.size - @size) / 2)
     @representation = new ObjectView(@)
     @update()
 
