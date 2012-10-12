@@ -1,4 +1,4 @@
-class Dummy extends SquaredObject
+class Dummy extends MovingObject
   constructor: (@map) ->
     super(@map)
 

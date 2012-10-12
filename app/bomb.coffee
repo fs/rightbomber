@@ -1,4 +1,4 @@
-class Bomb extends SquaredObject
+class Bomb extends MovingObject
   size: 0.5
   TTL: 3.0 # sec
 
@@ -31,5 +31,6 @@ class Bomb extends SquaredObject
     @representation.state.push 'exploded' if @exploded
     @representation.update()
 
-  intersectsWith: (object) ->
-    @player != object && super(object)
+  intersectableWith: (object) ->
+    ! @exploded &&
+    super(object)
