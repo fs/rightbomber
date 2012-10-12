@@ -4,28 +4,25 @@ var
   sass = require('node-sass'),
   http = require('http');
 
+var port = process.env.PORT || 3000;
+
 var app = connect()
-
   .use(compiler({
-    enabled : [ 'coffee' ],
-    log_level: 'debug',
-    src     : 'app',
-    dest    : 'public',
-    options : {
-      coffee : { bare : true }
-    }
+    enabled   : [ 'coffee' ],
+    log_level : 'debug',
+    src       : 'app',
+    dest      : 'public',
+    options   : { coffee : { bare : true } }
   }))
-
   .use(connect.favicon())
   .use(connect.logger('dev'))
   .use(sass.middleware({
-      src: __dirname + '/app',
-      dest: __dirname + '/public',
-      debug: true
-    })
-  )
+    src   : 'app',
+    dest  : 'public',
+    debug : true
+  }))
   .use(connect.static('public'));
 
-http.createServer(app).listen(process.env.PORT || 3000);
+http.createServer(app).listen(port);
 
-console.log('Server running at http://127.0.0.1:' + (process.env.PORT || 3000));
+console.log('Server running at http://0.0.0.0:' + port);
