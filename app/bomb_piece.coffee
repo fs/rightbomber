@@ -16,6 +16,12 @@ class BombPiece extends MovingObject
     @representation = new ObjectView(@)
     @update()
 
+  # setSize: (newSize) ->
+  #   delta = - (newSize - @size) / 2
+  #   @moveBy(delta, delta)
+
+  #   super(newSize)
+
   olderBy: (timeDelta) =>
     if @velocity > 0
       @velocity += @acceleration * timeDelta
@@ -43,5 +49,7 @@ class BombPiece extends MovingObject
   intersectsWith: (object) ->
     intersects = super(object)
 
-    if object instanceof Bomb && intersects
+    if (object instanceof Bomb) && intersects
       object.explode()
+
+    intersects
