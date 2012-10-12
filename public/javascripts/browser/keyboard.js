@@ -5,16 +5,16 @@ var Keyboard,
 Keyboard = (function() {
 
   Keyboard.prototype.keyNames = {
+    190: '.',
     38: 'up',
     40: 'down',
     37: 'left',
     39: 'right',
-    191: '/',
+    70: 'f',
     87: 'w',
     83: 's',
     65: 'a',
-    68: 'd',
-    86: 'v'
+    68: 'd'
   };
 
   function Keyboard() {

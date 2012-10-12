@@ -19,7 +19,7 @@ Bomb = (function(_super) {
     this.exploded = false;
     this.timer = this.TTL;
     Bomb.__super__.constructor.call(this, this.player.map);
-    this.moveBy(this.player.left, this.player.top);
+    this.moveBy(this.player.left + (this.player.size - this.size) / 2, this.player.top + (this.player.size - this.size) / 2);
     this.representation = new ObjectView(this);
     this.update();
   }

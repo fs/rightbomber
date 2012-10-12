@@ -34,8 +34,11 @@ Rightbomber = (function() {
 
   Rightbomber.prototype.tick = function(timeDelta) {
     var direction, object, _i, _len, _ref, _results;
-    if (this.keyboard.isKeyPressed('/')) {
+    if (this.keyboard.isKeyPressed('.')) {
       this.player.plantBomb();
+    }
+    if (this.keyboard.isKeyPressed('f')) {
+      this.player2.plantBomb();
     }
     direction = this.keyboard.latestOf(['right', 'up', 'left', 'down']);
     if ((this.player.moving = !!direction)) {
