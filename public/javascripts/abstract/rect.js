@@ -73,6 +73,6 @@ Rect = (function() {
 
 })();
 
-if (!window) {
+if (typeof window === "undefined" || window === null) {
   module.exports = Rect;
 }

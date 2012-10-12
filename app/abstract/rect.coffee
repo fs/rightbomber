@@ -53,4 +53,4 @@ class Rect
     @right  >= rect.right  &&
     @bottom >= rect.bottom
 
-module.exports = Rect unless window
+module.exports = Rect unless window?
