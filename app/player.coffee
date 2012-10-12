@@ -1,4 +1,4 @@
-class Player extends SquaredObject
+class Player extends MovingObject
   moving: false
   size: 0.75
   velocity: 4 # grid element per second
@@ -34,17 +34,9 @@ class Player extends SquaredObject
   intersectsWith: (object) ->
     intersects = super(object)
 
-    # kludge
-    if object instanceof BombPiece
-      if object.velocity == 0
-        return false
+    if object == @lastBomb
+      unless intersects
+        @lastBomb = null
+      intersects = false
 
-    if object instanceof Bomb
-      if intersects
-        if object == @lastBomb or object.exploded
-          return false
-      else
-        if object == @lastBomb
-          @lastBomb = null
-
-    return intersects
+    intersects

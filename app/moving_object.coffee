@@ -1,19 +1,12 @@
-class SquaredObject extends Rect
-  map: null
-  size: 1
+class MovingObject extends BasicObject
   moved: false
   velocity: 0
 
   epsilon: 0.001
 
   constructor: (@map) ->
-    @map.objects.push @
+    super @map
     @direction = new Direction()
-    @setSize(@size)
-
-  setSize: (newSize) ->
-    @size = newSize
-    super(newSize)
 
   olderBy: (timeDelta) ->
     distanceToGo = distance = @velocity * timeDelta
@@ -29,7 +22,7 @@ class SquaredObject extends Rect
   sprint: (distance) ->
     step = @size
 
-    throw 'To small to move with high speed' if distance > step && step / distance < @epsilon
+    throw 'Too small to move with high speed' if distance > step && step / distance < @epsilon
 
     while distance > step
       if @move(step)
@@ -104,12 +97,6 @@ class SquaredObject extends Rect
     @moveBy(-dx, -dy)
 
     area
-
-  intersectsWith: (object) ->
-    if object instanceof Cell
-      ! object.passable && super(object)
-    else
-      @ != object && super(object)
 
   isMovable: ->
     return false unless @map.contains(@)
