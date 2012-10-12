@@ -1,4 +1,4 @@
-class Rect
+module.exports = class Rect
   left: 0
   top: 0
   right: 1
