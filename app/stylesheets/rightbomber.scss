@@ -20,7 +20,7 @@ body {
 .bomb {
   position: absolute;
   background: url("/images/bomb.svg");
-  background-size: 34px 12px;
+  background-size: 62px 22px;
   background-position: 0 0;
   &.exploded {
     background: rgba(255, 0, 0, 0.01);
