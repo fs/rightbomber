@@ -2,7 +2,7 @@
 var Rect,
   __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
-Rect = (function() {
+module.exports = Rect = (function() {
 
   function Rect() {
     this.compare = __bind(this.compare, this);
