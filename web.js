@@ -1,10 +1,8 @@
 var
   connect = require('connect'),
-  assets = require('connect-assets'),
   http = require('http');
 
 var app = connect()
-  .use(assets())
   .use(connect.favicon())
   .use(connect.logger('dev'))
   .use(connect.static('public'))
