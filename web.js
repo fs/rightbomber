@@ -13,7 +13,7 @@ var app = connect()
   // .use(connect.session({ secret: 'my secret here' }))
   .use(function(req, res){
     res.writeHead(404, {'Content-Type': 'text/plain'});
-    res.end('Hello from Connect!\n');
+    res.end('nothing here\n');
   });
 
 
