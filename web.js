@@ -5,7 +5,7 @@ var
   http = require('http');
 
 var app = connect()
-
+  .use(connect.logger('dev'))
   .use(compiler({
     enabled : [ 'coffee' ],
     log_level: 'debug',
@@ -15,9 +15,6 @@ var app = connect()
       coffee : { bare : true }
     }
   }))
-
-  .use(connect.favicon())
-  .use(connect.logger('dev'))
   .use(sass.middleware({
       src: __dirname + '/app',
       dest: __dirname + '/public',
