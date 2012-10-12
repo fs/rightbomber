@@ -1,15 +1,16 @@
 class Keyboard
   keyNames:
+    190: '.' # place bomb
     38: 'up'
     40: 'down'
     37: 'left'
     39: 'right'
-    191: '/'
+
+    70: 'f' # place bomb
     87: 'w'
     83: 's'
     65: 'a'
     68: 'd'
-    86: 'v'
 
   constructor: ->
     @keys = {}

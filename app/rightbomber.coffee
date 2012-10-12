@@ -23,8 +23,11 @@ class Rightbomber
     gameLoop.run()
 
   tick: (timeDelta) =>
-    if @keyboard.isKeyPressed('/')
+    if @keyboard.isKeyPressed('.')
       @player.plantBomb()
+
+    if @keyboard.isKeyPressed('f')
+      @player2.plantBomb()
 
     direction = @keyboard.latestOf(['right', 'up', 'left', 'down'])
     if (@player.moving = !!direction)
