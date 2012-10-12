@@ -1,10 +1,15 @@
+# Rightbomber
+
 http://rightbomber.herokuapp.com/
 
-howto to compile:
+## Install
 
-    ./scripts/coffee-watcher.sh
+    npm install
 
-howto to run:
+## Run
 
-    PORT=3000 node web.js
-    open 'http://localhost:3000/'
+    npm start && open 0.0.0.0:3000
+
+## Test
+
+    npm test
