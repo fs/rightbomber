@@ -1,4 +1,1 @@
-.rvmrc
-.bundle
-bin
-vendor
+node_modules

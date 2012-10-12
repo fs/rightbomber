@@ -1,0 +1,12 @@
+{
+  "name": "rightbomber",
+  "version": "0.0.1",
+  "dependencies": {
+    "connect": "x",
+    "coffee-script": "x"
+  },
+  "engines": {
+    "node": "0.8.x",
+    "npm": "1.1.x"
+  }
+}
