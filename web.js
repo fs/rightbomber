@@ -15,6 +15,6 @@ var app = connect()
   });
 
 
-http.createServer(app).listen(3000);
+http.createServer(app).listen(process.env.PORT || 3000);
 
-console.log('Server running at http://127.0.0.1:3000/');
+console.log('Server running at http://127.0.0.1:' + (process.env.PORT || 3000));

@@ -6,5 +6,5 @@ howto to compile:
 
 howto to run:
 
-    node web.js
+    PORT=3000 node web.js
     open 'http://localhost:3000/'
