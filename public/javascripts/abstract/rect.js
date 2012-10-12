@@ -2,7 +2,7 @@
 var Rect,
   __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
-module.exports = Rect = (function() {
+Rect = (function() {
 
   function Rect() {
     this.compare = __bind(this.compare, this);
@@ -72,3 +72,7 @@ module.exports = Rect = (function() {
   return Rect;
 
 })();
+
+if (!window) {
+  module.exports = Rect;
+}
