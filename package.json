@@ -8,7 +8,8 @@
   "dependencies": {
     "connect": "*",
     "coffee-script": "*",
-    "connect-compiler": "*"
+    "connect-compiler": "*",
+    "node-sass": "*"
   },
   "devDependencies": {
     "chai"  : "*",

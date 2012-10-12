@@ -1,6 +1,7 @@
 var
   connect = require('connect'),
   compiler = require('connect-compiler'),
+  sass = require('node-sass'),
   http = require('http');
 
 var app = connect()
@@ -17,7 +18,13 @@ var app = connect()
 
   .use(connect.favicon())
   .use(connect.logger('dev'))
-  .use(connect.static('public'))
+  .use(sass.middleware({
+      src: __dirname + '/app',
+      dest: __dirname + '/public',
+      debug: true
+    })
+  )
+  .use(connect.static('public'));
 
 http.createServer(app).listen(process.env.PORT || 3000);
 
