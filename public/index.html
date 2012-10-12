@@ -2,7 +2,9 @@
 <head>
   <meta charset="UTF-8">
   <title>Rightbomber</title>
+  <link rel="icon" href="favicon.ico"/>
   <link rel="stylesheet" type="text/css" href="stylesheets/rightbomber.css">
+  <link rel="stylesheet" type="text/css" href="stylesheets/keys.css">
 
   <script type="text/javascript" src="javascripts/rightbomber.js"></script>
 
@@ -29,6 +31,32 @@
 </head>
 
 <body onload = '(new Rightbomber).run();'>
+  <div class="control-hits" id="player1-controls">
+    <span>Player#1 Controls</span>
+    <dl>
+      <dt>Move</dt>
+      <dd>
+        <kbd>W</kbd>, <kbd>S</kbd>, <kbd>A</kbd>, <kbd>D</kbd>
+      </dd>
+      <dt>Place Bomb</dt>
+      <dd>
+        <kbd>F</kbd>
+      </dd>
+    </dl>
+  </div>
   <div id="game"></div>
+  <div class="control-hits" id="player2-controls">
+    <span>Player#2 Controls</span>
+    <dl>
+      <dt>Move</dt>
+      <dd>
+        <kbd>&uarr;</kbd>, <kbd>&darr;</kbd>, <kbd>&larr;</kbd>, <kbd>&rarr;</kbd>
+      </dd>
+      <dt>Place Bomb</dt>
+      <dd>
+        <kbd>.</kbd>
+      </dd>
+    </dl>
+  </div>
 </body>
 </html>
