@@ -1,10 +1,11 @@
 class Keyboard
   keyNames:
+    32: 'space'
     38: 'up'
     40: 'down'
     37: 'left'
     39: 'right'
-    191: '/'
+    190: '.'
     87: 'w'
     83: 's'
     65: 'a'
