@@ -30,12 +30,17 @@
 </head>
 
 <body onload = '(new Rightbomber).run();'>
-  <div class="control-hits" id="player1-controls">
+  <div class="control-hints" id="player1-controls">
     <span>Player#1 Controls</span>
     <dl>
       <dt>Move</dt>
       <dd>
-        <kbd>W</kbd>, <kbd>S</kbd>, <kbd>A</kbd>, <kbd>D</kbd>
+        <div class="vertical">
+          <kbd>W</kbd><kbd>S</kbd>
+        </div>
+        <div class="horizontal">
+          <kbd>A</kbd><kbd>D</kbd>
+        </div>
       </dd>
       <dt>Place Bomb</dt>
       <dd>
@@ -44,12 +49,17 @@
     </dl>
   </div>
   <div id="game"></div>
-  <div class="control-hits" id="player2-controls">
+  <div class="control-hints" id="player2-controls">
     <span>Player#2 Controls</span>
     <dl>
       <dt>Move</dt>
       <dd>
-        <kbd>&uarr;</kbd>, <kbd>&darr;</kbd>, <kbd>&larr;</kbd>, <kbd>&rarr;</kbd>
+        <div class="vertical">
+          <kbd>&uarr;</kbd><kbd>&darr;</kbd>
+        </div>
+        <div class="horizontal">
+          <kbd>&larr;</kbd><kbd>&rarr;</kbd>
+        </div>
       </dd>
       <dt>Place Bomb</dt>
       <dd>

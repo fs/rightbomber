@@ -13,8 +13,10 @@
 kbd, .key {
   display: inline;
   display: inline-block;
-  min-width: 1em;
-  padding: .2em .3em;
+  width: 25px;
+  height: 23px;
+  padding: 5px;
+  box-sizing: border-box;
   font: normal 0.85em / 1 "Lucida Grande", Lucida, Arial, sans-serif;
   text-align: center;
   text-decoration: none;
