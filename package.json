@@ -9,7 +9,7 @@
     "connect": "*",
     "coffee-script": "*",
     "connect-compiler": "*",
-    "node-sass": "*"
+    "stylus": "*"
   },
   "devDependencies": {
     "chai"  : "*",
