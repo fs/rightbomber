@@ -16,14 +16,16 @@ class BombPiece extends MovingObject
     @representation = new ObjectView(@)
     @update()
 
-  # setSize: (newSize) ->
-  #   delta = - (newSize - @size) / 2
-  #   @moveBy(delta, delta)
+  setSize: (newSize) ->
+    delta = - (newSize - @size) / 2
+    @moveBy(delta, delta)
 
-  #   super(newSize)
+    super(newSize)
 
   olderBy: (timeDelta) =>
     if @velocity > 0
+      @setSize(@size + 1/(@size + 10))
+
       @velocity += @acceleration * timeDelta
 
       if @velocity < @epsilon
