@@ -10,7 +10,7 @@ class BombPiece extends SquaredObject
 
     @initialVelocity = @velocity *= Math.log(Math.random() + 1)
 
-    @direction.random(true)
+    @direction.random(false)
 
     @representation = new ObjectView(@)
     @update()

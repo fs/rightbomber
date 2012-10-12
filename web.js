@@ -1,19 +1,20 @@
 var
   connect = require('connect'),
+  compiler = require('connect-compiler'),
   http = require('http');
 
 var app = connect()
+
+  .use(compiler({
+    enabled : [ 'coffee' ],
+    log_level: 'debug',
+    src     : 'app',
+    dest    : 'public'
+  }))
+
   .use(connect.favicon())
   .use(connect.logger('dev'))
   .use(connect.static('public'))
-  .use(connect.directory('public'))
-  // .use(connect.cookieParser())
-  // .use(connect.session({ secret: 'my secret here' }))
-  .use(function(req, res){
-    res.writeHead(404, {'Content-Type': 'text/plain'});
-    res.end('nothing here\n');
-  });
-
 
 http.createServer(app).listen(process.env.PORT || 3000);
 

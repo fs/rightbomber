@@ -3,7 +3,8 @@
   "version": "0.0.2",
   "dependencies": {
     "connect": "*",
-    "coffee-script": "*"
+    "coffee-script": "*",
+    "connect-compiler": "*"
   },
   "engines": {
     "node": "0.8.x",
