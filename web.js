@@ -9,7 +9,10 @@ var app = connect()
     enabled : [ 'coffee' ],
     log_level: 'debug',
     src     : 'app',
-    dest    : 'public'
+    dest    : 'public',
+    options : {
+      coffee : { bare : true }
+    }
   }))
 
   .use(connect.favicon())
