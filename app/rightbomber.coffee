@@ -26,7 +26,7 @@ class Rightbomber
     if @keyboard.isKeyPressed('.')
       @player.plantBomb()
 
-    if @keyboard.isKeyPressed('space')
+    if @keyboard.isKeyPressed('f')
       @player2.plantBomb()
 
     direction = @keyboard.latestOf(['right', 'up', 'left', 'down'])
