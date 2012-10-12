@@ -1,4 +1,4 @@
-module.exports = class Rect
+class Rect
   left: 0
   top: 0
   right: 1
@@ -52,3 +52,5 @@ module.exports = class Rect
     @left   <= rect.left   &&
     @right  >= rect.right  &&
     @bottom >= rect.bottom
+
+module.exports = Rect unless window?

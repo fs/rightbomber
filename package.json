@@ -1,6 +1,10 @@
 {
   "name": "rightbomber",
   "version": "0.0.2",
+  "scripts": {
+    "start": "scripts/start",
+    "test": "scripts/test"
+  },
   "dependencies": {
     "connect": "*",
     "coffee-script": "*",

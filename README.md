@@ -1,8 +1,15 @@
+# Rightbomber
+
 http://rightbomber.herokuapp.com/
 
-reload page to compile coffee.
+## Install
 
-howto to run:
+    npm install
 
-    node web.js
-    open 'http://localhost:3000/'
+## Run
+
+    npm start && open 0.0.0.0:3000
+
+## Test
+
+    npm test
