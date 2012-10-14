@@ -1,5 +1,5 @@
 class Bomb extends MovingObject
-  size: 0.9
+  size: 0.75
   TTL: 3.0 # sec
 
   constructor: (@player) ->

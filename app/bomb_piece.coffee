@@ -1,6 +1,6 @@
 class BombPiece extends MovingObject
-  velocity: 20
-  acceleration: -50
+  velocity: 10
+  acceleration: -10
   size: 0.3
 
   constructor: (@bomb) ->
@@ -24,7 +24,7 @@ class BombPiece extends MovingObject
 
   olderBy: (timeDelta) =>
     if @velocity > 0
-      @setSize(@size + 1/(@size + 10))
+      # @setSize(@size + 1/(@size + 10))
 
       @velocity += @acceleration * timeDelta
 
