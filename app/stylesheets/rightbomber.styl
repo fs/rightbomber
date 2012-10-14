@@ -14,10 +14,6 @@ body
   margin-top: 25px
   border: 2px solid #ccc
 
-.bomb-piece
-  position: absolute
-  background: rgb(255, 0, 100)
-
 .dummy
   position: absolute
   background-color: darkgray
@@ -37,6 +33,12 @@ body
 
   &.down
     -webkit-transform: rotate(180deg)
+
+.bomb-piece
+  position: absolute
+  background: #fc0
+  border-radius: 100px
+  box-shadow: 0 0 10px #f00, 0 0 5px #a00 inset
 
 .bomb
   position: absolute

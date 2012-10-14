@@ -1,7 +1,7 @@
 class BombPiece extends MovingObject
   velocity: 10
   acceleration: -10
-  size: 0.3
+  size: 0.75
 
   constructor: (@bomb) ->
     super(@bomb.map)
