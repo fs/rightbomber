@@ -1,7 +1,6 @@
 var
   connect = require('connect'),
   compiler = require('connect-compiler'),
-  sass = require('node-sass'),
   http = require('http');
 
 var port = process.env.PORT || 3000;
@@ -10,16 +9,11 @@ var app = connect()
 var app = connect()
   .use(connect.logger('dev'))
   .use(compiler({
-    enabled   : [ 'coffee' ],
-    log_level : 'debug',
+    enabled   : [ 'coffee', 'stylus' ],
+    log_level : 'warn',
     src       : 'app',
     dest      : 'public',
     options   : { coffee : { bare : true } }
-  }))
-  .use(sass.middleware({
-    src   : 'app',
-    dest  : 'public',
-    debug : true
   }))
   .use(connect.static('public'));
 
