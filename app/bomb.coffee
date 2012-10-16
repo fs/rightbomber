@@ -1,37 +1,44 @@
 class Bomb extends MovingObject
+  pieces: 50
   size: 0.75
-  TTL: 3.0 # sec
+  timer: 3.0 # sec
 
   constructor: (@player) ->
-    @exploded = false
-    @timer = @TTL
-
     super(@player.map)
 
-    @moveBy(@player.left + (@player.size - @size) / 2, # coords of player`s center position
-            @player.top + (@player.size - @size) / 2)
+    playerCenter = (@player.size - @size) / 2
+    @moveBy(@player.left + playerCenter, @player.top + playerCenter)
+
     @representation = new ObjectView(@)
     @update()
 
   olderBy: (timeDelta) =>
-    if !@exploded and @timer < 0
-      @explode()
+    if @exploded()
+      if @pieces > 0
+        @emit()
+        if @pieces == 0
+          @update()
     else
       @timer -= timeDelta
 
+  emit: ->
+    newPieces = Math.round @pieces / 2
+    @pieces -= newPieces
+    while newPieces > 0
+      new BombPiece(@)
+      newPieces -= 1
+
   explode: ->
-    @exploded = true
+    @timer = 0
 
-    for i in [0..50]
-      piece = new BombPiece(@)
-
-    @update()
+  exploded: ->
+    @timer <= 0
 
   update: ->
     @representation.state = ['bomb']
-    @representation.state.push 'exploded' if @exploded
+    @representation.state.push 'exploded' if @exploded()
     @representation.update()
 
   intersectableWith: (object) ->
-    ! @exploded &&
+    ! @exploded() &&
     super(object)
