@@ -1,11 +1,9 @@
 class Bomb extends MovingObject
+  pieces: 50
   size: 0.9
-  TTL: 3.0 # sec
+  timer: 3.0 # sec
 
   constructor: (@player) ->
-    @exploded = false
-    @timer = @TTL
-
     super(@player.map)
 
     @moveBy(@player.left + (@player.size - @size) / 2, # coords of player`s center position
@@ -14,8 +12,12 @@ class Bomb extends MovingObject
     @update()
 
   olderBy: (timeDelta) =>
-    if !@exploded and @timer < 0
-      @explode()
+    if @timer < 0
+      if @pieces > 0
+        new BombPiece(@)
+        @pieces -= 1
+      else if @pieces == 0
+        @update()
     else
       @timer -= timeDelta
 
