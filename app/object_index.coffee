@@ -1,51 +1,85 @@
 class ObjectIndex extends Rect
   objects: []
 
-  push: (object, pushedUpFrom = null) ->
-    if @contains(object)
+  push: (object) ->
+    @pushUp(object) unless @pushDown(object)
+
+  pushUp: (object) ->
+    parent = @quadruple()
+
+    loop
+      break if parent.contains(object)
+
+      parent.moveBy(-width, 0)
+      break if parent.contains(object)
+
+      parent.moveBy(0, -height)
+      break if parent.contains(object)
+
+      parent.moveBy(width, 0)
+      break if parent.contains(object)
+
+      parent.pushUp(object)
+      break
+
+  pushDown: (object) ->
+    if pushed = @contains(object)
       @objects.push object
 
       for child in @children()
-        pushedDown   = child != pushedUpFrom
-        pushedDown &&= child.push(object)
-        break if pushedDown
+        break if child.pushDown(object)
 
-      return true
+    return pushed
 
-    else
-      @parent().push(object, @)
-
-  parent: ->
-    @parent ||= new @constructor
-
+  # Creates 4 children each 4 times smaller than this
+  # Children numeration:
+  #
+  # 3 | 1
+  # --+--
+  # 2 | 0
+  #
   children: ->
-    unless @children
-      @children = []
+    @children ||= []
 
-      # top left
-      @children.push @subRect(false, false)
+    # left top
+    @children[3] ||= @quarter(true, true)
 
-      # top right
-      @children.push @subRect(true,  false)
+    # left bottom
+    @children[2] ||= @quarter(true, false)
 
-      # bottom left
-      @children.push @subRect(false, true)
+    # right top
+    @children[1] ||= @quarter(false, true)
 
-      # bottom right
-      @children.push @subRect(true,  true)
+    # right bottom
+    @children[0] ||= @quarter(false,  false)
 
     @children
 
-  subRect: (left, top) ->
-    width  = @getWidth()  / 2
-    height = @getHeight() / 2
+  # Constructs a new node 4 times bigger than this
+  quadruple: ->
+    node = new @constructor
+    node.setWidth  @getWidth()  * 2
+    node.setHeight @getHeight() * 2
+    node
 
-    left = left ? width  : 0
-    top  = top  ? height : 0
+  # Constructs a new node 4 times smaller than this
+  # It could moved in 4 different positions afterwards:
+  #
+  #   leftmost | topmost
+  #   topmost  |
+  #   ---------+---------
+  #   leftmost |
+  #            |
+  #
+  quarter: (leftmost, topmost) ->
+    halfWidth  = @getWidth()  / 2
+    halfHeight = @getHeight() / 2
 
-    rect = new Rect
-    rect.moveBy(@left + left, @top + top)
-    rect.setWidth(width)
-    rect.setHeight(height)
+    left = leftmost ? 0 : halfWidth
+    top  = topmost  ? 0 : halfHeight
 
-    rect
+    node = new @constructor
+    node.moveBy(@left + left, @top + top)
+    node.setWidth  halfWidth
+    node.setHeight halfHeight
+    node
